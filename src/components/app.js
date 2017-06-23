@@ -7,58 +7,41 @@ import * as actions from '../actions';
 import { Button } from 'preact-mdl';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
+import satori_sdk from "satori-sdk-js";
+import ReactOutsideEvent from 'react-outside-event';
+import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
+
+import LiveGraph from '../service/LiveGraph';
+import TodoItem from './todo';
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
 
+	addTodos = () => {
+
+		const nodeID = "0000000081474d35";
+		const endpoint = "wss://open-data.api.satori.com";
+		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
+		const channel = "rosetta-home";
 
 
-
-	load() {
-		var x = Math.floor((Math.random() * 300) + 1);
-		var datum = [{
-	          key: "Cumulative Return",
-	          values: [
-	            {
-	              "label" : "A" ,
-	              "value" : x
-	            } ,
-	            {
-	              "label" : "B" ,
-	              "value" : 0
-	            } ,
-	            {
-	              "label" : "C" ,
-	              "value" : 32.807804682612
-	            } ,
-	            {
-	              "label" : "D" ,
-	              "value" : 196.45946739256
-	            } ,
-	            {
-	              "label" : "E" ,
-	              "value" : 0.19434030906893
-	            } ,
-	            {
-	              "label" : "F" ,
-	              "value" : -98.079782601442
-	            } ,
-	            {
-	              "label" : "G" ,
-	              "value" : -13.925743130903
-	            } ,
-	            {
-	              "label" : "H" ,
-	              "value" : -5.1387322875705
-	            }
-	          ]
-	        }
-	      ];
-		ReactDOM.render(
-        <NVD3Chart id="barChart" type="discreteBarChart" datum={datum} x="label" y="value"/>,
-        document.getElementById('barChart')
-      );
-	}
+		var rtm = new satori_sdk(endpoint, appKey);
+		rtm.on("enter-connected", function() { console.log("Connected to rosetta-home via satori.js!"); });
+		var subscription = rtm.subscribe("where", satori_sdk.SubscriptionMode.SIMPLE, {
+			filter: 'SELECT * FROM `rosetta-home` WHERE tags.node_id=\"'+ nodeID +'\"',
+		});
+		var self = this;
+		var count = 0;
+		subscription.on('rtm/subscription/data', function (pdu) {
+			pdu.body.messages.forEach(function (msg) {
+				if ('weather_station.outdoor_temperature' === msg.measurement) {
+					self.props.addTodo({x:count,y:msg.fields.value});
+					count++;
+				}
+			});
+		});
+		rtm.start();
+	};
 
 	removeTodo = (todo) => {
 		this.props.removeTodo(todo);
@@ -68,13 +51,19 @@ export default class App extends Component {
 		this.setState({ text: e.target.value });
 	};
 
+
+
+
 	render({ todos }, { text }) {
 		return (
 			<div id="app">
 				<h1>Rosetta Home</h1>
-				<Button onClick={this.load}>Load</Button>
-				<div id="barChart"></div>
+				<Button onClick={this.addTodos}>Start</Button>
+				<LiveGraph nodeID="0000000081474d35" config="" type="temps" listener="satori_data"/>
 			</div>
 		);
 	}
 }
+/*
+<LiveGraph nodeID="0000000081474d35" config="" type="temps" listener="satori_data" inputRef={el => this.inputElement = el}/>
+*/

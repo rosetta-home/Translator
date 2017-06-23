@@ -59,7 +59,9 @@
     "react-dom": "^15.6.1",
     "react-load-script": "0.0.4",
     "react-nvd3": "^0.5.7",
-    "redux": "^3.6.0"
+    "react-outside-event": "^1.2.5",
+    "redux": "^3.6.0",
+    "satori-sdk-js": "^1.0.1"
   },
   "main": "webpack.config.babel.js"
 }
