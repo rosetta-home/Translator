@@ -1,4 +1,3 @@
-
 export function addData(item) {
 	return {
 		type: 'ADD_DATA',
@@ -6,16 +5,16 @@ export function addData(item) {
 	};
 }
 
-export function removeTodo(todo) {
-	/*return {
-		type: 'REMOVE_TODO',
-		todo
-	};*/
-}
-
 export function createGraph(id,ts,nodeID) {
 	return {
 		type: 'ADD_GRAPH',
 		id,ts,nodeID
+	};
+}
+
+export function graphAddPoint(id) {
+	return {
+		type: 'ADD_POINT',
+		id
 	};
 }
