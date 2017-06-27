@@ -12,6 +12,7 @@ import satori_sdk from "satori-sdk-js";
 import ReactOutsideEvent from 'react-outside-event';
 import { bindActionCreators } from 'redux';
 
+
 class RosettaHomeGraph {
     constructor (props) {
         this.props = props;
@@ -22,9 +23,9 @@ class RosettaHomeGraph {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    messages: state.todos,
-    isConnected : true
+    graphs: state.graphs
   };
 }
 
@@ -35,35 +36,39 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-
-class LiveGraph extends Component {
+@connect(reduce, bindActions(actions))
+class RHLiveGraph extends Component {
 	constructor(props){
 		super(props);
 		this.manager = new RosettaHomeGraph(props);
-		this.data = [{ values: [], key: 'Current Temp.', color: '#ef6c00' }];
+		this.data = [{values: [], key: '', color: '#ffffff' }];
 		this.refresh = this.refresh.bind(this);
     this.tick = this.tick.bind(this);
-    this.interval = setInterval(this.tick, 1000);
+    this.id = Math.random().toString(36).substring(2);
+    this.types = this.props.type.split(',');
+    this.nodeID = this.props.nodeID;
+    this.props.createGraph(this.id,this.types,this.nodeID);
 	}
- 	componentDidMount() {
-
-  }
+ 	componentDidMount() { }
  	componentWillUnmount() { }
-	refresh() {
+  componentWillReceiveProps(nextProps) {
 
-	}
-  tick() {
-    this.data[0].values = this.props.messages;
-    this.setState();
-	}
+    if (nextProps.graphs[this.id].datum.length != 0) {
+      console.log(nextProps.graphs[this.id].datum);
+      this.data = nextProps.graphs[this.id].datum;
+      this.setState();
+    }
+
+  }//xAxis={{ tickFormat: (d) => new Date(d) }}
+	refresh() { }
+  tick() { }
   render({ todo }) {
-    function getX(d) { return d['text'].x; };
-    function getY(d) { return d['text'].y };
     return (
 			<div>
-			<NVD3Chart id="lineChart" type="lineChart" datum={this.data} x={getX} y={getY}/>
+			<NVD3Chart id="lineChart" type="lineChart" datum={this.data}  x="x" y="y"/>
+      <Button onClick={this.refresh}>Log DOM</Button>
 			</div>
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LiveGraph);
+export default connect(mapStateToProps, mapDispatchToProps)(RHLiveGraph);
