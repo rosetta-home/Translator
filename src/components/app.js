@@ -14,7 +14,11 @@ import RHLiveGraph from './LiveGraph';
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
+	constructor(props) {
+    super(props);
+  }
 	start = () => {
+		console.log("Start");
 		const nodeID = "0000000081474d35";
 		const endpoint = "wss://open-data.api.satori.com";
 		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
@@ -33,13 +37,18 @@ export default class App extends Component {
 		});
 		rtm.start();
 	};
+	/*
+	<h1>Rosetta Home App</h1>
+	<Button onClick={this.start}>Start</Button>
+	<Button onClick={this.start}>Start Satori</Button>
+	<RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature,weather_station.outdoor_temperature"/>
+	<RHLiveGraph nodeID="0000000081474d35" type="ieq.temperature,hvac.temperature"/>
+	*/
 	render({ todos }, { text }) {
+		console.log(props);
 		return (
 			<div id="app">
-				<h1>Rosetta Home</h1>
-				<Button onClick={this.start}>Start Satori</Button>
-				<RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature,weather_station.outdoor_temperature"/>
-				<RHLiveGraph nodeID="0000000081474d35" type="ieq.temperature,hvac.temperature"/>
+
 			</div>
 		);
 	}

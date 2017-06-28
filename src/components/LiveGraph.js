@@ -23,8 +23,11 @@ class RHLiveGraph extends Component {
     this.props.createGraph(this.id,this.types,this.nodeID);
 	}
   tick() { this.props.graphAddPoint(this.id); }
- 	componentDidMount() { this.timer = setInterval(this.tick, 1000); }
- 	componentWillUnmount() { clearInterval(this.timer); }
+ 	componentDidMount() {
+		this.timer = setInterval(this.tick, 1000); }
+ 	componentWillUnmount() {
+    clearInterval(this.timer);
+  }
   componentWillReceiveProps(nextProps) {
     var grs = nextProps.graphs[this.id];
     if (grs.datum.length != 0) { this.data = grs.datum; }
