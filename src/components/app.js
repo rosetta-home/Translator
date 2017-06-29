@@ -11,15 +11,18 @@ import ReactOutsideEvent from 'react-outside-event';
 import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
 
 import RHLiveGraph from './LiveGraph';
+import Authentication from '../service/authservice';
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
 	constructor(props) {
+		console.log(props);
     super(props);
   }
 	start = () => {
 		console.log("Start");
-		const nodeID = "0000000081474d35";
+		console.log(Authentication.get('title'));
+		/*const nodeID = "0000000081474d35";
 		const endpoint = "wss://open-data.api.satori.com";
 		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
 		const channel = "rosetta-home";
@@ -35,7 +38,7 @@ export default class App extends Component {
 				self.props.addData(msg);
 			});
 		});
-		rtm.start();
+		rtm.start();*/
 	};
 	/*
 	<h1>Rosetta Home App</h1>
@@ -45,10 +48,10 @@ export default class App extends Component {
 	<RHLiveGraph nodeID="0000000081474d35" type="ieq.temperature,hvac.temperature"/>
 	*/
 	render({ todos }, { text }) {
-		console.log(props);
+		console.log(this.props);
 		return (
 			<div id="app">
-
+			<Button onClick={this.start}>Login</Button>
 			</div>
 		);
 	}

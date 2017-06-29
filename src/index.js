@@ -7,6 +7,7 @@ import "material-design-lite";
 import "material-design-lite/dist/material.indigo-pink.min.css";
 import Script from 'react-load-script';
 import Login from './auth/login';
+import Dashboard from './components/dashboard';
 import { Router, Route, Switch,MemoryRouter } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 
@@ -19,9 +20,13 @@ import createBrowserHistory from 'history/createBrowserHistory';
 
 const Routes = (props) => (
   <Router {...props}>
-    <Route path="/" component={App}>
-      <Route path="/login" component={Login}></Route>
-    </Route>
+	<Switch>
+		<Route exact path="/" component={App}/>
+		<Route path="/login" component={Login}/>
+		<Route path="/register" component={Login}/>
+		<Route path="/dashboard" component={Dashboard}/>
+		<Route component={App}/>
+	</Switch>
   </Router>
 );
 
