@@ -6,6 +6,18 @@ import * as actions from '../actions';
 import { Button } from 'preact-mdl';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
+import StepZilla from 'react-stepzilla';
+
+import Login from '../auth/login';
+
+
+const steps =
+    [
+      {name: 'Step 1', component: <Login />},
+			{name: 'Step 1', component: <Login />},
+			{name: 'Step 1', component: <Login />}
+
+    ]
 
 export default class Dashboard extends Component {
 	login = () => {
@@ -13,9 +25,8 @@ export default class Dashboard extends Component {
 	};
 	render() {
 		return (
-			<div id="app">
-				<h1>Rosetta Home Dashboard</h1>
-
+			<div>
+			<StepZilla steps={steps}/>
 			</div>
 		);
 	}

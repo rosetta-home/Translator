@@ -79,3 +79,28 @@ ul {
 svg {
 	height: 400px;
 }
+
+.wizard {
+  margin: 0 auto;
+  .btn-next, .btn-back {
+    display: block;
+  }
+  .btn-next {
+    float: right;
+  }
+  .btn-back{
+    float: left;
+  }
+}
+
+.status-bar-wrapper {
+    height: 12px;
+    width: 100%;
+    background-color: lightgrey;
+    > div {
+        height: 12px;
+        background-color: greenyellow;
+        width: 0;
+        transition: width .5s;
+    }
+}

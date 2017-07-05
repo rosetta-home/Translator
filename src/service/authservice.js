@@ -11,7 +11,7 @@ export default {
     var form_data = new FormData();
     for ( var key in form ) { form_data.append(key, form[key]); }
     var self = this;
-    request.post('http://localhost:8080/account/login').send(form_data).end(function(err, res) {
+    request.post('http://35.167.180.46:8080/account/login').send(form_data).end(function(err, res) {
       if (!err) {
         console.log(res.body.success);
         self.setCachedToken(res.body.success);
@@ -23,7 +23,7 @@ export default {
   register(form) {
     var form_data = new FormData();
 		for ( var key in form ) { form_data.append(key, form[key]); }
-    request.put('http://localhost:8080/account/register').send(form_data).end(function(err, res) {
+    request.put('http://35.167.180.46:8080/account/register').send(form_data).end(function(err, res) {
       if (!err) {
         console.log(res.body);
       } else {
@@ -32,6 +32,13 @@ export default {
     });
   },
   getData() {
-    
+    console.log(this.getToken());
+    request.post('http://35.167.180.46:8080/data/ieq.co2/10m/now').set('Authorization', 'Bearer ' + this.getToken()).set('Content-Type','application/json').end(function(err, res) {
+      if (!err) {
+        console.log(res);
+      } else {
+        console.log('Error!');
+      }
+    });
   }
 }

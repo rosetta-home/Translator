@@ -50,8 +50,8 @@ export default class App extends Component {
 	render({ todos }, { text }) {
 		console.log(this.props);
 		return (
-			<div id="app">
-			<Button onClick={this.start}>Login</Button>
+			<div>
+
 			</div>
 		);
 	}

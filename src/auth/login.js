@@ -18,17 +18,18 @@ export default class Login extends Component {
 			this.formdata = {};
 			this.login = this.login.bind(this);
 			this.register = this.register.bind(this);
-
+			this.data = this.data.bind(this);
     }
 	register() {
-		console.log(this.formdata);
 		Authentication.register(this.formdata);
 		this.formdata = {};
 	};
 	login() {
-		console.log(this.formdata);
 		Authentication.login(this.formdata);
 		this.formdata = {};
+	}
+	data() {
+		Authentication.getData();
 	}
 	onChange(event) {
 		this.formdata[event.target.name] = event.target.value;
@@ -39,16 +40,17 @@ export default class Login extends Component {
 			<div id="app">
 				<h3>Rosetta Home Register </h3>
 				<input type="text" name="location_name" value="" placeholder="location_name" onChange={this.onChange.bind(this)}/>
-				<input type="text" name="username" value="" placeholder="email" onChange={this.onChange.bind(this)}/>
+				<input type="text" name="email" value="" placeholder="email" onChange={this.onChange.bind(this)}/>
 				<input type="text" name="password" value="" placeholder="password" onChange={this.onChange.bind(this)}/>
 				<input type="text" name="kit_number" value="" placeholder="kit_number" onChange={this.onChange.bind(this)}/>
 				<input type="text" name="zipcode" value="" placeholder="zipcode" onChange={this.onChange.bind(this)}/>
 				<input type="text" name="password_conf" value="" placeholder="password_conf" onChange={this.onChange.bind(this)}/>
 				<Button onClick={this.register}>Register</Button>
 				<h3>Rosetta Home Login </h3>
-				<input type="text" name="username" value="" placeholder="email" onChange={this.onChange.bind(this)}/>
+				<input type="text" name="email" value="" placeholder="email" onChange={this.onChange.bind(this)}/>
 				<input type="text" name="password" value="" placeholder="password" onChange={this.onChange.bind(this)}/>
 				<Button onClick={this.login}>Login</Button>
+				<Button onClick={this.data}>Data</Button>
 			</div>
 		);
 	}

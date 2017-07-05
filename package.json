@@ -67,6 +67,7 @@
     "react-nvd3": "^0.5.7",
     "react-outside-event": "^1.2.5",
     "react-router": "^4.1.1",
+    "react-stepzilla": "^4.6.2",
     "redux": "^3.6.0",
     "request": "^2.81.0",
     "rxjs": "^5.4.1",
