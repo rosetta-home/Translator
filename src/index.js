@@ -10,7 +10,7 @@ import Login from './auth/login';
 import Dashboard from './components/dashboard';
 import { Router, Route, Switch,MemoryRouter } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
-
+import "bootstrap/dist/css/bootstrap.css";
 /*<div id="outer">
 	<Provider store={store}>
 		<App/>

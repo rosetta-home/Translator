@@ -12,13 +12,12 @@ import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
 
 import RHLiveGraph from './LiveGraph';
 import Authentication from '../service/authservice';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
-	constructor(props) {
-		console.log(props);
-    super(props);
-  }
 	start = () => {
 		console.log("Start");
 		console.log(Authentication.get('title'));
@@ -40,6 +39,20 @@ export default class App extends Component {
 		});
 		rtm.start();*/
 	};
+	constructor(props) {
+	super(props);
+
+	this.toggleNavbar = this.toggleNavbar.bind(this);
+	this.state = {
+		collapsed: true
+	};
+}
+
+toggleNavbar() {
+	this.setState({
+		collapsed: !this.state.collapsed
+	});
+}
 	/*
 	<h1>Rosetta Home App</h1>
 	<Button onClick={this.start}>Start</Button>
@@ -51,8 +64,30 @@ export default class App extends Component {
 		console.log(this.props);
 		return (
 			<div>
-
-			</div>
+			 <Navbar color="faded" light>
+				 <NavbarToggler onClick={this.toggleNavbar}>
+				 <span class="navbar-toggler-icon" data-reactid="104"></span>
+				 </NavbarToggler>
+				 <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
+				   <br></br>
+					 <Nav navbar>
+						 <NavItem>
+							 <NavLink>Components</NavLink>
+						 </NavItem>
+						 <NavItem>
+							 <NavLink>Github</NavLink>
+						 </NavItem>
+					 </Nav>
+				 </Collapse>
+			 </Navbar>
+			 <Container>
+			 <Row>
+				 <Col xs="4"></Col>
+				 <Col xs="4"></Col>
+				 <Col xs="4"></Col>
+			 </Row>
+		 </Container>
+		 </div>
 		);
 	}
 }

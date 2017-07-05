@@ -26,7 +26,6 @@ export default class Dashboard extends Component {
 	render() {
 		return (
 			<div>
-			<StepZilla steps={steps}/>
 			</div>
 		);
 	}
