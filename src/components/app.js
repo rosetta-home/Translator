@@ -3,7 +3,7 @@ import { connect } from 'preact-redux';
 import { bindActions } from '../util';
 import reduce from '../reducers';
 import * as actions from '../actions';
-import { Button } from 'preact-mdl';
+import { Button , Layout, Navigation} from 'preact-mdl';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
 import satori_sdk from "satori-sdk-js";
@@ -12,9 +12,14 @@ import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
 
 import RHLiveGraph from './LiveGraph';
 import Authentication from '../service/authservice';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import { Container, Row, Col } from 'reactstrap';
+//import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Router, Route, Switch,MemoryRouter,Link } from 'react-router';
+import Login from "../auth/login";
+import Header from './Header';
+import Footer from './Footer';
+import './App.css';
 
+import { browserHistory } from 'react-router'
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
@@ -49,45 +54,26 @@ export default class App extends Component {
 }
 
 toggleNavbar() {
-	this.setState({
-		collapsed: !this.state.collapsed
-	});
+browserHistory.push('/some/path')
 }
-	/*
-	<h1>Rosetta Home App</h1>
-	<Button onClick={this.start}>Start</Button>
-	<Button onClick={this.start}>Start Satori</Button>
-	<RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature,weather_station.outdoor_temperature"/>
-	<RHLiveGraph nodeID="0000000081474d35" type="ieq.temperature,hvac.temperature"/>
-	*/
-	render({ todos }, { text }) {
+	render() {
 		console.log(this.props);
 		return (
-			<div>
-			 <Navbar color="faded" light>
-				 <NavbarToggler onClick={this.toggleNavbar}>
-				 <span class="navbar-toggler-icon" data-reactid="104"></span>
-				 </NavbarToggler>
-				 <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
-				   <br></br>
-					 <Nav navbar>
-						 <NavItem>
-							 <NavLink>Components</NavLink>
-						 </NavItem>
-						 <NavItem>
-							 <NavLink>Github</NavLink>
-						 </NavItem>
-					 </Nav>
-				 </Collapse>
-			 </Navbar>
-			 <Container>
-			 <Row>
-				 <Col xs="4"></Col>
-				 <Col xs="4"></Col>
-				 <Col xs="4"></Col>
-			 </Row>
-		 </Container>
-		 </div>
+			<div className="App">
+			<Layout fixed-header fixed-drawer>
+									<Header/>
+									<Layout.Drawer>
+                <Layout.Title></Layout.Title>
+								<Navigation>
+								<a onClick={this.toggleNavbar}>Here</a>
+                </Navigation>
+            		</Layout.Drawer>
+ 								<Layout.Content>
+								  {this.props.children}
+								</Layout.Content>
+							</Layout>
+        <Footer/>
+      </div>
 		);
 	}
 }

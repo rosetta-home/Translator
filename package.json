@@ -15,7 +15,7 @@
     "redux"
   ],
   "license": "MIT",
-  "author": "Jason Miller <jason@developit.ca>",
+  "author": "John O'Sullivan <john@crtlabs.org>",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
@@ -36,7 +36,7 @@
     "eslint": "^2.11.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "html-webpack-plugin": "^2.19.0",
+    "html-webpack-plugin": "^2.29.0",
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
@@ -68,6 +68,7 @@
     "react-nvd3": "^0.5.7",
     "react-outside-event": "^1.2.5",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-stepzilla": "^4.6.2",
     "react-transition-group": "^1.2.0",
     "reactstrap": "^4.8.0",
