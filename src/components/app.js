@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h, Component,Link } from 'preact';
+import React from 'react';
 import { connect } from 'preact-redux';
 import { bindActions } from '../util';
 import reduce from '../reducers';
@@ -13,13 +14,14 @@ import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
 import RHLiveGraph from './LiveGraph';
 import Authentication from '../service/authservice';
 //import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import { Router, Route, Switch,MemoryRouter,Link } from 'react-router';
 import Login from "../auth/login";
 import Header from './Header';
 import Footer from './Footer';
 import './App.css';
 
+import history from '../history';
 import { browserHistory } from 'react-router'
+
 
 @connect(reduce, bindActions(actions))
 export default class App extends Component {
@@ -46,15 +48,18 @@ export default class App extends Component {
 	};
 	constructor(props) {
 	super(props);
-
-	this.toggleNavbar = this.toggleNavbar.bind(this);
+	this.state = {
+    redirectTo: null
+}
+	this.toggleRoute = this.toggleRoute.bind(this);
 	this.state = {
 		collapsed: true
 	};
 }
 
-toggleNavbar() {
-browserHistory.push('/some/path')
+
+toggleRoute() {
+	console.log("route");
 }
 	render() {
 		console.log(this.props);
@@ -64,10 +69,9 @@ browserHistory.push('/some/path')
 									<Header/>
 									<Layout.Drawer>
                 <Layout.Title></Layout.Title>
-								<Navigation>
-								<a onClick={this.toggleNavbar}>Here</a>
-                </Navigation>
+								<Button onClick={this.toggleRoute}>link</Button>
             		</Layout.Drawer>
+
  								<Layout.Content>
 								  {this.props.children}
 								</Layout.Content>

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { Redirect } from 'react-router';
 
 export default class OtherComponent extends Component {
 	login = () => {
@@ -7,7 +8,7 @@ export default class OtherComponent extends Component {
 	render() {
 		return (
 			<div>
-      <h2>afd</h2>
+      <h2>Other</h2>
 			</div>
 		);
 	}

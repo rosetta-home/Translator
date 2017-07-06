@@ -5,6 +5,7 @@ export default class Footer extends Component {
 	login = () => {
 
 	};
+
 	render() {
 		return (
       <div className="Footer">

@@ -17,11 +17,11 @@ import Error404 from './components/Error404';
 import ReactDOM from 'react-dom';
 
 
-
+import history from './history';
 
 const Root = () => (
   <App>
-    <BrowserRouter>
+    <BrowserRouter history={history}>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/other" component={OtherComponent} />
