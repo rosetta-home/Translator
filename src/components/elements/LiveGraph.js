@@ -1,11 +1,10 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
-import { bindActions } from '../util';
-import reduce from '../reducers';
-import * as actions from '../actions';
+import { bindActions } from '../../util';
+import reduce from '../../reducers';
+import * as actions from '../../actions';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
-import satori_sdk from "satori-sdk-js";
 import { bindActionCreators } from 'redux';
 
 function mapStateToProps(state) { return {   graphs: state.graphs }; }

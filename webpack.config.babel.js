@@ -88,6 +88,7 @@ module.exports = {
 		publicPath: '/',
 		contentBase: './src',
 		historyApiFallback: true,
+		disableHostCheck: true,
 		proxy: [
 			// OPTIONAL: proxy configuration:
 			// {

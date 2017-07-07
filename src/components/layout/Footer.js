@@ -1,11 +1,10 @@
 import { h, Component } from 'preact';
-import './Footer.css';
+import '../../style/Footer.css';
 
 export default class Footer extends Component {
-	login = () => {
-
-	};
-
+	constructor(props) {
+	   super(props);
+  }
 	render() {
 		return (
       <div className="Footer">
