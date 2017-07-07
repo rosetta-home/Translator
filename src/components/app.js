@@ -16,26 +16,13 @@ import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
 import '../style/App.css';
 
-@connect(reduce, bindActions(actions))
+import { Provider } from 'preact-redux';
+import store from '../store';
+
+//@connect(reduce, bindActions(actions))
 export default class App extends Component {
 	start = () => {
-		/*const nodeID = "0000000081474d35";
-		const endpoint = "wss://open-data.api.satori.com";
-		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
-		const channel = "rosetta-home";
-		var rtm = new satori_sdk(endpoint, appKey);
-		rtm.on("enter-connected", function() { console.log("Connected to rosetta-home via satori.js!"); });
-		var subscription = rtm.subscribe("where", satori_sdk.SubscriptionMode.SIMPLE, {
-			filter: 'SELECT * FROM `rosetta-home` WHERE tags.node_id=\"'+ nodeID +'\"',
-		});
-		var self = this;
-		subscription.on('rtm/subscription/data', function (pdu) {
-			pdu.body.messages.forEach(function (msg) {
-				console.log(msg);
-				self.props.addData(msg);
-			});
-		});
-		rtm.start();*/
+
 	};
 	constructor(props) {
 	   super(props);
@@ -45,17 +32,35 @@ export default class App extends Component {
 	   this.state = {
 		   collapsed: true
 	   };
+		 /*const nodeID = "0000000081474d35";
+ 		const endpoint = "wss://open-data.api.satori.com";
+ 		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
+ 		const channel = "rosetta-home";
+ 		var rtm = new satori_sdk(endpoint, appKey);
+ 		rtm.on("enter-connected", function() { console.log("Connected to rosetta-home via satori.js!"); });
+ 		var subscription = rtm.subscribe("where", satori_sdk.SubscriptionMode.SIMPLE, {
+ 			filter: 'SELECT * FROM `rosetta-home` WHERE tags.node_id=\"'+ nodeID +'\"',
+ 		});
+ 		var self = this;
+ 		subscription.on('rtm/subscription/data', function (pdu) {
+ 			pdu.body.messages.forEach(function (msg) {
+ 				console.log(self.props);
+ 				self.props.addData(msg);
+ 			});
+ 		});
+ 		rtm.start();*/
   }
 	render() {
-		console.log(this.props);
 		return (
 			<div className="App">
 			  <Layout fixed-header fixed-drawer>
 				  <Header/>
           <SideMenu/>
+					<Provider store={store}>
           <Layout.Content>
 					  {this.props.children}
 					</Layout.Content>
+					</Provider>
 					</Layout>
         <Footer/>
       </div>

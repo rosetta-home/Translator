@@ -9,4 +9,10 @@ h2 {
 
 main {
   padding: 10px;
+  background-color:lightgray;
+}
+
+.nv-x text{
+		  font-size: 8px;
+          fill: #0277bd;
 }

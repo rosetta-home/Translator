@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 /* Array of the hex colors for RH  */
 const colors = ['#0277bd','#03a9f4','#81d4fa','#ffcc80','#ff9800','#ef6c00'];
 /* How many minutes graphs will display at once */
-const graph_minutes = 0.5;
+const graph_minutes = 0.1;
 /* Update type tracker so the incoming item from satori know what graphs to be send too. */
 function updateTypeTracker(tracker,id,ts,node) {
 	/* Creates a copy of the tracker */
@@ -20,12 +20,19 @@ function updateTypeTracker(tracker,id,ts,node) {
 	/* Returns new state of type tracker */
 	return newtracker;
 }
+function keyName(key) {
+	if (key === 'weather_station.outdoor_temperature') {
+		return 'Outdoor Temp.';
+	} else if (key === 'weather_station.indoor_temperature') {
+		return 'Indoor Temp.';
+	}
+}
 /* Creates the default datum for graph */
 function createDefautGraph(ts) {
 	var arr = [];
 	/* Goes though each data type and create set with the configs for d3.js */
 	for (var i = 0, j = ts.length; i < j; i++) {
-		arr.push({values: [],type:ts[i], key:ts[i], color:colors[i], lastItem: null});
+		arr.push({values: [],type:ts[i], key:keyName(ts[i]), color:colors[i], lastItem: null});
 	}
 	/* Returns the default datum */
 	return arr;

@@ -19,8 +19,10 @@ export default class SideMenu extends Component {
     <Layout.Drawer id="menu">
       <Layout.Title></Layout.Title>
       <Navigation>
-        <Navigation.Link href="/" onClick={this.closeMenu}>Home</Navigation.Link>
-        <Navigation.Link href="/dashboard" onClick={this.closeMenu}>Dasboard</Navigation.Link>
+        <Navigation.Link style="align-self: left;" href="/" onClick={this.closeMenu}><i class="fa fa-home" aria-hidden="true"></i> Home</Navigation.Link>
+        <Navigation.Link style="align-self: left;" href="/dashboard" onClick={this.closeMenu}><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</Navigation.Link>
+        <Navigation.Link style="align-self: left;" href="/" onClick={this.closeMenu}><i class="fa fa-user" aria-hidden="true"></i> Profile</Navigation.Link>
+        <Navigation.Link href="/login" onClick={this.closeMenu}>Login</Navigation.Link>
       </Navigation>
     </Layout.Drawer>
 		);

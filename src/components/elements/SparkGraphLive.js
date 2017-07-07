@@ -17,7 +17,7 @@ class SparkGraphLive extends Component {
 	constructor(props){
 		super(props);
     var nums = [];
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 25; i++) {
       nums.push((Math.random() * 100) + 1);
     }
 		this.data = nums;
