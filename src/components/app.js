@@ -19,11 +19,16 @@ import '../style/App.css';
 import { Provider } from 'preact-redux';
 import store from '../store';
 
+import d3 from 'd3';
+import nv from 'nvd3';
 //@connect(reduce, bindActions(actions))
 export default class App extends Component {
 	start = () => {
 
 	};
+	componentDidMount() {
+
+	}
 	constructor(props) {
 	   super(props);
 	   this.state = {

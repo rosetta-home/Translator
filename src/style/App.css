@@ -16,6 +16,16 @@ main {
 		  font-size: 8px;
           fill: #0277bd;
 }
+svg {
+            display: block;
+        }
+
+        svg.sparkline {
+            width: 500px;
+            height: 70px;
+            font-size: 14px;
+            margin-top: -6px;
+        }
 /*
 * {box-sizing: border-box;}
 .wrapper {
@@ -60,13 +70,13 @@ main {
   position: absolute;
   margin: auto;
   top: 0;
-  right: 0;
+  right: -35px;
   bottom: 0;
   left: 0;
   width: 100px;
   height: 100px;
-  background-color: #ccc;
-  border-radius: 3px;
+  /*background-color: #ccc;*/
+  border-radius: 15px;
 }
 .visitors .sparkline {
   fill: none;
@@ -105,3 +115,8 @@ main {
 .col-10 {width: 83.33%;}
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
+
+
+.nv-currentValue {
+  color:red;
+}

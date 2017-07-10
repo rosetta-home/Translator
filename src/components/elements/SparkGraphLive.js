@@ -9,52 +9,29 @@ import { bindActionCreators } from 'redux';
 import React from 'preact';
 import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3';
-function mapStateToProps(state) { return {   graphs: state.graphs }; }
-function mapDispatchToProps(dispatch) { return { actions: bindActionCreators(bindActions, dispatch) }; }
+import nv from 'nvd3';
 
-@connect(reduce, bindActions(actions))
 class SparkGraphLive extends Component {
+  constructor(props){
+    super(props);
+    this.data = [];
+    var now =+new Date();
+    for (var i = 0; i < 50; i++) {
+       this.data.push({x:now + i * 1000 * 60 * 60 * 24,y:(Math.random() * 100) + 1});
+    }
+  }
+ 	componentDidMount() { }
+ 	componentWillUnmount() { }
+  componentWillReceiveProps(nextProps) { }
+  defaultChartConfig(containerId, data) {
 
-  //tick() { this.props.graphAddPoint(this.id); }
- 	componentDidMount() {
-		//this.timer = setInterval(this.tick, 1000);
-  }
- 	componentWillUnmount() {
-    //clearInterval(this.timer);
-  }
-  componentWillReceiveProps(nextProps) {
-    //var grs = nextProps.graphs[this.id];
-    //if (grs.datum.length != 0) { this.data = grs.datum; }
   }
 	render ({ todo }) {
-    const {width, height, data, interpolation} = this.props;
-
-    const el = d3.select(ReactFauxDOM.createElement('svg'))
-      .attr(this.props)
-      .attr('data', null)
-
-    const x = d3.scale.linear()
-      .range([0, width])
-      .domain(d3.extent(data, (d, i) => i))
-
-    const y = d3.scale.linear()
-      .range([height, 0])
-      .domain(d3.extent(data, (d) => d))
-
-    const line = d3.svg.line()
-      .x((d, i) => x(i))
-      .y((d) => y(d))
-      .interpolate(interpolation)
-
-    el.append('path')
-      .datum(data)
-      .attr({
-        key: 'sparkline',
-        className: 'sparkline',
-        d: line
-      })
-
-    return el.node().toReact()
+    return (
+      <div>
+      <NVD3Chart margin={{top: 10, right: 10, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} showLastValue={false}/>
+      </div>
+    );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SparkGraphLive);
+export default SparkGraphLive;

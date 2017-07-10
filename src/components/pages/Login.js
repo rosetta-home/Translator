@@ -2,14 +2,31 @@ import { h, Component } from 'preact';
 import { Card, Button, TextField } from 'preact-mdl';
 
 export default class Login extends Component {
+	constructor() {
+			super();
+			this.formdata = {};
+			this.login = this.login.bind(this);
+    }
+	login() {
+		console.log(this.formdata);
+		this.formdata = {};
+	}
+	onChange(event) {
+		this.formdata[event.target.name] = event.target.value;
+  }
 	render() {
 		return (
 			<div>
-      <TextField placeholder="email"></TextField>
-      <TextField placeholder="password"></TextField>
-      <div>
-        <Button>Login</Button>
-      </div>
+			<Card shadow={4} style="width:100%;padding:20px;">
+								<Card.Title>
+								</Card.Title>
+								<TextField name="email" placeholder="email" onChange={this.onChange.bind(this)}></TextField>
+					      <TextField name="password" placeholder="password" onChange={this.onChange.bind(this)}></TextField>
+								<Card.Actions style="text-align:right">
+								<Button onClick={this.login}>Login</Button>
+								</Card.Actions>
+						</Card>
+
 			</div>
 		);
 	}

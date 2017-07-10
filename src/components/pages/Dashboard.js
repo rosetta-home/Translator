@@ -8,63 +8,53 @@ import '../../style/Card.css';
 import Collapsible from 'react-collapsible';
 import RHLiveGraph from '../elements/LiveGraph'
 
-/*
-<SparkGraphLive/>
-<Collapsible style="color:#ef6c00;" trigger="Live">
-<RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature,weather_station.outdoor_temperature"/>
-</Collapsible>*/
-/*<Card shadow={4} style="width:100%">
-          <Card.Title>
-              <Card.TitleText><small>Outside Temperature</small></Card.TitleText>
-          </Card.Title>
-          <RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature,weather_station.outdoor_temperature"/>
-          <Card.Actions style="text-align:right">
-          </Card.Actions>
-
-
-                          <Grid className="demo-grid-1">
-                                  <Cell col={4}>4</Cell>
-                                  <Cell col={4}>4</Cell>
-                                  <Cell col={4}>4</Cell>
-                              </Grid>
-      </Card>*/
-
-
 export default class Dashboard extends Component {
 	render() {
-		const data = [85, 66, 71, 10, 5, 16, 71, 1, 16, 24, 54, 85, 37, 36, 43, 67, 63, 23, 96, 53, 25];
+		const data = [85, 66, 71, 10, 5, 16, 71, 1, 16, 24, 54, 85, 37, 36, 43, 67, 63, 23, 96, 53, 25,85, 66, 71, 10, 5, 16, 71, 1, 16, 24, 54, 85, 37, 36, 43, 67, 63, 23, 96, 53, 25];
 		return (
 			<div>
       <Card shadow={4} style="width:100%">
                 <Card.Title>
                     <Card.TitleText><small>Outdoor Temperature</small></Card.TitleText>
                 </Card.Title>
-
-
 								<div className="row">
 								<div className="col-4">
 								 <div className="center-div">
-								 <label className="readingLabel">75 °C</label>
+								 <label className="readingLabel">75°C</label>
 								 </div>
 								</div>
-								<div id="sparkarea" className="col-8">
-								<SparkGraphLive
-    className='visitors'
-    width={200}
-    height={200}
-    data={data}
-  />
+								<div className="col-8">
+								<SparkGraphLive/>
 								</div>
 								</div>
-
-
-
                 <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
                   <RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>
                 </Collapsible>
                 <Card.Actions style="text-align:right">
                 </Card.Actions>
             </Card>
+
+						<br></br>
+						<Card shadow={4} style="width:100%">
+			                <Card.Title>
+			                    <Card.TitleText><small>Indoor Temperature</small></Card.TitleText>
+			                </Card.Title>
+											<div className="row">
+											<div className="col-4">
+											 <div className="center-div">
+											 <label className="readingLabel">65°C</label>
+											 </div>
+											</div>
+											<div className="col-8">
+											<SparkGraphLive/>
+											</div>
+											</div>
+			                <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+			                  <RHLiveGraph nodeID="0000000081474d35" type="weather_station.indoor_temperature"/>
+			                </Collapsible>
+			                <Card.Actions style="text-align:right">
+			                </Card.Actions>
+			            </Card>
 
 			</div>
 		);
