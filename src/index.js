@@ -2,8 +2,8 @@ import { h, render } from 'preact';
 import { Provider } from 'preact-redux';
 import store from './store';
 import App from './components/App';
-import "material-design-lite";
-import "material-design-lite/dist/material.indigo-pink.min.css";
+//import "material-design-lite";
+//import "material-design-lite/dist/material.indigo-pink.min.css";
 
 import createBrowserHistory from 'history/createBrowserHistory';
 import "bootstrap/dist/css/bootstrap.css";

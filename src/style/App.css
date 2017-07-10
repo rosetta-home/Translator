@@ -16,3 +16,92 @@ main {
 		  font-size: 8px;
           fill: #0277bd;
 }
+/*
+* {box-sizing: border-box;}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+.one {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+.two {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+}
+.three {
+  grid-row: 2 / 5;
+  grid-column: 1;
+}
+.four {
+  grid-column: 3;
+  grid-row: 3;
+}
+.five {
+  grid-column: 2;
+  grid-row: 4;
+}
+.six {
+  grid-column: 3;
+  grid-row: 4;
+}*/
+* {
+    box-sizing: border-box;
+}
+.header {
+    border: 1px solid red;
+    padding: 15px;
+}
+.center-div
+{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+.visitors .sparkline {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.readingLabel {
+  margin-bottom: 0;
+    font-size: 2em;
+    padding: 10px;
+    border-radius: 10px;
+    color: #0277bd;
+    top: 17%;
+    position: relative;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+    vertical-align: middle;
+    text-align:center
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}

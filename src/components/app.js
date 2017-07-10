@@ -3,7 +3,7 @@ import { connect } from 'preact-redux';
 import { bindActions } from '../util';
 import reduce from '../reducers';
 import * as actions from '../actions';
-import { Button , Layout, Navigation} from 'preact-mdl';
+import { Button , Layout, Navigation,Grid,Cell } from 'preact-mdl';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
 import satori_sdk from "satori-sdk-js";

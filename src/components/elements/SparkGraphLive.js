@@ -7,26 +7,14 @@ import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
 import { bindActionCreators } from 'redux';
 import React from 'preact';
-import { Sparklines,SparklinesLine } from 'react-sparklines';
-
+import ReactFauxDOM from 'react-faux-dom'
+import d3 from 'd3';
 function mapStateToProps(state) { return {   graphs: state.graphs }; }
 function mapDispatchToProps(dispatch) { return { actions: bindActionCreators(bindActions, dispatch) }; }
 
 @connect(reduce, bindActions(actions))
 class SparkGraphLive extends Component {
-	constructor(props){
-		super(props);
-    var nums = [];
-    for (var i = 0; i < 25; i++) {
-      nums.push((Math.random() * 100) + 1);
-    }
-		this.data = nums;
-    //this.tick = this.tick.bind(this);
-    this.id = Math.random().toString(36).substring(2);
-    //this.types = this.props.type.split(',');
-    //this.nodeID = this.props.nodeID;
-    //this.props.createGraph(this.id,this.types,this.nodeID);
-	}
+
   //tick() { this.props.graphAddPoint(this.id); }
  	componentDidMount() {
 		//this.timer = setInterval(this.tick, 1000);
@@ -38,14 +26,35 @@ class SparkGraphLive extends Component {
     //var grs = nextProps.graphs[this.id];
     //if (grs.datum.length != 0) { this.data = grs.datum; }
   }
-  render({ todo }) {
-    return (
-      <div style="padding:10px;">
-      <Sparklines data={this.data}>
-      <SparklinesLine style={{ fill: "none" }} color="#0277bd"/>
-</Sparklines>
-			</div>
-    );
+	render ({ todo }) {
+    const {width, height, data, interpolation} = this.props;
+
+    const el = d3.select(ReactFauxDOM.createElement('svg'))
+      .attr(this.props)
+      .attr('data', null)
+
+    const x = d3.scale.linear()
+      .range([0, width])
+      .domain(d3.extent(data, (d, i) => i))
+
+    const y = d3.scale.linear()
+      .range([height, 0])
+      .domain(d3.extent(data, (d) => d))
+
+    const line = d3.svg.line()
+      .x((d, i) => x(i))
+      .y((d) => y(d))
+      .interpolate(interpolation)
+
+    el.append('path')
+      .datum(data)
+      .attr({
+        key: 'sparkline',
+        className: 'sparkline',
+        d: line
+      })
+
+    return el.node().toReact()
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SparkGraphLive);
