@@ -31,14 +31,15 @@ export default {
       }
     });
   },
-  getData() {
-    console.log(this.getToken());
-    request.post('http://35.167.180.46:8080/data/ieq.co2/10m/now').set('Authorization', 'Bearer ' + this.getToken()).set('Content-Type','application/json').end(function(err, res) {
-      if (!err) {
-        console.log(res);
-      } else {
-        console.log('Error!');
-      }
+  async getData() {
+    return new Promise((resolve, reject) => {
+      request.post('http://35.167.180.46:8080/data/ieq.co2/60m/now')
+      .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
+      .send({})
+      .withCredentials()
+      .end(function(err, res) {
+        err ? reject(err) : resolve(JSON.parse(res.text));
+      });
     });
   }
 }

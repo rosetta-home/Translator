@@ -81,6 +81,7 @@
     "satori-sdk-js": "^1.0.1",
     "semantic-ui-react": "^0.70.0",
     "superagent": "^3.5.2",
+    "superagent-cors-proxy": "0.0.1",
     "tls": "0.0.1"
   },
   "main": "webpack.config.babel.js"

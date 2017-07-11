@@ -10,26 +10,34 @@ import React from 'preact';
 import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3';
 import nv from 'nvd3';
+import Authentication from '../../service/authservice';
 
 class SparkGraphLive extends Component {
   constructor(props){
     super(props);
     this.data = [];
-    var now =+new Date();
+    /*var now =+new Date();
     for (var i = 0; i < 50; i++) {
        this.data.push({x:now + i * 1000 * 60 * 60 * 24,y:(Math.random() * 100) + 1});
-    }
+    }*/
+    Authentication.getData().then(v => {
+  		var series = v['results'][0].series;
+      var results = series[0].values;
+      var now =+new Date();
+      for (var i = 0; i < results.length; i++) {
+         this.data.push({x:new Date(results[i][0]),y:results[i][1]});
+      }
+      this.setState();
+		});
   }
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
-  defaultChartConfig(containerId, data) {
 
-  }
-	render ({ todo }) {
+	render () {
     return (
       <div>
-      <NVD3Chart margin={{top: 10, right: 10, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} showLastValue={false}/>
+      <NVD3Chart margin={{top: 10, right: 10, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
       </div>
     );
   }

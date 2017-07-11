@@ -21,6 +21,9 @@ import store from '../store';
 
 import d3 from 'd3';
 import nv from 'nvd3';
+
+require("babel-core/register");
+require("babel-polyfill");
 //@connect(reduce, bindActions(actions))
 export default class App extends Component {
 	start = () => {

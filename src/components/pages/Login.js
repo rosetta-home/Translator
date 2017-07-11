@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Card, Button, TextField } from 'preact-mdl';
+import Authentication from '../../service/authservice';
 
 export default class Login extends Component {
 	constructor() {
@@ -9,6 +10,7 @@ export default class Login extends Component {
     }
 	login() {
 		console.log(this.formdata);
+		Authentication.login(this.formdata);
 		this.formdata = {};
 	}
 	onChange(event) {
@@ -23,7 +25,7 @@ export default class Login extends Component {
 								<TextField name="email" placeholder="email" onChange={this.onChange.bind(this)}></TextField>
 					      <TextField name="password" placeholder="password" onChange={this.onChange.bind(this)}></TextField>
 								<Card.Actions style="text-align:right">
-								<Button onClick={this.login}>Login</Button>
+								<button onClick={this.login}>Login</button>
 								</Card.Actions>
 						</Card>
 

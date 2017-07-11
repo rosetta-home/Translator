@@ -89,6 +89,11 @@ module.exports = {
 		contentBase: './src',
 		historyApiFallback: true,
 		disableHostCheck: true,
+		headers: {
+    "Access-Control-Allow-Origin": "http://35.167.180.46:8080",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+	  },
 		proxy: [
 			// OPTIONAL: proxy configuration:
 			// {
