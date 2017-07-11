@@ -3,6 +3,11 @@ import 'rxjs/add/operator/map';
 import request from 'superagent';
 import Configs from '../configs';
 
+/*.set('Access-Control-Allow-Origin','*')
+.set('Access-Control-Allow-Credentials',true)
+.set('Access-Control-Request-Headers','Authorization')
+*/
+
 export default {
   getToken() { return localStorage.getItem('id_token') || ''; },
   setCachedToken(token) { localStorage.setItem('id_token', token); },
@@ -15,8 +20,10 @@ export default {
       if (!err) {
         console.log(res.body.success);
         self.setCachedToken(res.body.success);
+        alert("You Good!");
       } else {
         console.log('Error!');
+        alert(err);
       }
     });
   },
@@ -36,7 +43,6 @@ export default {
       request.post('http://35.167.180.46:8080/data/ieq.co2/60m/now')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
-      .withCredentials()
       .end(function(err, res) {
         err ? reject(err) : resolve(JSON.parse(res.text));
       });
