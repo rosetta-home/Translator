@@ -1,11 +1,21 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
+import { connect } from 'preact-redux';
+import { bindActions } from '../../util';
+import reduce from '../../reducers';
+import * as actions from '../../actions';
+import { bindActionCreators } from 'redux';
+import { Broadcast, Subscriber } from 'react-broadcast';
 
+//@connect(reduce, bindActions(actions))
 export default class SideMenu extends Component {
   constructor(props) {
 	    super(props);
 	    this.closeMenu = this.closeMenu.bind(this);
   }
+  componentDidMount() { }
+ 	componentWillUnmount() { }
+  componentWillReceiveProps(nextProps) { }
   closeMenu() {
     /* Temp fix, css broken for dismissing menu sidebar in preact-mdl */
     var menuDiv = document.getElementById("menu");
@@ -13,6 +23,9 @@ export default class SideMenu extends Component {
     menuDiv.setAttribute("aria-hidden", "true");
     var list = document.getElementsByClassName("mdl-layout__obfuscator");
     if (list.length > 0) { list[0].classList.remove("is-visible"); }
+  }
+  shouldComponentUpdate() {
+    return false;
   }
 	render() {
 		return (

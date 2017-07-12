@@ -3,8 +3,8 @@ import { Card, Button, TextField } from 'preact-mdl';
 import Authentication from '../../service/authservice';
 
 export default class Login extends Component {
-	constructor() {
-			super();
+	constructor(props) {
+			super(props);
 			this.formdata = {};
 			this.login = this.login.bind(this);
     }

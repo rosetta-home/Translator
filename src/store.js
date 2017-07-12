@@ -125,7 +125,8 @@ let ACTIONS = {
 
 const INITIAL = {
 	graphs: {},
-	typetracker: {}
+	typetracker: {},
+	isLoggedIn: false
 };
 
 export default createStore( (state, action) => (

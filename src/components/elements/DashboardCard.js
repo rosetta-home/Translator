@@ -24,7 +24,7 @@ class DashboardCard extends Component {
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
-
+  /* <RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/> */
 	render () {
     return (
       <div>
@@ -42,8 +42,10 @@ class DashboardCard extends Component {
                 <SparkGraphLive/>
                 </div>
                 </div>
+
+
                 <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-                <RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>
+
                 </Collapsible>
                 <Card.Actions style="text-align:right">
                 </Card.Actions>

@@ -3,73 +3,45 @@ import { connect } from 'preact-redux';
 import { bindActions } from '../util';
 import reduce from '../reducers';
 import * as actions from '../actions';
+import { Provider } from 'preact-redux';
+import store from '../store';
 import { Button , Layout, Navigation,Grid,Cell } from 'preact-mdl';
-import ReactDOM from 'preact-compat';
-import NVD3Chart from 'react-nvd3';
-import satori_sdk from "satori-sdk-js";
-import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
-
 import Authentication from '../service/authservice';
 import Login from "../auth/login";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
 import '../style/App.css';
-
-import { Provider } from 'preact-redux';
-import store from '../store';
-
-import d3 from 'd3';
-import nv from 'nvd3';
-
 require("babel-core/register");
 require("babel-polyfill");
-//@connect(reduce, bindActions(actions))
+
 export default class App extends Component {
-	start = () => {
-
-	};
-	componentDidMount() {
-
-	}
+	start = () => { };
+	componentDidMount() { }
 	constructor(props) {
 	   super(props);
-	   this.state = {
-       redirectTo: null
-     }
-	   this.state = {
-		   collapsed: true
-	   };
-		 /*const nodeID = "0000000081474d35";
- 		const endpoint = "wss://open-data.api.satori.com";
- 		const appKey = "da4F19eb331E6465a6C206DE6c9cE2dc";
- 		const channel = "rosetta-home";
- 		var rtm = new satori_sdk(endpoint, appKey);
- 		rtm.on("enter-connected", function() { console.log("Connected to rosetta-home via satori.js!"); });
- 		var subscription = rtm.subscribe("where", satori_sdk.SubscriptionMode.SIMPLE, {
- 			filter: 'SELECT * FROM `rosetta-home` WHERE tags.node_id=\"'+ nodeID +'\"',
- 		});
- 		var self = this;
- 		subscription.on('rtm/subscription/data', function (pdu) {
- 			pdu.body.messages.forEach(function (msg) {
- 				console.log(self.props);
- 				self.props.addData(msg);
- 			});
- 		});
- 		rtm.start();*/
+		 this.start = this.start.bind(this);
   }
 	render() {
 		return (
 			<div className="App">
+			{/* Root of the RH application, here is the basic layout of the web app with Google Material. */}
 			  <Layout fixed-header fixed-drawer>
+				  {/* Header component with title */}
 				  <Header/>
-          <SideMenu/>
+					{/* SideMenu with the options and router links */}
+					<SideMenu/>
+					{/* Provider for the redux storage */}
 					<Provider store={store}>
+					{/* Layout content area for the preact component */}
           <Layout.Content>
 					  {this.props.children}
 					</Layout.Content>
+					{/* Layout content area end tag */}
 					</Provider>
+					{/* Provider for the redux storage end tag */}
 					</Layout>
+					{/* Footer for the whole applicaiton */}
         <Footer/>
       </div>
 		);
