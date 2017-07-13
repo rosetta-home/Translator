@@ -20,6 +20,7 @@ export default class App extends Component {
 	componentDidMount() { }
 	constructor(props) {
 	   super(props);
+		 /* Binds startt function to the scope to help with debug processes outside the redux container */
 		 this.start = this.start.bind(this);
   }
 	render() {

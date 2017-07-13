@@ -41,7 +41,7 @@ export default {
   async getData(datapoint) {
     //ieq.co2
     return new Promise((resolve, reject) => {
-      request.post('http://35.167.180.46:8080/data/sum/' + datapoint + '/60m/now')
+      request.get('http://35.167.180.46:8080/data/mean/' + datapoint + '/60m/now')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {

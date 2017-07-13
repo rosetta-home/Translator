@@ -20,10 +20,11 @@ class SparkGraphLive extends Component {
     for (var i = 0; i < 50; i++) {
        this.data.push({x:now + i * 1000 * 60 * 60 * 24,y:(Math.random() * 100) + 1});
     }*/
-    Authentication.getData('ieq.co2').then(v => {
+    Authentication.getData('weather_station.outdoor_temperature').then(v => {
       console.log(v);
   		var series = v['results'][0].series;
       var results = series[0].values;
+      console.log(results);
       var now =+new Date();
       for (var i = 0; i < results.length; i++) {
          this.data.push({x:new Date(results[i][0]),y:results[i][1]});

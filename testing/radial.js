@@ -30,7 +30,6 @@ function radialChart() {
   }
 
   function initChart(container) {
-    console.log(filterKey);
     var g = d3.select(container)
       .append('svg')
       .style('width', 2 * barHeight + margin.left + margin.right + 'px')
