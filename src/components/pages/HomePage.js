@@ -1,12 +1,21 @@
 import { h, Component } from 'preact';
 import { Card, Button } from 'preact-mdl';
 import DemoChart from '../elements/DemoChart';
+import DRes from '../../service/dres';
 
 export default class HomePage extends Component {
+	constructor() {
+			super();
+			this.data = this.data.bind(this);
+    }
+	data() {
+		console.log(DRes.minutes(60));
+		//route('/');
+	}
 	render() {
 		return (
 			<div>
-			<DemoChart/>
+					<button onClick={this.data}>Data</button>
 			</div>
 		);
 	}

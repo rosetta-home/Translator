@@ -16,10 +16,13 @@ import SparkGraphLive from '../elements/SparkGraphLive';
 import Authentication from '../../service/authservice';
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 
+import DRes from '../../service/dres';
+
+
 class DashboardCard extends Component {
   constructor(props){
     super(props);
-
+    console.log(DRes.minutes(10));
   }
  	componentDidMount() { }
  	componentWillUnmount() { }

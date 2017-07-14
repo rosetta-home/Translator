@@ -2,11 +2,7 @@ import { Observable }     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import request from 'superagent';
 import Configs from '../configs';
-
-/*.set('Access-Control-Allow-Origin','*')
-.set('Access-Control-Allow-Credentials',true)
-.set('Access-Control-Request-Headers','Authorization')
-*/
+import DRes from './dres';
 
 export default {
   getToken() { return localStorage.getItem('id_token') || ''; },
@@ -40,6 +36,8 @@ export default {
   },
   async getData(datapoint) {
     //ieq.co2
+
+    console.log(DRes.minutes(60));
     return new Promise((resolve, reject) => {
       request.get('http://35.167.180.46:8080/data/mean/' + datapoint + '/60m/now')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})

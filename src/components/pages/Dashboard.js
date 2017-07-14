@@ -10,6 +10,7 @@ import RHLiveGraph from '../elements/LiveGraph';
 import DashboardCard from '../elements/DashboardCard';
 import Authentication from '../../service/authservice';
 import { route } from 'preact-router';
+import DRes from '../../service/dres';
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -17,8 +18,8 @@ export default class Dashboard extends Component {
 			this.data = this.data.bind(this);
     }
 	data() {
-		console.log("reroute");
-		route('/');
+		console.log(DRes.minutes(60));
+		//route('/');
 	}
 	render() {
 		return (
