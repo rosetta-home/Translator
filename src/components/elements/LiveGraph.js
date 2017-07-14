@@ -7,10 +7,11 @@ import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
 import { bindActionCreators } from 'redux';
 import satori_sdk from "satori-sdk-js";
-
+/* mapping for the props object adds the redux data */
 function mapStateToProps(state) { return {   graphs: state.graphs }; }
 function mapDispatchToProps(dispatch) { return { actions: bindActionCreators(bindActions, dispatch) }; }
 
+/* Connects the component to the redux */
 @connect(reduce, bindActions(actions))
 class RHLiveGraph extends Component {
 	constructor(props){

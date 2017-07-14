@@ -20,14 +20,10 @@ import DRes from '../../service/dres';
 
 
 class DashboardCard extends Component {
-  constructor(props){
-    super(props);
-    console.log(DRes.minutes(10));
-  }
+  constructor(props){ super(props); }
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
-  /* <RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/> */
 	render () {
     return (
       <div>
