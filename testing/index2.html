@@ -21,7 +21,38 @@ svg {
 .line:nth-of-type(2) {
   stroke: blue;
 }
+.axis text {
+  font: 11px sans-serif;
+}
 
+
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line,
+.grid path {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.grid .minor.tick line {
+  stroke-opacity: .5;
+}
+
+.brush .extent {
+  stroke: #1d9fcb;
+  fill: #1d9fcb;
+  fill-opacity: .225;
+  shape-rendering: crispEdges;
+}
 .axis path,
 .axis line {
   fill: none;
@@ -86,6 +117,8 @@ a {
 </style>
 </head>
 <body>
+  <!--<span class="start"></span> - <span class="end"></span>-->
+
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
@@ -151,12 +184,10 @@ function create(dx) {
       .attr("height", height);
   var focus = svg.append("g")
       .attr("class", "focus")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + margin.left + "," + (margin.top + 80) + ")");
   var context = svg.append("g")
       .attr("class", "context")
-      .attr("transform", "translate(" + margin2.left + "," + (margin2.top + 65) + ")");
-
-
+      .attr("transform", "translate(" + margin2.left + "," + (margin2.top + 75) + ")");
 
 
 
@@ -289,10 +320,128 @@ function create(dx) {
     focus.selectAll("path.line").attr("d", focusLine);
     focus.select(".x.axis").call(xAxis);
   }
+
+
+
+
+
+  var margindate = {top: 10, right: 10, bottom: 20, left: 10};
+      widthdate = 920;
+      heightdate = 62;
+
+  //var $startdate = d3.select("span.start"),
+  //	$enddate = d3.select("span.end");
+
+    var today = new Date();
+    today.setDate(today.getDate()-10);
+    var lasttwomonths = new Date();
+    var lastday = new Date();
+    lasttwomonths.setDate(today.getDate()-60);
+    lastday.setDate(lastday.getDate()-2);
+
+  var start = lasttwomonths,
+  	startExtent = today,
+  	endExtend = lastday,
+  	end = lastday;
+
+  var x = d3.time.scale()
+      .domain([start, end])
+      .range([0, widthdate]);
+
+  var brushdate = d3.svg.brush()
+      .x(x)
+      .extent([startExtent, endExtend])
+      .on("brush", brushedDate);
+
+  var svgdate = svg.append("svg")
+      .attr("width", widthdate + margindate.left + margindate.right)
+      .attr("height", heightdate + margindate.top + margindate.bottom)
+    .append("g")
+      .attr("transform", "translate(" + 40 + "," + 0 + ")");
+
+  svgdate.append("rect")
+      .attr("class", "grid-background")
+      .attr("width", widthdate)
+      .attr("height", heightdate);
+
+  svgdate.append("g")
+      .attr("class", "x grid")
+      .attr("transform", "translate(0," + heightdate + ")")
+      .call(d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .ticks(d3.time.hours, 6)
+          .tickSize(-heightdate)
+          .tickFormat(""))
+    .selectAll(".tick")
+      .classed("minor", function(d) { return d.getHours(); });
+
+  svgdate.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + heightdate + ")")
+      .call(d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(d3.time.days, 2)
+        .tickFormat(d3.time.format("%m/%d"))
+        .tickPadding(0))
+    .selectAll("text")
+      .attr("x", -14)
+      .style("text-anchor", null);
+
+  var gBrush = svgdate.append("g")
+      .attr("class", "brush")
+      .call(brushdate);
+
+  gBrush.selectAll("rect")
+      .attr("height", heightdate);
+
+  var bucket = d3.scale.quantize()
+  			.domain([start, end])
+  			.range(d3.time.hours(start, end, 6));
+
+  function brushedDate() {
+    var extent0 = brushdate.extent(),
+        extent1;
+    if (d3.event.mode === "move") {
+      var d0 = bucket(extent0[0]),
+      	d1 = bucket(extent0[1]);
+      extent1 = [d0, d1];
+    }
+    else {
+      extent1 = extent0.map(bucket);
+      if (extent1[0] >= extent1[1]) {
+        extent1[0] = bucket(extent0[0]);
+        extent1[1] = bucket(extent0[1]);
+      }
+    }
+
+    renderRange(extent1);
+
+    d3.select(this).call(brushdate.extent(extent1));
+  }
+
+  function renderRange(extent) {
+  	//$startdate.text(d3.time.format.iso(extent[0]));
+  	//$enddate.text(d3.time.format.iso(extent[1]));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
-var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBY2NvdW50OjU5NjRkNjljMGQwZTA0MDAwODVmOWMwNCIsImV4cCI6MTUwMjkxMDc4NywiaWF0IjoxNTAwMzE4Nzg3LCJpc3MiOiJCcm9vZCIsImp0aSI6IjM5ZTAzMzg2LWJmYWEtNDI3Yi1hZjE1LTBiZTU5ZGZjYWIwYiIsInBlbSI6e30sInN1YiI6IkFjY291bnQ6NTk2NGQ2OWMwZDBlMDQwMDA4NWY5YzA0IiwidHlwIjoiYWNjZXNzIn0.uIVS1aLaxTEgSZXx8z0MNXJ3KyYseub6W7nq3p4rCG9qnyc6bQLbbk8U-tea78hXiDl4FRUzFtnDzxJi5_yV3w";
+var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBY2NvdW50OjU5NmQxNDBmZDg1ODk1MDAwNmM2YTYwOCIsImV4cCI6MTUwMjkxMjc4MywiaWF0IjoxNTAwMzIwNzgzLCJpc3MiOiJCcm9vZCIsImp0aSI6IjliOTU2MjNhLTI4NTMtNDFmOS04OGFkLTU4YjU3YWM0YTY4NiIsInBlbSI6e30sInN1YiI6IkFjY291bnQ6NTk2ZDE0MGZkODU4OTUwMDA2YzZhNjA4IiwidHlwIjoiYWNjZXNzIn0.RxvgpgwUwXJgScamcEPFx34UcFYOgM1pfFx3IzaTDcEWFjzlzhOAnsrTWI3Bp9KoOWeZf7RlyPcudQce4GyuPw";
 
 var bearerXMLHttpRequest = (function (jwtoken) {
   function getXMLHttpRequest(method, url, async){
@@ -304,7 +453,7 @@ var bearerXMLHttpRequest = (function (jwtoken) {
 })(token);
 
 function load() {
-  var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/mean/ieq.co2/1d/now',true);
+  var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/mean/ieq.co2/2017-07-06T12:12:12Z/now',true);
   xmlHttpRequest.send();
   xmlHttpRequest.onreadystatechange = function() {
       if (xmlHttpRequest.readyState == XMLHttpRequest.DONE) {

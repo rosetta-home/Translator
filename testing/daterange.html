@@ -47,16 +47,12 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var margin = {top: 200, right: 40, bottom: 200, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var margindate = {top: 10, right: 10, bottom: 20, left: 10};
+    widthdate = 920;
+    heightdate = 62;
 
-    margin = {top: 10, right: 10, bottom: 20, left: 10};
-    width = 920;
-    height = 62;
-
-var $start = d3.select("span.start"),
-	$end = d3.select("span.end");
+var $startdate = d3.select("span.start"),
+	$enddate = d3.select("span.end");
 
   var today = new Date();
   var lasttwomonths = new Date();
@@ -71,39 +67,39 @@ var start = lasttwomonths,
 
 var x = d3.time.scale()
     .domain([start, end])
-    .range([0, width]);
+    .range([0, widthdate]);
 
-var brush = d3.svg.brush()
+var brushdate = d3.svg.brush()
     .x(x)
     .extent([startExtent, endExtend])
-    .on("brush", brushed);
+    .on("brush", brushedDate);
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+var svgdate = d3.select("body").append("svg")
+    .attr("width", widthdate + margindate.left + margindate.right)
+    .attr("height", heightdate + margindate.top + margindate.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margindate.left + "," + margindate.top + ")");
 
-svg.append("rect")
+svgdate.append("rect")
     .attr("class", "grid-background")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", widthdate)
+    .attr("height", heightdate);
 
-svg.append("g")
+svgdate.append("g")
     .attr("class", "x grid")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + heightdate + ")")
     .call(d3.svg.axis()
         .scale(x)
         .orient("bottom")
         .ticks(d3.time.hours, 6)
-        .tickSize(-height)
+        .tickSize(-heightdate)
         .tickFormat(""))
   .selectAll(".tick")
     .classed("minor", function(d) { return d.getHours(); });
 
-svg.append("g")
+svgdate.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + heightdate + ")")
     .call(d3.svg.axis()
       .scale(x)
       .orient("bottom")
@@ -114,19 +110,19 @@ svg.append("g")
     .attr("x", -14)
     .style("text-anchor", null);
 
-var gBrush = svg.append("g")
+var gBrush = svgdate.append("g")
     .attr("class", "brush")
-    .call(brush);
+    .call(brushdate);
 
 gBrush.selectAll("rect")
-    .attr("height", height);
+    .attr("height", heightdate);
 
 var bucket = d3.scale.quantize()
 			.domain([start, end])
 			.range(d3.time.hours(start, end, 6));
 
-function brushed() {
-  var extent0 = brush.extent(),
+function brushedDate() {
+  var extent0 = brushdate.extent(),
       extent1;
   if (d3.event.mode === "move") {
     var d0 = bucket(extent0[0]),
@@ -143,12 +139,12 @@ function brushed() {
 
   renderRange(extent1);
 
-  d3.select(this).call(brush.extent(extent1));
+  d3.select(this).call(brushdate.extent(extent1));
 }
 
 function renderRange(extent) {
-	$start.text(d3.time.format.iso(extent[0]));
-	$end.text(d3.time.format.iso(extent[1]));
+	$startdate.text(d3.time.format.iso(extent[0]));
+	$enddate.text(d3.time.format.iso(extent[1]));
 }
 
 </script>
