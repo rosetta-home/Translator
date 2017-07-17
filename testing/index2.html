@@ -31,10 +31,57 @@ svg {
 }
 
 .brush .extent {
-  stroke: #0277bd;
-  stroke-width: 2px;
+  stroke: black;
   fill-opacity: .125;
   shape-rendering: crispEdges;
+}
+.axis--grid .domain {
+  fill: #ddd;
+  stroke: none;
+}
+
+.axis--x .domain,
+.axis--grid .tick line {
+  stroke: #fff;
+}
+
+.axis--grid .tick--minor line {
+  stroke-opacity: .5;
+}
+
+p {
+  color: white;
+  margin: 50px;
+}
+
+a {
+  color: #4FDEF2;
+}
+
+.axis {
+  fill: gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.axis .halo {
+  stroke: gray;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.slider .handle path {
+  stroke: white;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.slider .handle text {
+  fill: white;
+  text-align: center;
+  font-size: 18px;
 }
 </style>
 </head>
@@ -45,12 +92,16 @@ svg {
 
 function create(dx) {
   var data = [];
+
+  // Configure the data
   for (i = 0; i < dx.length; i++) {
     var current = dx[i];
     data.push({ date:new Date(current[0]), value:current[1]  });
   }
+
   var margin = {top: 10, right: 10, bottom: 100, left: 40},
       margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+      margin3 = {top: 430, right: 10, bottom: 20, left: 40},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom,
       height2 = 500 - margin2.top - margin2.bottom;
@@ -81,9 +132,18 @@ function create(dx) {
 
 
 
+
+
+
+
+
+
+
+
+
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom);
+      .attr("height", height + margin.top + margin.bottom + 100);
   svg.append("defs").append("clipPath")
       .attr("id", "clip")
     .append("rect")
@@ -94,7 +154,14 @@ function create(dx) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   var context = svg.append("g")
       .attr("class", "context")
-      .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+      .attr("transform", "translate(" + margin2.left + "," + (margin2.top + 65) + ")");
+
+
+
+
+
+
+
 
   //Testing for more than one data set
   line_data.push(new Array());
@@ -189,10 +256,33 @@ function create(dx) {
         .selectAll("rect")
           .attr("y", -6)
           .attr("height", height2 + 7);
+
+          context.append("g")
+              .attr("class", "x brush")
+              .attr("y",-50)
+              .call(brush)
+            .selectAll("rect")
+              .attr("y", -6)
+              .attr("height", height2 + 7);
     } else {
       renderLines('context');
     };
   }
+
+  function brushdate() {
+  if (d3.event.sourceEvent.type === "brush") return;
+  var d0 = d3.event.selection.map(x.invert),
+      d1 = d0.map(d3.timeDay.round);
+
+  // If empty when rounded, use floor instead.
+  if (d1[0] >= d1[1]) {
+    d1[0] = d3.timeDay.floor(d0[0]);
+    d1[1] = d3.timeDay.offset(d1[0]);
+  }
+
+  d3.select(this).call(d3.event.target.move, d1.map(x));
+}
+
 
   function brushed() {
     x.domain(brush.empty() ? x2.domain() : brush.extent());
@@ -202,7 +292,7 @@ function create(dx) {
 }
 
 
-var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBY2NvdW50OjU5NjRkNjljMGQwZTA0MDAwODVmOWMwNCIsImV4cCI6MTUwMjU2Nzc4OSwiaWF0IjoxNDk5OTc1Nzg5LCJpc3MiOiJCcm9vZCIsImp0aSI6ImFiOTU4YTBkLTMxZDktNDRjYS04MWY1LTI5MzllOGExMGZmMyIsInBlbSI6e30sInN1YiI6IkFjY291bnQ6NTk2NGQ2OWMwZDBlMDQwMDA4NWY5YzA0IiwidHlwIjoiYWNjZXNzIn0.5YvcjaXlaisuu8fkV9qfDQ0ZU3468kfNfCgUQqVaoy0BD7bTXaIg_M4CqDHWAUvOCNPCrRjYbs4_5MYAhpQsgA";
+var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBY2NvdW50OjU5NjRkNjljMGQwZTA0MDAwODVmOWMwNCIsImV4cCI6MTUwMjkxMDc4NywiaWF0IjoxNTAwMzE4Nzg3LCJpc3MiOiJCcm9vZCIsImp0aSI6IjM5ZTAzMzg2LWJmYWEtNDI3Yi1hZjE1LTBiZTU5ZGZjYWIwYiIsInBlbSI6e30sInN1YiI6IkFjY291bnQ6NTk2NGQ2OWMwZDBlMDQwMDA4NWY5YzA0IiwidHlwIjoiYWNjZXNzIn0.uIVS1aLaxTEgSZXx8z0MNXJ3KyYseub6W7nq3p4rCG9qnyc6bQLbbk8U-tea78hXiDl4FRUzFtnDzxJi5_yV3w";
 
 var bearerXMLHttpRequest = (function (jwtoken) {
   function getXMLHttpRequest(method, url, async){

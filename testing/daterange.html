@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.axis text {
+  font: 11px sans-serif;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line,
+.grid path {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.grid .minor.tick line {
+  stroke-opacity: .5;
+}
+
+.brush .extent {
+  stroke: #1d9fcb;
+  fill: #1d9fcb;
+  fill-opacity: .225;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<p>
+	<span class="start"></span> to <span class="end"></span>
+</p>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 200, right: 40, bottom: 200, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    margin = {top: 10, right: 10, bottom: 20, left: 10};
+    width = 920;
+    height = 62;
+
+var $start = d3.select("span.start"),
+	$end = d3.select("span.end");
+
+  var today = new Date();
+  var lasttwomonths = new Date();
+  var lastday = new Date();
+  lasttwomonths.setDate(today.getDate()-60);
+  lastday.setDate(lastday.getDate()-2);
+
+var start = lasttwomonths,
+	startExtent = lastday,
+	endExtend = today,
+	end = today;
+
+var x = d3.time.scale()
+    .domain([start, end])
+    .range([0, width]);
+
+var brush = d3.svg.brush()
+    .x(x)
+    .extent([startExtent, endExtend])
+    .on("brush", brushed);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("rect")
+    .attr("class", "grid-background")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.append("g")
+    .attr("class", "x grid")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(d3.time.hours, 6)
+        .tickSize(-height)
+        .tickFormat(""))
+  .selectAll(".tick")
+    .classed("minor", function(d) { return d.getHours(); });
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .ticks(d3.time.days, 2)
+      .tickFormat(d3.time.format("%m/%d"))
+      .tickPadding(0))
+  .selectAll("text")
+    .attr("x", -14)
+    .style("text-anchor", null);
+
+var gBrush = svg.append("g")
+    .attr("class", "brush")
+    .call(brush);
+
+gBrush.selectAll("rect")
+    .attr("height", height);
+
+var bucket = d3.scale.quantize()
+			.domain([start, end])
+			.range(d3.time.hours(start, end, 6));
+
+function brushed() {
+  var extent0 = brush.extent(),
+      extent1;
+  if (d3.event.mode === "move") {
+    var d0 = bucket(extent0[0]),
+    	d1 = bucket(extent0[1]);
+    extent1 = [d0, d1];
+  }
+  else {
+    extent1 = extent0.map(bucket);
+    if (extent1[0] >= extent1[1]) {
+      extent1[0] = bucket(extent0[0]);
+      extent1[1] = bucket(extent0[1]);
+    }
+  }
+
+  renderRange(extent1);
+
+  d3.select(this).call(brush.extent(extent1));
+}
+
+function renderRange(extent) {
+	$start.text(d3.time.format.iso(extent[0]));
+	$end.text(d3.time.format.iso(extent[1]));
+}
+
+</script>
