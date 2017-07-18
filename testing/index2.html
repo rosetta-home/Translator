@@ -2,25 +2,75 @@
 <head>
 <meta charset="utf-8">
 <title>Test2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
 body {
   font: 10px sans-serif;
 }
+
 svg {
   font: 10px sans-serif;
   background-color: lightgray;
   padding: 20px;
 }
+
+#chart {
+ font-family: "Helvetica Neue", Helvetica, sans-serif;
+ font-size: 14px;
+}
+#chart path {
+ fill: none;
+}
+/* layers */
+#chart .layer-0 path {
+ fill: steelblue;
+}
+#chart .layer-1 path {
+ fill: white !important;
+ opacity: 0.3;
+ stroke-width: 2px;
+ stroke: #999;
+}
+/* Outer circle, tick-circles and spokes */
+#chart circle.outer {
+ stroke: #aaa;
+ stroke-dasharray: 4, 4;
+}
+#chart .tick-circles circle {
+ stroke: #ddd;
+ stroke-dasharray: 2, 2;
+}
+#chart .spokes line {
+ stroke: #666;
+ stroke-width: 0.2;
+}
+/* Axis */
+#chart .axis text {
+ font-size: 11px;
+}
+#chart .axis path {
+ stroke: #999;
+ shape-rendering: crispEdges;
+}
+#chart .axis line {
+ stroke: #999;
+ shape-rendering: crispEdges;
+}
+/* Labels */
+#chart .labels text {
+ fill: #333;
+ font-size: 10px;
+ font-weight: 500;
+}
+
 .line {
   fill: none;
   stroke-width: 2px;
   clip-path: url(#clip);
   stroke: #ef6c00;
 }
-.line:nth-of-type(2) {
-  stroke: blue;
-}
+
 .axis text {
   font: 11px sans-serif;
 }
@@ -114,18 +164,108 @@ a {
   text-align: center;
   font-size: 18px;
 }
+
+.area {
+  fill: lightgray;
+  clip-path: url(#clip);
+}
+.line {
+  fill: none;
+  stroke-width: 2px;
+  clip-path: url(#clip);
+  stroke: #ef6c00;
+}
+
+
+.brush .extent {
+  stroke: #1d9fcb;
+  fill: #1d9fcb;
+  fill-opacity: .225;
+  shape-rendering: crispEdges;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke-width: 2px;
+  stroke: #0277bd;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #0277bd;
+  stroke-width: 2px;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+.axis--grid .domain {
+  fill: #ddd;
+  stroke: none;
+}
+
+rect.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
 </style>
 </head>
 <body>
   <!--<span class="start"></span> - <span class="end"></span>-->
 
 <script src="http://d3js.org/d3.v3.js"></script>
+<!--<script src="radial.js"></script>-->
+<div id="chart"></div>
 <script>
 
+function radChart() {
+  var dataa = {};
+
+	var selectedValue = Math.floor((Math.random() * 350) + 1);
+	for (i = 0; i < 360; i++) {
+		if ((i >= selectedValue - 10) && (i <= selectedValue + 10)) {
+			dataa[i] = 10;
+		} else {
+			dataa[i] = 0;
+		}
+		//data[i] = Math.floor((Math.random() * 15) + 1);
+	}
+
+
+
+
+	var chart = radialChart()
+		.barHeight(250)
+		.reverseLayerOrder(true)
+		.capitalizeLabels(true)
+		.barColors(['#ef6c00'])
+		.domain([0,20])
+		.filterKey(30)
+		.tickValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+		.tickCircleValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);
+	d3.select('#chart')
+		.datum([{
+	  "data": dataa
+	  }])
+		.call(chart);
+}
 
 function create(dx) {
   var data = [];
-
+  //radChart();
   // Configure the data
   for (i = 0; i < dx.length; i++) {
     var current = dx[i];
@@ -149,9 +289,26 @@ function create(dx) {
   var xAxis = d3.svg.axis().scale(x).orient("bottom"),
       xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
       yAxis = d3.svg.axis().scale(y).orient("left");
-  var brush = d3.svg.brush()
-      .x(x2)
-      .on("brush", brushed);
+
+
+    var brush = d3.svg.brush()
+        .x(x2)
+        .on("brush", brushed);
+
+    var area = d3.svg.area()
+        .interpolate("monotone")
+        .x(function(d) { return x(d.date); })
+        .y0(height)
+        .y1(function(d) { return y(d.value); });
+
+    var area2 = d3.svg.area()
+        .interpolate("monotone")
+        .x(function(d) { return x2(d.date); })
+        .y0(height2)
+        .y1(function(d) { return y2(d.value); });
+
+
+
   var focusLine = d3.svg.line()
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.value); })
@@ -160,8 +317,6 @@ function create(dx) {
       .x(function(d) { return x2(d.date); })
       .y(function(d) { return y2(d.value); })
       .defined(function(d) { return d.value; });
-
-
 
 
 
@@ -190,7 +345,46 @@ function create(dx) {
       .attr("transform", "translate(" + margin2.left + "," + (margin2.top + 75) + ")");
 
 
+    /*  focus.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area);*/
 
+        focus.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        focus.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+        context.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area2);
+
+        context.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height2 + ")")
+            .call(xAxis2);
+
+        context.append("g")
+            .attr("class", "x brush")
+            .call(brush)
+          .selectAll("rect")
+            .attr("y", -6)
+            .attr("height", height2 + 7);
+
+            var zoom = d3.behavior.zoom()
+                .on("zoom", draw);
+            // Add rect cover the zoomed graph and attach zoom event.
+            var rect = svg.append("svg:rect")
+                .attr("class", "pane")
+                .attr("width", width)
+                .attr("height", (height + 100))
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                .call(zoom);
 
 
 
@@ -205,8 +399,15 @@ function create(dx) {
   x2.domain(x.domain());
   y2.domain(y.domain());
 
+
+ zoom.x(x);
+
   chart_data.push(line_data[0]);
   drawChart();
+
+
+
+
 
   function drawChart() {
     svg = d3.selectAll('svg').data([chart_data]);
@@ -216,8 +417,11 @@ function create(dx) {
     renderBrush();
   }
 
+  function addDots() {
+
+  }
+
   function updateScales() {
-    // Get 0 and max of all prices for all the lines.
     y.domain([
       0,
       d3.max(chart_data, function(line) {
@@ -229,7 +433,6 @@ function create(dx) {
   }
 
   function renderAxes() {
-
     if (d3.select('.x.axis').empty()) {
       focus.append("g")
           .attr("class", "x axis");
@@ -254,7 +457,7 @@ function create(dx) {
   }
 
 
-  // chart can be either 'focus' or 'context'.
+
   function renderLines(chart) {
     if (chart == 'context') {
       var chartEl = context;
@@ -263,23 +466,14 @@ function create(dx) {
       var chartEl = focus;
       var chartLine = focusLine;
     }
-
-    var line = chartEl.selectAll('path.line')
-                      .data(chart_data);
-
-    line.enter().append('path')
-          .attr("class", "line");
-
-    line.transition()
-              .attr('d', function(d) { return chartLine(d); });
-
+    var line = chartEl.selectAll('path.line').data(chart_data);
+    line.enter().append('path').attr("class", "line");
+    line.transition().attr('d', function(d) { return chartLine(d); });
     line.exit().remove();
-  };
-
+  }
   function renderBrush() {
     if (d3.select('g.brush').empty()) {
       renderLines('context');
-
       context.append("g")
           .attr("class", "x brush")
           .attr("y",-50)
@@ -288,156 +482,30 @@ function create(dx) {
           .attr("y", -6)
           .attr("height", height2 + 7);
 
-          context.append("g")
-              .attr("class", "x brush")
-              .attr("y",-50)
-              .call(brush)
-            .selectAll("rect")
-              .attr("y", -6)
-              .attr("height", height2 + 7);
+      context.append("g")
+          .attr("class", "x brush")
+          .attr("y",-50)
+          .call(brush)
+        .selectAll("rect")
+          .attr("y", -6)
+          .attr("height", height2 + 7);
     } else {
       renderLines('context');
     };
   }
-
-  function brushdate() {
-  if (d3.event.sourceEvent.type === "brush") return;
-  var d0 = d3.event.selection.map(x.invert),
-      d1 = d0.map(d3.timeDay.round);
-
-  // If empty when rounded, use floor instead.
-  if (d1[0] >= d1[1]) {
-    d1[0] = d3.timeDay.floor(d0[0]);
-    d1[1] = d3.timeDay.offset(d1[0]);
-  }
-
-  d3.select(this).call(d3.event.target.move, d1.map(x));
-}
-
-
   function brushed() {
     x.domain(brush.empty() ? x2.domain() : brush.extent());
     focus.selectAll("path.line").attr("d", focusLine);
     focus.select(".x.axis").call(xAxis);
+    zoom.x(x);
   }
-
-
-
-
-
-  var margindate = {top: 10, right: 10, bottom: 20, left: 10};
-      widthdate = 920;
-      heightdate = 62;
-
-  //var $startdate = d3.select("span.start"),
-  //	$enddate = d3.select("span.end");
-
-    var today = new Date();
-    today.setDate(today.getDate()-10);
-    var lasttwomonths = new Date();
-    var lastday = new Date();
-    lasttwomonths.setDate(today.getDate()-60);
-    lastday.setDate(lastday.getDate()-2);
-
-  var start = lasttwomonths,
-  	startExtent = today,
-  	endExtend = lastday,
-  	end = lastday;
-
-  var x = d3.time.scale()
-      .domain([start, end])
-      .range([0, widthdate]);
-
-  var brushdate = d3.svg.brush()
-      .x(x)
-      .extent([startExtent, endExtend])
-      .on("brush", brushedDate);
-
-  var svgdate = svg.append("svg")
-      .attr("width", widthdate + margindate.left + margindate.right)
-      .attr("height", heightdate + margindate.top + margindate.bottom)
-    .append("g")
-      .attr("transform", "translate(" + 40 + "," + 0 + ")");
-
-  svgdate.append("rect")
-      .attr("class", "grid-background")
-      .attr("width", widthdate)
-      .attr("height", heightdate);
-
-  svgdate.append("g")
-      .attr("class", "x grid")
-      .attr("transform", "translate(0," + heightdate + ")")
-      .call(d3.svg.axis()
-          .scale(x)
-          .orient("bottom")
-          .ticks(d3.time.hours, 6)
-          .tickSize(-heightdate)
-          .tickFormat(""))
-    .selectAll(".tick")
-      .classed("minor", function(d) { return d.getHours(); });
-
-  svgdate.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + heightdate + ")")
-      .call(d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(d3.time.days, 2)
-        .tickFormat(d3.time.format("%m/%d"))
-        .tickPadding(0))
-    .selectAll("text")
-      .attr("x", -14)
-      .style("text-anchor", null);
-
-  var gBrush = svgdate.append("g")
-      .attr("class", "brush")
-      .call(brushdate);
-
-  gBrush.selectAll("rect")
-      .attr("height", heightdate);
-
-  var bucket = d3.scale.quantize()
-  			.domain([start, end])
-  			.range(d3.time.hours(start, end, 6));
-
-  function brushedDate() {
-    var extent0 = brushdate.extent(),
-        extent1;
-    if (d3.event.mode === "move") {
-      var d0 = bucket(extent0[0]),
-      	d1 = bucket(extent0[1]);
-      extent1 = [d0, d1];
-    }
-    else {
-      extent1 = extent0.map(bucket);
-      if (extent1[0] >= extent1[1]) {
-        extent1[0] = bucket(extent0[0]);
-        extent1[1] = bucket(extent0[1]);
-      }
-    }
-
-    renderRange(extent1);
-
-    d3.select(this).call(brushdate.extent(extent1));
+  function draw() {
+    focus.select(".area").attr("d", area);
+    focus.select(".x.axis").call(xAxis);
+    brush.extent(x.domain());
+    focus.selectAll("path.line").attr("d", focusLine);
+    svg.select(".brush").call(brush);
   }
-
-  function renderRange(extent) {
-  	//$startdate.text(d3.time.format.iso(extent[0]));
-  	//$enddate.text(d3.time.format.iso(extent[1]));
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
