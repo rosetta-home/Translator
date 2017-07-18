@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
-<title>Test2</title>
+<title>Test3</title>
 <style>
 
 body {
@@ -9,9 +9,13 @@ body {
   background: lightgray;
 }
 
+.timeline {
+
+}
+
 .line {
   fill: none;
-  stroke-width: 5px;
+  stroke-width: 2px;
   clip-path: url(#clip);
   stroke: #ef6c00;
 }
@@ -45,7 +49,7 @@ body {
 
 .brush .extent {
   stroke: #0277bd;
-  stroke-width:3px;
+  stroke-width:2px;
   fill: #0277bd;
   fill-opacity: .225;
   shape-rendering: crispEdges;
@@ -57,6 +61,27 @@ body {
   stroke: #0277bd;
   shape-rendering: crispEdges;
 }
+
+.axistime path,
+.axistime line {
+  fill: none;
+  stroke-width: 2px;
+  stroke: #0277bd;
+  shape-rendering: crispEdges;
+}
+.axistime {
+  fill: #0277bd;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.axistime .halo {
+  stroke: #0277bd;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
 
 .brush .extent {
   stroke-width: 2px;
@@ -87,11 +112,13 @@ a {
   stroke-linecap: round;
 }
 
-
+.slider {
+  height: 50px;
+}
 
 .slider .handle path {
   stroke: white;
-  stroke-width: 3px;
+  stroke-width: 6px;
   stroke-linecap: round;
   pointer-events: none;
 }
@@ -160,6 +187,32 @@ text-align: center;
 <div id="chart"></div>
 <script>
 
+function radchart() {
+	var raddata = {};
+	var selectedValue = Math.floor((Math.random() * 350) + 1);
+	for (i = 0; i < 360; i++) {
+		if ((i >= selectedValue - 10) && (i <= selectedValue + 10)) {
+			raddata[i] = 10;
+		} else {
+			raddata[i] = 0;
+		}
+	}
+	var chart = radialChart()
+		.barHeight(250)
+		.reverseLayerOrder(true)
+		.capitalizeLabels(true)
+		.barColors(['#ef6c00'])
+		.domain([0,20])
+		.filterKey(30)
+		.tickValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+		.tickCircleValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);
+	d3.select('#chart')
+		.datum([{
+	  "data": raddata
+	  }])
+		.call(chart);
+}
+radchart();
 function create(dx) {
   var data = [];
   // Configure the data
@@ -168,7 +221,9 @@ function create(dx) {
     data.push({ date:new Date(current[0]), value:current[1]  });
   }
 
-  var margin = {top: 10, right: 10, bottom: 100, left: 40},
+  formatDate = d3.time.format("%b %d");
+
+  var margin = {top: 10, right: 10, bottom: 100, left: 20},
       margin2 = {top: 430, right: 10, bottom: 20, left: 40},
       margin3 = {top: 430, right: 10, bottom: 20, left: 40},
       width = window.innerWidth - 60,
@@ -185,6 +240,28 @@ function create(dx) {
   var xAxis = d3.svg.axis().scale(x).orient("bottom"),
       xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
       yAxis = d3.svg.axis().scale(y).orient("left");
+
+
+
+      // scale function
+    var timeScale = d3.time.scale()
+      .domain([new Date('2012-01-02'), new Date('2013-01-01')])
+      .range([0, width])
+      .clamp(true);
+
+
+    // initial value
+    var startValue = timeScale(new Date('2012-03-20'));
+    startingValue = new Date('2012-03-20');
+
+    //////////
+
+    // defines brush
+    var datebrush = d3.svg.brush()
+      .x(timeScale)
+      .extent([startingValue, startingValue])
+      .on("brush", datebrushed);
+
 
 
 
@@ -208,12 +285,77 @@ function create(dx) {
     .append("rect")
       .attr("width", "100%")
       .attr("height", height);
-  var focus = svg.append("g")
-      .attr("class", "focus")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   var context = svg.append("g")
       .attr("class", "context")
-      .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var timeline = svg.append("g")
+          .attr("class", "timeline")
+          .attr("transform", "translate(" + margin.left + "," + (margin.top + 80) + ")");
+
+
+  var tm = timeline.append("g")
+        .attr("class", "x axistime")
+      // put in middle of screen
+      .attr("transform", "translate(0," + 40 + ")");
+
+
+      // inroduce axis
+      tm.call(d3.svg.axis()
+        .scale(timeScale)
+        .orient("bottom")
+        .tickFormat(function(d) {
+          return formatDate(d);
+        })
+        .tickSize(0)
+        .tickPadding(12)
+        .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
+        .select(".domain")
+        .select(function() {
+          return this.parentNode.appendChild(this.cloneNode(true));
+        })
+        .attr("class", "halo");
+
+
+var slider = timeline.append("g")
+.attr("class", "slider")
+  .call(datebrush);
+
+slider.selectAll(".extent,.resize")
+  .remove();
+
+slider.select(".background")
+  .attr("height", 50);
+
+
+var handle = slider.append("g")
+  .attr("class", "handle")
+
+handle.append("path")
+  .attr("transform", "translate(0," + 38 + ")")
+  .attr("d", "M 0 -20 V 20")
+
+handle.append('text')
+  .text(startingValue)
+  .attr("transform", "translate(" + (8) + " ," + 32 + ")");
+
+slider
+  .call(datebrush.event)
+
+function datebrushed() {
+  var value = datebrush.extent()[0];
+
+  if (d3.event.sourceEvent) { // not a programmatic event
+    value = timeScale.invert(d3.mouse(this)[0]);
+    datebrush.extent([value, value]);
+  }
+
+  handle.attr("transform", "translate(" + timeScale(value) + ",0)");
+  handle.select('text').text(formatDate(value));
+}
+
+
+
 
   //Testing for more than one data set
   line_data.push(new Array());
@@ -226,25 +368,6 @@ function create(dx) {
   x2.domain(x.domain());
   y2.domain(y.domain());
 
-  //Line chart mouse over
-  var hoverLineGroup = svg.append("g").attr("class", "hover-line");
-  var hoverLine = hoverLineGroup.append("line")
-                  .attr("stroke", "#000")
-                  .attr("stroke-width", "3px")
-                  .attr("x1", 10).attr("x2", 10)
-                  .attr("y1", 0).attr("y2", height);
-  hoverLineGroup.style("opacity", 1e-6);
-
-  focus.on("mousedown", function() {
-       var mouse_x = d3.mouse(this)[0];
-       var mouse_y = d3.mouse(this)[1];
-       var graph_y = y.invert(mouse_y);
-       var graph_x = x.invert(mouse_x);
-       console.log(graph_x);
-       console.log(graph_y);
-       hoverLine.attr("x1", (mouse_x + margin.left)).attr("x2", (mouse_x + margin.left))
-       hoverLineGroup.style("opacity", 1);
-  });
 
   chart_data.push(line_data[0]);
   drawChart();
@@ -265,22 +388,14 @@ function create(dx) {
   }
   function renderAxes() {
     if (d3.select('.x.axis').empty()) {
-      focus.append("g").attr("class", "x axis");
-      focus.append("g").attr("class", "y axis");
       context.append("g").attr("class", "x axis");
     };
-    focus.select('.x.axis').attr("transform", "translate(0," + height + ")").call(xAxis);
-    focus.select('.y.axis').call(yAxis);
     context.select('.x.axis').attr("transform", "translate(0," + height2 + ")").call(xAxis2);
   }
   function renderLines(chart) {
-    if (chart == 'context') {
-      var chartEl = context;
-      var chartLine = contextLine;
-    } else {
-      var chartEl = focus;
-      var chartLine = focusLine;
-    }
+    var chartEl = context;
+    var chartLine = contextLine;
+
     var line = chartEl.selectAll('path.line').data(chart_data);
     line.enter().append('path').attr("class", "line");
     line.transition().attr('d', function(d) { return chartLine(d); });
@@ -310,9 +425,7 @@ function create(dx) {
   }
   function brushed() {
     x.domain(brush.empty() ? x2.domain() : brush.extent());
-    focus.selectAll("path.line").attr("d", focusLine);
-    focus.select(".x.axis").call(xAxis);
-    hoverLineGroup.style("opacity", 1e-6);
+    console.log(x.domain());
   }
 }
 
