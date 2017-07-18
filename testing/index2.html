@@ -6,7 +6,6 @@
 
 body {
   font: 10px sans-serif;
-  background: lightgray;
 }
 
 .line {
@@ -229,7 +228,7 @@ function create(dx) {
   //Line chart mouse over
   var hoverLineGroup = svg.append("g").attr("class", "hover-line");
   var hoverLine = hoverLineGroup.append("line")
-                  .attr("stroke", "#000")
+                  .attr("stroke", "gray")
                   .attr("stroke-width", "3px")
                   .attr("x1", 10).attr("x2", 10)
                   .attr("y1", 0).attr("y2", height);
