@@ -243,24 +243,7 @@ function create(dx) {
 
 
 
-      // scale function
-    var timeScale = d3.time.scale()
-      .domain([new Date('2012-01-02'), new Date('2013-01-01')])
-      .range([0, width])
-      .clamp(true);
 
-
-    // initial value
-    var startValue = timeScale(new Date('2012-03-20'));
-    startingValue = new Date('2012-03-20');
-
-    //////////
-
-    // defines brush
-    var datebrush = d3.svg.brush()
-      .x(timeScale)
-      .extent([startingValue, startingValue])
-      .on("brush", datebrushed);
 
 
 
@@ -293,54 +276,7 @@ function create(dx) {
           .attr("class", "timeline")
           .attr("transform", "translate(" + margin.left + "," + (margin.top + 80) + ")");
 
-
-  var tm = timeline.append("g")
-        .attr("class", "x axistime")
-      // put in middle of screen
-      .attr("transform", "translate(0," + 40 + ")");
-
-
-      // inroduce axis
-      tm.call(d3.svg.axis()
-        .scale(timeScale)
-        .orient("bottom")
-        .tickFormat(function(d) {
-          return formatDate(d);
-        })
-        .tickSize(0)
-        .tickPadding(12)
-        .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
-        .select(".domain")
-        .select(function() {
-          return this.parentNode.appendChild(this.cloneNode(true));
-        })
-        .attr("class", "halo");
-
-
-var slider = timeline.append("g")
-.attr("class", "slider")
-  .call(datebrush);
-
-slider.selectAll(".extent,.resize")
-  .remove();
-
-slider.select(".background")
-  .attr("height", 50);
-
-
-var handle = slider.append("g")
-  .attr("class", "handle")
-
-handle.append("path")
-  .attr("transform", "translate(0," + 38 + ")")
-  .attr("d", "M 0 -20 V 20")
-
-handle.append('text')
-  .text(startingValue)
-  .attr("transform", "translate(" + (8) + " ," + 32 + ")");
-
-slider
-  .call(datebrush.event)
+renderTimeLine(new Date('2012-01-02'), new Date('2013-01-01'),timeline)
 
 function datebrushed() {
   var value = datebrush.extent()[0];
@@ -423,9 +359,107 @@ function datebrushed() {
       renderLines('context');
     };
   }
+  function renderTimeLine(start,end,dom) {
+
+
+    // scale function
+  var timeScale = d3.time.scale()
+    .domain([start, end])
+    .range([0, width])
+    .clamp(true);
+
+
+  // initial value
+  var startValue = timeScale(start);
+  startingValue = start;
+
+  //////////
+
+  // defines brush
+  var datebrush = d3.svg.brush()
+    .x(timeScale)
+    .extent([startingValue, startingValue])
+    .on("brush", function(){
+
+      var value = datebrush.extent()[0];
+
+      if (d3.event.sourceEvent) { // not a programmatic event
+        value = timeScale.invert(d3.mouse(this)[0]);
+        datebrush.extent([value, value]);
+      }
+
+      handle.attr("transform", "translate(" + timeScale(value) + ",0)");
+      handle.select('text').text(formatDate(value));
+    });
+
+
+
+    var tm = dom.append("g")
+        .attr("class", "x axistime")
+        // put in middle of screen
+        .attr("transform", "translate(0," + 40 + ")");
+
+
+        // inroduce axis
+        tm.call(d3.svg.axis()
+          .scale(timeScale)
+          .orient("bottom")
+          .tickFormat(function(d) {
+            return formatDate(d);
+          })
+          .tickSize(0)
+          .tickPadding(12)
+          .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
+          .select(".domain")
+          .select(function() {
+            return this.parentNode.appendChild(this.cloneNode(true));
+          })
+          .attr("class", "halo");
+
+
+  var slider = timeline.append("g")
+  .attr("class", "slider")
+    .call(datebrush);
+
+  slider.selectAll(".extent,.resize")
+    .remove();
+
+  slider.select(".background")
+    .attr("height", 50);
+
+
+  var handle = slider.append("g")
+    .attr("class", "handle")
+
+  handle.append("path")
+    .attr("transform", "translate(0," + 38 + ")")
+    .attr("d", "M 0 -20 V 20")
+
+  handle.append('text')
+    .text(startingValue)
+    .attr("transform", "translate(" + (8) + " ," + 32 + ")");
+
+  slider
+    .call(datebrush.event)
+
+
+
+
+
+
+
+
+
+
+  }
+
+
   function brushed() {
     x.domain(brush.empty() ? x2.domain() : brush.extent());
+    timeline.selectAll('g').remove();
+    renderTimeLine(x.domain()[0],x.domain()[1],timeline);
     console.log(x.domain());
+
   }
 }
 
