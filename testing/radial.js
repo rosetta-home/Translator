@@ -110,6 +110,8 @@ function radialChart() {
         }
         return '';
       });
+
+    
   }
 
   function chart(selection) {

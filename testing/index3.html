@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Test3</title>
 <style>
 
 body {
   font: 10px sans-serif;
-  background: lightgray;
 }
 
 .timeline {
@@ -117,16 +117,18 @@ a {
 }
 
 .slider .handle path {
-  stroke: white;
+  stroke: gray;
   stroke-width: 6px;
   stroke-linecap: round;
   pointer-events: none;
+  cursor:pointer;
 }
 
 .slider .handle text {
-  fill: white;
+  fill: #0277bd;
   text-align: center;
   font-size: 18px;
+  cursor:pointer;
 }
 #chart {
  font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -198,7 +200,7 @@ function radchart() {
 		}
 	}
 	var chart = radialChart()
-		.barHeight(250)
+		.barHeight(200)
 		.reverseLayerOrder(true)
 		.capitalizeLabels(true)
 		.barColors(['#ef6c00'])
@@ -206,23 +208,19 @@ function radchart() {
 		.filterKey(30)
 		.tickValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
 		.tickCircleValues([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);
-	d3.select('#chart')
-		.datum([{
-	  "data": raddata
-	  }])
-		.call(chart);
+	d3.select('#chart').datum([{"data": raddata}]).call(chart);
 }
+
 radchart();
-function create(dx) {
+
+function renderTimeComponent(dx) {
   var data = [];
   // Configure the data
   for (i = 0; i < dx.length; i++) {
     var current = dx[i];
     data.push({ date:new Date(current[0]), value:current[1]  });
   }
-
-  formatDate = d3.time.format("%b %d");
-
+  var formatDate = d3.time.format("%b %d");
   var margin = {top: 10, right: 10, bottom: 100, left: 20},
       margin2 = {top: 430, right: 10, bottom: 20, left: 40},
       margin3 = {top: 430, right: 10, bottom: 20, left: 40},
@@ -240,123 +238,14 @@ function create(dx) {
   var xAxis = d3.svg.axis().scale(x).orient("bottom"),
       xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
       yAxis = d3.svg.axis().scale(y).orient("left");
-
-
-
-      // scale function
-    var timeScale = d3.time.scale()
-      .domain([new Date('2012-01-02'), new Date('2013-01-01')])
-      .range([0, width])
-      .clamp(true);
-
-
-    // initial value
-    var startValue = timeScale(new Date('2012-03-20'));
-    startingValue = new Date('2012-03-20');
-
-    //////////
-
-    // defines brush
-    var datebrush = d3.svg.brush()
-      .x(timeScale)
-      .extent([startingValue, startingValue])
-      .on("brush", datebrushed);
-
-
-
-
-  var brush = d3.svg.brush()
-      .x(x2)
-      .on("brush", brushed);
-  var focusLine = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.value); })
-      .defined(function(d) { return d.value; });
-  var contextLine = d3.svg.line()
-      .x(function(d) { return x2(d.date); })
-      .y(function(d) { return y2(d.value); })
-      .defined(function(d) { return d.value; });
-
-  var svg = d3.select("body").append("svg")
-      .attr("width", "100%")
-      .attr("height", height + margin.top + margin.bottom + 100);
-  svg.append("defs").append("clipPath")
-      .attr("id", "clip")
-    .append("rect")
-      .attr("width", "100%")
-      .attr("height", height);
-  var context = svg.append("g")
-      .attr("class", "context")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var timeline = svg.append("g")
-          .attr("class", "timeline")
-          .attr("transform", "translate(" + margin.left + "," + (margin.top + 80) + ")");
-
-
-  var tm = timeline.append("g")
-      .attr("class", "x axistime")
-      // put in middle of screen
-      .attr("transform", "translate(0," + 40 + ")");
-
-
-      // inroduce axis
-      tm.call(d3.svg.axis()
-        .scale(timeScale)
-        .orient("bottom")
-        .tickFormat(function(d) {
-          return formatDate(d);
-        })
-        .tickSize(0)
-        .tickPadding(12)
-        .tickValues([timeScale.domain()[0], timeScale.domain()[1]]))
-        .select(".domain")
-        .select(function() {
-          return this.parentNode.appendChild(this.cloneNode(true));
-        })
-        .attr("class", "halo");
-
-
-var slider = timeline.append("g")
-.attr("class", "slider")
-  .call(datebrush);
-
-slider.selectAll(".extent,.resize")
-  .remove();
-
-slider.select(".background")
-  .attr("height", 50);
-
-
-var handle = slider.append("g")
-  .attr("class", "handle")
-
-handle.append("path")
-  .attr("transform", "translate(0," + 38 + ")")
-  .attr("d", "M 0 -20 V 20")
-
-handle.append('text')
-  .text(startingValue)
-  .attr("transform", "translate(" + (8) + " ," + 32 + ")");
-
-slider
-  .call(datebrush.event)
-
-function datebrushed() {
-  var value = datebrush.extent()[0];
-
-  if (d3.event.sourceEvent) { // not a programmatic event
-    value = timeScale.invert(d3.mouse(this)[0]);
-    datebrush.extent([value, value]);
-  }
-
-  handle.attr("transform", "translate(" + timeScale(value) + ",0)");
-  handle.select('text').text(formatDate(value));
-}
-
-
-
-
+  //Creates the brush for the timeframe bursh
+  var brush = d3.svg.brush().x(x2).on("brush", brushed);
+  var focusLine = d3.svg.line().x(function(d) { return x(d.date); }).y(function(d) { return y(d.value); }).defined(function(d) { return d.value; });
+  var contextLine = d3.svg.line().x(function(d) { return x2(d.date); }).y(function(d) { return y2(d.value); }).defined(function(d) { return d.value; });
+  var svg = d3.select("body").append("svg").attr("width", "100%").attr("height", height + margin.top + margin.bottom + 100);
+  svg.append("defs").append("clipPath").attr("id", "clip").append("rect").attr("width", "100%").attr("height", height);
+  var context = svg.append("g").attr("class", "context").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var timeline = svg.append("g").attr("class", "timeline").attr("transform", "translate(" + margin.left + "," + (margin.top + 80) + ")");
   //Testing for more than one data set
   line_data.push(new Array());
   data.forEach(function(d) { line_data[0].push({date: d.date, value:d.value}); });
@@ -367,70 +256,89 @@ function datebrushed() {
   // Sets the domains
   x2.domain(x.domain());
   y2.domain(y.domain());
-
-
   chart_data.push(line_data[0]);
   drawChart();
-
   function drawChart() {
     svg = d3.selectAll('svg').data([chart_data]);
-    updateScales();
     renderAxes();
-    renderLines('focus');
     renderBrush();
   }
-  function updateScales() {
-    y.domain([0,
-      d3.max(chart_data, function(line) {
-        return d3.max(line, function(d) {return d.value;})
-      })
-    ]);
-  }
   function renderAxes() {
-    if (d3.select('.x.axis').empty()) {
-      context.append("g").attr("class", "x axis");
-    };
+    if (d3.select('.x.axis').empty()) { context.append("g").attr("class", "x axis"); };
     context.select('.x.axis').attr("transform", "translate(0," + height2 + ")").call(xAxis2);
   }
   function renderLines(chart) {
     var chartEl = context;
     var chartLine = contextLine;
-
     var line = chartEl.selectAll('path.line').data(chart_data);
     line.enter().append('path').attr("class", "line");
     line.transition().attr('d', function(d) { return chartLine(d); });
     line.exit().remove();
   };
-
   function renderBrush() {
     if (d3.select('g.brush').empty()) {
       renderLines('context');
-      context.append("g")
-        .attr("class", "x brush")
-        .attr("y",-50)
-        .call(brush)
-        .selectAll("rect")
-        .attr("y", -6)
-        .attr("height", height2 + 7);
-      context.append("g")
-        .attr("class", "x brush")
-        .attr("y",-50)
-        .call(brush)
-        .selectAll("rect")
-        .attr("y", -6)
-        .attr("height", height2 + 7);
+      context.append("g").attr("class", "x brush").attr("y",-50).call(brush).selectAll("rect").attr("y", -6).attr("height", height2 + 7);
+      context.append("g").attr("class", "x brush").attr("y",-50).call(brush).selectAll("rect").attr("y", -6).attr("height", height2 + 7);
     } else {
       renderLines('context');
     };
   }
-  function renderTimeLine(start,end,dom) {
+  //Sets the the init scale for the timeline
+  var timeScale = d3.time.scale().domain([new Date(), new Date()]).range([0, width]).clamp(true);
+  var startValue = timeScale(new Date());
+  startingValue = new Date();
+  var datebrush = d3.svg.brush().x(timeScale).extent([startingValue, startingValue]).on("brush", function() {
+      var value = datebrush.extent()[0];
+      if (d3.event.sourceEvent) {
+        value = timeScale.invert(d3.mouse(this)[0]);
+        datebrush.extent([value, value]);
+      }
+      handle.attr("transform", "translate(" + timeScale(value) + ",0)");
+      handle.select('text').text(formatDate(value));
+      /*  Rerendering the radial chart */
+      console.log(value);
+      radchart();
 
+  });
+  var tm = timeline.append("g").attr("class", "x axistime").attr("transform", "translate(0," + 40 + ")");
+  tm.call(d3.svg.axis().scale(timeScale).orient("bottom").tickFormat(function(d) {
+    return formatDate(d);
+  }).tickSize(0).tickPadding(12).tickValues([timeScale.domain()[0], timeScale.domain()[1]])).select(".domain").select(function() {
+    return this.parentNode.appendChild(this.cloneNode(true));
+  }).attr("class", "halo");
+  var slider = timeline.append("g").attr("class", "slider").call(datebrush);
+  slider.selectAll(".extent,.resize").remove();
+  slider.select(".background").attr("height", 60);
+  var handle = slider.append("g").attr("class", "handle")
+  handle.append("path").attr("transform", "translate(0," + 38 + ")").attr("d", "M 0 -20 V 10")
+  handle.append('text').text(startingValue).attr("transform", "translate(" + (8) + " ," + 32 + ")");
+  slider.call(datebrush.event);
+  //Rerendering the timeline
+  function renderTimeLine(start,end) {
+    //Sets the new timelone scale
+    timeScale = d3.time.scale().domain([new Date(start), new Date(end)]).range([0, width]).clamp(true);
+    startValue = timeScale(new Date(start));
+    startingValue = new Date(start);
+    //Sets the new brush values
+    datebrush = d3.svg.brush().x(timeScale);
+    tm.call(d3.svg.axis().scale(timeScale).orient("bottom").tickFormat(function(d) {
+      return formatDate(d);
+    }).tickSize(0).tickPadding(12).tickValues([timeScale.domain()[0], timeScale.domain()[1]])).select(".domain").select(function() {
+      return this.parentNode.appendChild(this.cloneNode(true));
+    }).attr("class", "halo");
+    var value = datebrush.extent()[0];
+    //Forces the brush to the start
+    handle.select('text').text(formatDate(value));
+    
+    datebrush.extent([value]);
+    datebrush(d3.select(".brush").transition().duration(500));
+    datebrush.event(d3.select(".brush").transition().delay(1000).duration(500))
   }
+  //Brush handler for the the timeframe.
   function brushed() {
     x.domain(brush.empty() ? x2.domain() : brush.extent());
-
-    console.log(x.domain());
-
+    renderTimeLine(x.domain()[0],x.domain()[1]);
   }
 }
 
@@ -450,11 +358,11 @@ function load() {
   var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/mean/ieq.co2/2017-07-06T12:12:12Z/now/60m',true);
   xmlHttpRequest.send();
   xmlHttpRequest.onreadystatechange = function() {
-      if (xmlHttpRequest.readyState == XMLHttpRequest.DONE) {
-          var a = JSON.parse(xmlHttpRequest.responseText);
-          var b = a['results'][0].series
-          create(b[0].values);
-      }
+    if (xmlHttpRequest.readyState == XMLHttpRequest.DONE) {
+      var a = JSON.parse(xmlHttpRequest.responseText);
+      var b = a['results'][0].series
+      renderTimeComponent(b[0].values);
+    }
   }
 }
 
