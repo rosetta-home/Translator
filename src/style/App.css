@@ -26,6 +26,161 @@ svg {
             font-size: 14px;
             margin-top: -6px;
         }
+
+        .line {
+          fill: none;
+          stroke-width: 3px;
+          clip-path: url(#clip);
+          stroke: #ef6c00;
+        }
+        .line:nth-of-type(2) {
+          stroke: blue;
+        }
+        .axis text {
+          font: 11px sans-serif;
+        }
+
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .grid-background {
+          fill: #ddd;
+        }
+
+        .grid line,
+        .grid path {
+          fill: none;
+          stroke: #fff;
+          shape-rendering: crispEdges;
+        }
+
+        .grid .minor.tick line {
+          stroke-opacity: .5;
+        }
+
+        .brush .extent {
+          stroke: #0277bd;
+          stroke-width:3px;
+          fill: #0277bd;
+          fill-opacity: .225;
+          shape-rendering: crispEdges;
+        }
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke-width: 2px;
+          stroke: #0277bd;
+          shape-rendering: crispEdges;
+        }
+
+        .brush .extent {
+          stroke-width: 2px;
+          stroke: #0277bd;
+          fill-opacity: .125;
+          shape-rendering: crispEdges;
+        }
+
+        p {
+          color: white;
+          margin: 50px;
+        }
+
+        a {
+          color: #4FDEF2;
+        }
+
+        .axis {
+          fill: gray;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+
+        .axis .halo {
+          stroke: gray;
+          stroke-width: 4px;
+          stroke-linecap: round;
+        }
+
+
+
+        .slider .handle path {
+          stroke: white;
+          stroke-width: 3px;
+          stroke-linecap: round;
+          pointer-events: none;
+        }
+
+        .slider .handle text {
+          fill: white;
+          text-align: center;
+          font-size: 18px;
+        }
+        #chart {
+         font-family: "Helvetica Neue", Helvetica, sans-serif;
+         font-size: 14px;
+        text-align: center;
+        }
+        #chart path {
+         fill: none;
+        }
+        /* layers */
+        #chart .layer-0 path {
+         fill: steelblue;
+        }
+        #chart .layer-1 path {
+         fill: white !important;
+         opacity: 0.3;
+         stroke-width: 2px;
+         stroke: #999;
+        }
+        /* Outer circle, tick-circles and spokes */
+        #chart circle.outer {
+         stroke: #aaa;
+         stroke-dasharray: 4, 4;
+        }
+        #chart .tick-circles circle {
+         stroke: #ddd;
+         stroke-dasharray: 2, 2;
+        }
+        #chart .spokes line {
+         stroke: #666;
+         stroke-width: 0.2;
+        }
+        /* Axis */
+        #chart .axis text {
+         font-size: 11px;
+        }
+        #chart .axis path {
+         stroke: #999;
+         shape-rendering: crispEdges;
+        }
+        #chart .axis line {
+         stroke: #999;
+         shape-rendering: crispEdges;
+        }
+        /* Labels */
+        #chart .labels text {
+         fill: #333;
+         font-size: 10px;
+         font-weight: 500;
+        }
+
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 28px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
 /*
 * {box-sizing: border-box;}
 .wrapper {

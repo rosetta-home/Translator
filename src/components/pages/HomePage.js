@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { Card, Button } from 'preact-mdl';
-import DemoChart from '../elements/DemoChart';
 import DRes from '../../service/dres';
 
 export default class HomePage extends Component {

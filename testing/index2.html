@@ -2,6 +2,7 @@
 <head>
 <meta charset="utf-8">
 <title>Test2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
 body {
@@ -10,7 +11,7 @@ body {
 
 .line {
   fill: none;
-  stroke-width: 5px;
+  stroke-width: 3px;
   clip-path: url(#clip);
   stroke: #ef6c00;
 }
@@ -175,6 +176,7 @@ div.tooltip {
 
 function create(dx) {
   var data = [];
+  console.log(dx);
   // Configure the data
   for (i = 0; i < dx.length; i++) {
     var current = dx[i];
@@ -264,7 +266,7 @@ function create(dx) {
        circle = focus.append("circle").attr("cx", mouse_x).attr("cy", mouse_y).attr("r", 10).attr("fill", "gray").style("opacity", 1);
 
        text.remove();
-       text = focus.append("text").attr("dx", mouse_x + 15).attr("dy", mouse_y + 3).text(graph_y);
+       text = focus.append("text").attr("dx", mouse_x + 15).attr("dy", mouse_y + 3).text(Math.round(graph_y));
 
   });
 
@@ -353,7 +355,7 @@ var bearerXMLHttpRequest = (function (jwtoken) {
 })(token);
 
 function load() {
-  var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/mean/ieq.co2/2017-07-06T12:12:12Z/now/60m',true);
+  var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/mean/ieq.co2/2017-07-01T12:12:12Z/now/6h',true);
   xmlHttpRequest.send();
   xmlHttpRequest.onreadystatechange = function() {
       if (xmlHttpRequest.readyState == XMLHttpRequest.DONE) {

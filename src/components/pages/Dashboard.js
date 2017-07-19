@@ -11,6 +11,7 @@ import DashboardCard from '../elements/DashboardCard';
 import Authentication from '../../service/authservice';
 import { route } from 'preact-router';
 import DRes from '../../service/dres';
+import SelectorChart from '../elements/SelectorChart';
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -24,7 +25,7 @@ export default class Dashboard extends Component {
 	render() {
 		return (
 			<div>
-					<DashboardCard/>
+					<SelectorChart/>
 					<button onClick={this.data}>Data</button>
 			</div>
 		);
