@@ -16,6 +16,9 @@ main {
 		  font-size: 8px;
           fill: #0277bd;
 }
+text {
+  font-size: 12px;
+}
 #container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

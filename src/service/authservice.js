@@ -39,7 +39,7 @@ export default {
 
     console.log(DRes.minutes(60));
     return new Promise((resolve, reject) => {
-      request.get('http://35.167.180.46:8080/data/mean/ieq.co2/2017-07-06T12:12:12Z/now/60m')
+      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-06T12:12:12Z/now/60m')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {

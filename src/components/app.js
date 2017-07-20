@@ -23,7 +23,7 @@ export default class App extends Component {
 		 /* Binds startt function to the scope to help with debug processes outside the redux container */
 		 this.start = this.start.bind(this);
   }
-	/* Renders the component */
+	/* Renders the component*/
 	render() {
 		return (
 			<div className="App">

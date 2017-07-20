@@ -14,6 +14,21 @@ class SelectorChart extends Component {
     this.valueformat = this.valueformat.bind(this);
     this.labelformat = this.labelformat.bind(this);
     this.dformat = this.dformat.bind(this);
+    this.click = this.click.bind(this);
+  }
+  updateDimensions() {
+    console.log("updateDimensions");
+    this.setState({ width: window.innerWidth - 50});
+  }
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions.bind(this));
+  }
+  click(data) {
+    console.log(data);
   }
  	componentDidMount() { console.log(this); }
  	componentWillUnmount() { }
@@ -21,26 +36,24 @@ class SelectorChart extends Component {
   dateformat(date) { return "";}
   valueformat(value) { return Math.round(value);}
   labelformat(label) { return "Value"; }
-  dformat(d) {
-    console.log(d);
-    return "A";
-  }
-  //tickFormatter={this.dformat}
+  dformat(d) { }
   render () {
     	return (
-        <LineChart width={window.innerWidth - 50} height={300} data={this.props.data}
+        <ResponsiveContainer width='100%' aspect={4.0/3.0}>
+        <LineChart data={this.props.data} onClick={this.click}
             margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-            <XAxis type="number" domain={['dataMin', 'dataMax']} dataKey="date" scale="time"/>
-            <YAxis domain={['auto', 'auto']} label="Value" />
+            <XAxis dataKey="date" label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
+            <YAxis domain={['auto', 'auto']} name="Value" hide={false} stroke="#0277bd" padding={{ bottom: 20 }}/>
             <Tooltip formatter={this.valueformat}/>
-            <Line dataKey="value" stroke="#ef6c00" dot={false} />
+            <Line dataKey="value" stroke="#000" dot={false} />
             <Brush dataKey="date" tickFormatter={this.dateformat}>
-              <AreaChart>
+              <LineChart>
                 <YAxis hide domain={['auto', 'auto']} />
-                <Area dataKey="value" stroke="#ef6c00" fill="#ef6c00" dot={false} />
-              </AreaChart>
+                <Line dataKey="value" stroke="#000" fill="#000" dot={false} />
+              </LineChart>
             </Brush>
           </LineChart>
+          </ResponsiveContainer>
       );
     }
 }
