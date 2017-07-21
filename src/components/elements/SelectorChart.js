@@ -1,7 +1,4 @@
 import { h, Component } from 'preact';
-import ReactFauxDOM from 'react-faux-dom'
-import d3 from 'd3';
-
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine,
   ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
   Label, LabelList,Surface } from 'recharts';
@@ -10,50 +7,52 @@ class SelectorChart extends Component {
 
   constructor(props){
     super(props);
+    /* Binds functions to compoent for its use */
     this.dateformat = this.dateformat.bind(this);
     this.valueformat = this.valueformat.bind(this);
     this.labelformat = this.labelformat.bind(this);
-    this.dformat = this.dformat.bind(this);
     this.click = this.click.bind(this);
   }
-  updateDimensions() {
-    console.log("updateDimensions");
-    this.setState({ width: window.innerWidth - 50});
-  }
-  componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
-  }
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
-  }
-  click(data) {
-    console.log(data);
-  }
- 	componentDidMount() { console.log(this); }
+  click(data) { console.log(data); }
+  /* React component lifecyle functions */
+ 	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
-  dateformat(date) { return "";}
+  /* Date formatter for the brush */
+  dateformat(date) { return ""; }
+  /* Formater for the value on the chart, rounds the value to nearest whole number */
   valueformat(value) { return Math.round(value);}
   labelformat(label) { return "Value"; }
-  dformat(d) { }
   render () {
-    	return (
+    return (
+        <div>
+        {/* ResponsiveContainer for the linechart with brush to fit in container */}
         <ResponsiveContainer width='100%' aspect={4.0/3.0}>
-        <LineChart data={this.props.data} onClick={this.click}
-            margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-            <XAxis dataKey="date" label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
-            <YAxis domain={['auto', 'auto']} name="Value" hide={false} stroke="#0277bd" padding={{ bottom: 20 }}/>
-            <Tooltip formatter={this.valueformat}/>
-            <Line dataKey="value" stroke="#000" dot={false} />
-            <Brush dataKey="date" tickFormatter={this.dateformat}>
-              <LineChart>
-                <YAxis hide domain={['auto', 'auto']} />
-                <Line dataKey="value" stroke="#000" fill="#000" dot={false} />
-              </LineChart>
-            </Brush>
-          </LineChart>
-          </ResponsiveContainer>
+        {/* Linchart with the the data and click callback defined */}
+        <LineChart data={this.props.data} onClick={this.click} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+          {/* XAxis with value for custom color and padding */}
+          <XAxis dataKey="date" label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
+          {/* YAxis with value for custom color and padding */}
+          <YAxis domain={['auto', 'auto']} name="Value" hide={false} stroke="#0277bd" padding={{ bottom: 20 }}/>
+          {/* Tooltip with callback set for formatting */}
+          <Tooltip formatter={this.valueformat}/>
+          {/* The actually line for plotting the data values */}
+          <Line dataKey="value" stroke="#000" dot={false} />
+          {/* ReferenceLine which is used as a threshold */}
+          <ReferenceLine y={this.props.threshold} label="Threshold" stroke="red" strokeDasharray="3 3" />
+          {/* Brush for the data ease, with data key set for the formatter */}
+          <Brush dataKey="date" tickFormatter={this.dateformat}>
+            {/* Brush linchart within */}
+            <LineChart>
+              {/* YAxis with value for custom color and padding */}
+              <YAxis hide domain={['auto', 'auto']} />
+              {/* The line for plotting the data values in brush */}
+              <Line dataKey="value" stroke="#000" fill="#000" dot={false} />
+            </LineChart>
+          </Brush>
+        </LineChart>
+        </ResponsiveContainer>
+        </div>
       );
     }
 }

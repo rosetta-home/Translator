@@ -16,6 +16,10 @@ import authentication from '../../service/authservice';
 import configs from '../../configs';
 import moment from 'moment';
 import ReactBroadcast from 'ReactBroadcast';
+import RadialCompare from '../elements/RadialCompare';
+
+import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer } from 'recharts';
+
 export default class Dashboard extends Component {
 	constructor() {
 			super();
@@ -34,21 +38,26 @@ export default class Dashboard extends Component {
 	      /* Triggers a state change so the nvd3 chart will reload the data */
 	      this.setState();
 			});
+  }
+	componentDidMount() {
+		if (authentication.getToken() === '') {
+      route('/login');
     }
+	}
 	data() {
 		console.log(DRes.minutes(60));
-		ReactBroadcast.broadcast('updateTitle', 'value1');
+		//ReactBroadcast.broadcast('updateTitle', 'value1');
 		//route('/');
-		//<button onClick={this.data}>Test</button>
+		//this.setState();
 	}
 	render() {
 		return (
 			<div>
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
-					<Card.TitleText></Card.TitleText>
+					<Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
 				</Card.Title>
-
+				<RadialCompare/>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>
@@ -78,7 +87,7 @@ export default class Dashboard extends Component {
 				<Card.Title>
 					<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
 				</Card.Title>
-				<SelectorChart data={this.dx}/>
+				<SelectorChart data={this.dx} threshold={1000}/>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>

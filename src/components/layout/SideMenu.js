@@ -12,11 +12,11 @@ export default class SideMenu extends Component {
   /* TODO: Find a better why to interact with the material controls */
   closeMenu() {
     /* Temp fix, css broken for dismissing menu sidebar in preact-mdl */
-    var menuDiv = document.getElementById("menu");
-    menuDiv.classList.remove("is-visible");
-    menuDiv.setAttribute("aria-hidden", "true");
-    var list = document.getElementsByClassName("mdl-layout__obfuscator");
-    if (list.length > 0) { list[0].classList.remove("is-visible"); }
+    //var menuDiv = document.getElementById("menu");
+    //menuDiv.classList.remove("is-visible");
+    //menuDiv.setAttribute("aria-hidden", "true");
+    //var list = document.getElementsByClassName("mdl-layout__obfuscator");
+    //if (list.length > 0) { list[0].classList.remove("is-visible"); }
   }
   /* TODO: Need to detect different auth status to display the different login in option the Authentication class will help with this */
 	render() {
@@ -26,9 +26,9 @@ export default class SideMenu extends Component {
       <Layout.Title></Layout.Title>
       {/* Where the nav link are located */}
       <Navigation>
-        <Navigation.Link style="align-self: left;" href="/" onClick={this.closeMenu}><i class="fa fa-home" aria-hidden="true"></i> Home</Navigation.Link>
-        <Navigation.Link style="align-self: left;" href="/dashboard" onClick={this.closeMenu}><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</Navigation.Link>
-        <Navigation.Link style="align-self: left;" href="/" onClick={this.closeMenu}><i class="fa fa-user" aria-hidden="true"></i> Profile</Navigation.Link>
+        <Navigation.Link href="/" onClick={this.closeMenu}>Home</Navigation.Link>
+        <Navigation.Link href="/dashboard" onClick={this.closeMenu}>Dashboard</Navigation.Link>
+        <Navigation.Link href="/" onClick={this.closeMenu}>Profile</Navigation.Link>
         <Navigation.Link href="/login" onClick={this.closeMenu}>Login</Navigation.Link>
       </Navigation>
     </Layout.Drawer>

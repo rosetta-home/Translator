@@ -330,7 +330,7 @@ function renderTimeComponent(dx) {
     var value = datebrush.extent()[0];
     //Forces the brush to the start
     handle.select('text').text(formatDate(value));
-    
+
     datebrush.extent([value]);
     datebrush(d3.select(".brush").transition().duration(500));
     datebrush.event(d3.select(".brush").transition().delay(1000).duration(500))
