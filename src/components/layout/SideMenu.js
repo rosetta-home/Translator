@@ -12,9 +12,9 @@ export default class SideMenu extends Component {
   /* TODO: Find a better why to interact with the material controls */
   closeMenu() {
     /* Temp fix, css broken for dismissing menu sidebar in preact-mdl */
-    //var menuDiv = document.getElementById("menu");
-    //menuDiv.classList.remove("is-visible");
-    //menuDiv.setAttribute("aria-hidden", "true");
+    var menuDiv = document.getElementById("menu");
+    menuDiv.classList.remove("is-visible");
+    menuDiv.setAttribute("aria-hidden", "true");
     //var list = document.getElementsByClassName("mdl-layout__obfuscator");
     //if (list.length > 0) { list[0].classList.remove("is-visible"); }
   }
@@ -30,6 +30,7 @@ export default class SideMenu extends Component {
         <Navigation.Link href="/dashboard" onClick={this.closeMenu}>Dashboard</Navigation.Link>
         <Navigation.Link href="/" onClick={this.closeMenu}>Profile</Navigation.Link>
         <Navigation.Link href="/login" onClick={this.closeMenu}>Login</Navigation.Link>
+        <Navigation.Link href="/setup" onClick={this.closeMenu}>Setup</Navigation.Link>
       </Navigation>
     </Layout.Drawer>
 		);

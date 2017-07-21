@@ -28,7 +28,7 @@ class RadialCompare extends Component {
       this.setState();
     });
   }
- 	componentDidMount() { console.log(this); }
+ 	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
   render () {

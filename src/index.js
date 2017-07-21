@@ -13,7 +13,7 @@ import OtherComponent from './components/pages/OtherComponent';
 import Error404 from './components/pages/Error404';
 import Dashboard from './components/pages/Dashboard';
 import Login from './components/pages/Login';
-
+import Setup from './components/setup/Setup';
 
 import { Router } from 'preact-router';
 import { Link } from 'preact-router/match';
@@ -25,6 +25,7 @@ const Root = () => (
       <Login path="/login" />
       <Dashboard path="/dashboard" />
       <OtherComponent path="/other" />
+      <Setup path="/setup" />
     </Router>
   </App>
 );

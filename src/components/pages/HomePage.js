@@ -9,13 +9,21 @@ export default class HomePage extends Component {
     }
 	data() {
 		console.log(DRes.minutes(60));
-		//route('/');
 	}
 	render() {
 		return (
 			<div>
-					<button onClick={this.data}>Data</button>
-			</div>
+			<Card shadow={4} style="width:100%" padding={20}>
+								<Card.Title>
+										<Card.TitleText></Card.TitleText>
+								</Card.Title>
+								<div style="padding:20px;height:500px;">
+
+								</div>
+								<Card.Actions style="text-align:right">
+								</Card.Actions>
+						</Card>
+						</div>
 		);
 	}
 }

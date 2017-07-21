@@ -9,10 +9,16 @@ class SparkGraphLive extends Component {
     /* Creates data object in the memory */
     this.data = [];
     this.lastValue = 0;
+    this.lastValueEnding = '';
+    /* Checks the props type and assigns the correct endding value if needed. */
+    if (this.props.type === 'weather_station.outdoor_temperature') { this.lastValueEnding = '°C'; }
+    if (this.props.type === 'weather_station.indoor_temperature') { this.lastValueEnding = '°C'; }
+    if (this.props.type === 'weather_station.humidity') { this.lastValueEnding = '%'; }
+
     /* (Promise Object) Fetchs the data for the RH api */
-    authentication.getData(this.props.type).then(v => {
+    authentication.getData(this.props.type).then(payload => {
       /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
-  		var series = v['results'][0].series;
+  		var series = payload['results'][0].series;
       var results = series[0].values;
       for (var i = 0; i < results.length; i++) {
          var currentobj = results[i];
@@ -31,14 +37,14 @@ class SparkGraphLive extends Component {
 	render () {
     return (
       <div>
-      {/* Renders the nvd3 chart */}
+      {/* Renders the nvd3 chart creates a row */}
         <div className="row">
+           {/* */}
   			   <div className="col-3">
-  				   <div className="center-div"><label className="readingLabel">{this.lastValue}</label></div>
+  				   <div className="center-div"><label className="readingLabel">{this.lastValue + this.lastValueEnding}</label></div>
   			   </div>
            <div className="col-9">
-             {/* TODO: Rendering issues when the data is flow right ot left. Detail pop does not dismiss after cursor is moved.  */}
-             <NVD3Chart fill="#ef6c00" stroke="#ef6c00" height={100} margin={{top: 10, right: 30, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
+             <NVD3Chart fill="#ef6c00" stroke="#ef6c00" height={80} margin={{top: 10, right: 30, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
            </div>
         </div>
       </div>

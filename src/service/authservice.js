@@ -34,6 +34,19 @@ export default {
 
     //console.log(DRes.minutes(60));
     return new Promise((resolve, reject) => {
+      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-06T12:12:12Z/now/1d')
+      .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
+      .send({})
+      .end(function(err, res) {
+        err ? reject(err) : resolve(JSON.parse(res.text));
+      });
+    });
+  },
+  async getData2(datapoint) {
+    //ieq.co2
+
+    //console.log(DRes.minutes(60));
+    return new Promise((resolve, reject) => {
       request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-06T12:12:12Z/now/60m')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})

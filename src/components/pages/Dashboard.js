@@ -25,7 +25,7 @@ export default class Dashboard extends Component {
 			super();
 			this.data = this.data.bind(this);
 			this.dx = [];
-			authentication.getData('ieq.co2').then(v => {
+			authentication.getData2('ieq.co2').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
 	  		var series = v['results'][0].series;
 	      var results = series[0].values;
@@ -51,8 +51,75 @@ export default class Dashboard extends Component {
 		//this.setState();
 	}
 	render() {
+		const nowdata = [
+    { type: 'X', A: 80, B: 110, fullMark: 150 },
+    { type: 'Y', A: 58, B: 130, fullMark: 150 },
+    { type: 'Z', A: 86, B: 130, fullMark: 150 },
+    { type: 'W', A: 99, B: 100, fullMark: 150 }
+		];
+
+		const nowdata2 = [
+    { type: 'A', A: 20, B: 110, fullMark: 150 },
+    { type: 'B', A: 38, B: 130, fullMark: 150 },
+    { type: 'C', A: 36, B: 130, fullMark: 150 },
+    { type: 'D', A: 39, B: 100, fullMark: 150 }
+		];
+
+
 		return (
 			<div>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>{configs.title("weather_station.humidity")}</small></Card.TitleText>
+				</Card.Title>
+				<SparkGraphLive type="weather_station.humidity"/>
+				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
+				</Collapsible>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>Now</small></Card.TitleText>
+				</Card.Title>
+
+
+				<div className="row">
+				<div className="col-6">
+				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
+				<RadarChart data={nowdata}>
+          <Radar name="A" dataKey="A" stroke="#0277bd" fill="#0277bd" fillOpacity={0.5}/>
+          <PolarGrid />
+          <PolarAngleAxis axisLine={false} dataKey="type" />
+        </RadarChart>
+				</ResponsiveContainer>
+				</div>
+				<div className="col-6">
+				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
+				<RadarChart data={nowdata2}>
+          <Radar name="A" dataKey="A" stroke="#0277bd" fill="#0277bd" fillOpacity={0.5}/>
+          <PolarGrid />
+          <PolarAngleAxis axisLine={false} dataKey="type" />
+        </RadarChart>
+				</ResponsiveContainer>
+				</div>
+				</div>
+
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>{configs.title("weather_station.indoor_temperature")}</small></Card.TitleText>
+				</Card.Title>
+				<SparkGraphLive type="weather_station.indoor_temperature"/>
+				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
+				</Collapsible>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
 					<Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
@@ -67,7 +134,7 @@ export default class Dashboard extends Component {
 				</Card.Title>
 				<SparkGraphLive type="weather_station.outdoor_temperature"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           <RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>
+           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
@@ -78,7 +145,7 @@ export default class Dashboard extends Component {
 				</Card.Title>
 				<SparkGraphLive type="ieq.co2"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           <RHLiveGraph nodeID="0000000081474d35" type="ieq.co2"/>
+           {/*<RHLiveGraph nodeID="0000000081474d35" type="ieq.co2"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
