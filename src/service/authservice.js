@@ -29,10 +29,27 @@ export default {
       }
     });
   },
+  promisebuild(uri) {
+    return new Promise((resolve, reject) => {
+      request.get(uri).set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
+      .send({}).end(function(err, res) { err ? reject(err) : resolve(JSON.parse(res.text)); });
+    });
+  },
+  multipromise(uris) {
+    return new Promise((resolve, reject) => {
+      var promises = [];
+      var self = this;
+      uris.forEach(function(element) {
+        promises.push(self.promisebuild(element));
+      });
+      Promise.all(promises).then((values) => {
+        resolve(values);
+      }, function() {
+        reject("Failed")
+      });
+    });
+  },
   async getData(datapoint) {
-    //ieq.co2
-
-    //console.log(DRes.minutes(60));
     return new Promise((resolve, reject) => {
       request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-06T12:12:12Z/now/1d')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
@@ -43,9 +60,6 @@ export default {
     });
   },
   async getData2(datapoint) {
-    //ieq.co2
-
-    //console.log(DRes.minutes(60));
     return new Promise((resolve, reject) => {
       request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-06T12:12:12Z/now/60m')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})

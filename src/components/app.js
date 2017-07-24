@@ -11,6 +11,7 @@ import Login from "../auth/login";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
+import NotificationCenter from './NotificationCenter';
 import '../style/App.css';
 require("babel-core/register");
 require("babel-polyfill");
@@ -37,6 +38,7 @@ export default class App extends Component {
 					<Provider store={store}>
 					{/* Layout content area for the preact component */}
           <Layout.Content>
+					  <NotificationCenter/>
 					  {this.props.children}
 					</Layout.Content>
 					{/* Layout content area end tag */}

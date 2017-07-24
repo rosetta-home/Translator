@@ -69,6 +69,7 @@
     "react-load-script": "0.0.4",
     "react-nvd3": "^0.5.7",
     "react-outside-event": "^1.2.5",
+    "react-rangeslider": "^2.1.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-sparklines": "^1.6.0",
@@ -84,7 +85,8 @@
     "semantic-ui-react": "^0.70.0",
     "superagent": "^3.5.2",
     "superagent-cors-proxy": "0.0.1",
-    "tls": "0.0.1"
+    "tls": "0.0.1",
+    "victory": "^0.21.2"
   },
   "main": "webpack.config.babel.js"
 }
