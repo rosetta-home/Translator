@@ -18,6 +18,7 @@ import moment from 'moment';
 import ReactBroadcast from 'ReactBroadcast';
 import RadialCompare from '../elements/RadialCompare';
 import MultiDPChart from '../elements/MultiDPChart';
+import BulletChart from '../elements/BulletChart';
 
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer } from 'recharts';
 
@@ -44,10 +45,11 @@ export default class Dashboard extends Component {
 		if (authentication.getToken() === '') {
       route('/login');
     }
+		ReactBroadcast.broadcast('SetTitle', 'Dashboard');
 	}
 	data() {
-		console.log(DRes.minutes(60));
-		//ReactBroadcast.broadcast('updateTitle', 'value1');
+		//console.log(DRes.minutes(60));
+		//ReactBroadcast.broadcast('SetTitle', 'Dashboard');
 		//route('/');
 		//this.setState();
 	}
@@ -69,6 +71,16 @@ export default class Dashboard extends Component {
 
 		return (
 			<div>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText></Card.TitleText>
+				</Card.Title>
+				<BulletChart datapoint="weather_station.humidity"/>
+				<BulletChart datapoint="weather_station.outdoor_temperature"/>
+				<BulletChart datapoint="weather_station.indoor_temperature"/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
 					<Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>

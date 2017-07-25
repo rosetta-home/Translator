@@ -9,10 +9,6 @@ import BrushElement from './BrushElement';
 import DateSlider from './DateSlider';
 
 class RadialCompare extends Component {
-  state = {
-    x: 10,
-    y: 10
-  };
   constructor(props){
     super(props);
     this.dx = [];
@@ -21,18 +17,18 @@ class RadialCompare extends Component {
       current:0,
       raddata:[
         { angle: 'E', value: 0,  fullMark: 150 },
-      { angle: '60', value: 0, fullMark: 150 },
-      { angle: '30', value: 0, fullMark: 150 },
-      { angle: 'N', value: 0, fullMark: 150 },
-      { angle: '330', value: 0, fullMark: 150 },
-      { angle: '300', value: 0, fullMark: 150 },
-      { angle: 'W', value: 0, fullMark: 150 },
-      { angle: '240', value: 0, fullMark: 150 },
-      { angle: '210', value: 0, fullMark: 150 },
-      { angle: 'S', value: 0, fullMark: 150 },
-      { angle: '150', value: 0, fullMark: 150 },
-      { angle: '120', value: 0, fullMark: 150 }
-    ]
+        { angle: '60', value: 0, fullMark: 150 },
+        { angle: '30', value: 0, fullMark: 150 },
+        { angle: 'N', value: 0, fullMark: 150 },
+        { angle: '330', value: 0, fullMark: 150 },
+        { angle: '300', value: 0, fullMark: 150 },
+        { angle: 'W', value: 0, fullMark: 150 },
+        { angle: '240', value: 0, fullMark: 150 },
+        { angle: '210', value: 0, fullMark: 150 },
+        { angle: 'S', value: 0, fullMark: 150 },
+        { angle: '150', value: 0, fullMark: 150 },
+        { angle: '120', value: 0, fullMark: 150 }
+      ]
     }
     authentication.getData('ieq.co2').then(v => {
       /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
@@ -47,39 +43,36 @@ class RadialCompare extends Component {
       /* Triggers a state change so the nvd3 chart will reload the data */
       this.setState();
     });
-
-
   }
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
-
   handleBrushChange = (value) => {
     this.setState({
       value:value,
       current:0,
       raddata:[
         { angle: 'E', value: 0,  fullMark: 150 },
-      { angle: '60', value: 0, fullMark: 150 },
-      { angle: '30', value: 0, fullMark: 150 },
-      { angle: 'N', value: 0, fullMark: 150 },
-      { angle: '330', value: 0, fullMark: 150 },
-      { angle: '300', value: 0, fullMark: 150 },
-      { angle: 'W', value: 0, fullMark: 150 },
-      { angle: '240', value: 0, fullMark: 150 },
-      { angle: '210', value: 0, fullMark: 150 },
-      { angle: 'S', value: 0, fullMark: 150 },
-      { angle: '150', value: 0, fullMark: 150 },
-      { angle: '120', value: 0, fullMark: 150 }
-    ]
+        { angle: '60', value: 0, fullMark: 150 },
+        { angle: '30', value: 0, fullMark: 150 },
+        { angle: 'N', value: 0, fullMark: 150 },
+        { angle: '330', value: 0, fullMark: 150 },
+        { angle: '300', value: 0, fullMark: 150 },
+        { angle: 'W', value: 0, fullMark: 150 },
+        { angle: '240', value: 0, fullMark: 150 },
+        { angle: '210', value: 0, fullMark: 150 },
+        { angle: 'S', value: 0, fullMark: 150 },
+        { angle: '150', value: 0, fullMark: 150 },
+        { angle: '120', value: 0, fullMark: 150 }
+      ]
     });
   }
   handleDateChange = (value,current) => {
+    var rad = [];
+    var current_direction = value['weather_station.wind.direction'];
+    var current_co2 = value['ieq.co2'];
 
-  var rad = [];
-
-  var current_direction = value['weather_station.wind.direction'];
-  var current_co2 = value['ieq.co2'];
+    //console.log(Math.round(current_direction / 30));
 
   if (current_direction < 90 && current_direction > 60) {
     rad.push({ angle: 'E', value: current_co2,  fullMark: 150 });
@@ -174,45 +167,29 @@ class RadialCompare extends Component {
   } else {
     rad.push({ angle: '120', value: 0,  fullMark: 150 });
   }
-  /*
-  { angle: 'E', value: 0,  fullMark: 150 },
-{ angle: '60', value: 0, fullMark: 150 },
-{ angle: '30', value: 0, fullMark: 150 },
-{ angle: 'N', value: 0, fullMark: 150 },
-{ angle: '330', value: 0, fullMark: 150 },
-{ angle: '300', value: 0, fullMark: 150 },
-{ angle: 'W', value: 0, fullMark: 150 },
-{ angle: '240', value: 120, fullMark: 150 },
-{ angle: '210', value: 120, fullMark: 150 },
-{ angle: 'S', value: 0, fullMark: 150 },
-{ angle: '150', value: 0, fullMark: 150 },
-{ angle: '120', value: 0, fullMark: 150 }
-  */
 
-  this.setState({
+    this.setState({
       current: current,
       raddata:rad
-  });
+    });
   }
 
-
   render () {
-const { value,raddata,current } = this.state;
-
+      const { value,raddata,current } = this.state;
     	return (
         <div>
         <ResponsiveContainer width='100%' aspect={4.0/3.0}>
         <RadarChart data={raddata}>
-                <Radar name="Mike" isAnimationActive={false} dataKey="value" stroke="#ef6c00" fill="#ef6c00" fillOpacity={0.6}/>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="angle" stroke="#0277bd"/>
-                <PolarRadiusAxis stroke="#0277bd"/>
-              </RadarChart>
-          </ResponsiveContainer>
-          <BrushElement brushChange={this.handleBrushChange}/>
-          <DateSlider value={value} current={current} dateChange={this.handleDateChange}/>
-          </div>
+          <Radar name="Mike" isAnimationActive={false} dataKey="value" stroke="#ef6c00" fill="#ef6c00" fillOpacity={0.6}/>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="angle" stroke="#0277bd"/>
+          <PolarRadiusAxis stroke="#0277bd"/>
+        </RadarChart>
+        </ResponsiveContainer>
+        <BrushElement brushChange={this.handleBrushChange}/>
+        <DateSlider value={value} current={current} dateChange={this.handleDateChange}/>
+        </div>
       );
-    }
+  }
 }
 export default RadialCompare;

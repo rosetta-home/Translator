@@ -1,12 +1,22 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
+import ReactBroadcast from "ReactBroadcast";
 
 export default class SideMenu extends Component {
   constructor(props) {
 	    super(props);
 	    this.closeMenu = this.closeMenu.bind(this);
+      this.state = {
+        links:''
+      }
   }
-  componentDidMount() { }
+  componentDidMount() {
+    ReactBroadcast.on('Change_Links', payload => {
+      this.setState({
+        links:payload
+      });
+    });
+  }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
   /* TODO: Find a better why to interact with the material controls */
@@ -20,10 +30,11 @@ export default class SideMenu extends Component {
   }
   /* TODO: Need to detect different auth status to display the different login in option the Authentication class will help with this */
 	render() {
+    const { links } = this.state;
 		return (
     <Layout.Drawer id="menu">
       {/* Beginning of the menu layout */}
-      <Layout.Title></Layout.Title>
+      <Layout.Title>Rosetta Home</Layout.Title>
       {/* Where the nav link are located */}
       <Navigation>
         <Navigation.Link href="/" onClick={this.closeMenu}>Home</Navigation.Link>

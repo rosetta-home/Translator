@@ -1,13 +1,29 @@
 import { h, Component } from 'preact';
 import { Redirect } from 'react-router';
+import ReactBroadcast from "ReactBroadcast";
 
 export default class NotificationCenter extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      notifications:[]
+    }
   }
-  componentDidMount() {}
+  componentDidMount() {
+    ReactBroadcast.on('Add_Notification', payload => {
+      var { notifications } = this.state;
+      notifications.push(payload);
+      this.setState({
+        notifications:notifications
+      });
+    });
+  }
   componentWillUnmount() {}
   render() {
+    const { notifications } = this.state;
+    if (notifications.length === 0) { return ( <div> </div> ); }
+
+
     return (
       <div className="notecontainer">
       <div className="notealert"><span class="closebtn">&times;</span>

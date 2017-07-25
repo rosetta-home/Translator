@@ -12,6 +12,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
 import NotificationCenter from './NotificationCenter';
+import ReactBroadcast from "ReactBroadcast";
 import '../style/App.css';
 require("babel-core/register");
 require("babel-polyfill");
@@ -26,6 +27,7 @@ export default class App extends Component {
   }
 	/* Renders the component*/
 	render() {
+		const { title } = this.state;
 		return (
 			<div className="App">
 			{/* Root of the RH application, here is the basic layout of the web app with Google Material. */}

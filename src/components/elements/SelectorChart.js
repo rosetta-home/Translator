@@ -39,7 +39,7 @@ class SelectorChart extends Component {
           {/* The actually line for plotting the data values */}
           <Line isAnimationActive={false}  dataKey="value" stroke="#ef6c00" dot={false} />
           {/* ReferenceLine which is used as a threshold */}
-          <ReferenceLine y={this.props.threshold} label="Threshold" stroke="red" strokeDasharray="5 5" />
+          <ReferenceLine y={this.props.threshold} label="Threshold" stroke="red"/>
           {/* Brush for the data ease, with data key set for the formatter */}
           <Brush dataKey="date" tickFormatter={this.dateformat} stroke="#0277bd">
             {/* Brush linchart within */}

@@ -14,9 +14,11 @@ class BrushElement extends Component {
     this.dateformat = this.dateformat.bind(this);
     this.datatypes = ['ieq.co2','weather_station.wind.direction'];
     var uris = [];
+
     this.datatypes.forEach(function(element) {
       uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/6h');
     });
+
     this.data = [];
     authentication.multipromise(uris).then(data => {
         var self = this;
@@ -46,31 +48,24 @@ class BrushElement extends Component {
     });
   }
   dateformat(date) { return ""; }
-  change(range) {
-    this.props.brushChange(this.data.slice(range.startIndex,range.endIndex));
-  }
+  change(range) { this.props.brushChange(this.data.slice(range.startIndex,range.endIndex)); }
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
   render () {
-
-if (this.data.length === 0) {
-  return ( <div> </div> );
-}
-    	return (
-        <div>
+    if (this.data.length === 0) { return ( <div> </div> ); }
+    return (
+      <div>
         <ResponsiveContainer width='100%' aspect={14.0/2.0}>
-
-        <LineChart  data={this.data}>
-      <Brush onChange={this.change} tickFormatter={this.dateformat} stroke="#0277bd">
-      <LineChart>
-
-        <Line isAnimationActive={false} dataKey="ieq.co2" stroke="#ef6c00" fill="#ef6c00" dot={false}/>
-      </LineChart>
-      </Brush>
-    </LineChart>
-    </ResponsiveContainer>
-          </div>
+          <LineChart data={this.data}>
+          <Brush onChange={this.change} tickFormatter={this.dateformat} stroke="#0277bd">
+            <LineChart>
+              <Line isAnimationActive={false} dataKey="ieq.co2" stroke="#ef6c00" fill="#ef6c00" dot={false}/>
+            </LineChart>
+          </Brush>
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
       );
     }
 }

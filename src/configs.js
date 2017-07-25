@@ -1,6 +1,7 @@
 import { Observable }     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
+
 export default {
   title(type) {
     if (type === 'weather_station.outdoor_temperature') {

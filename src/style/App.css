@@ -20,6 +20,13 @@ text {
   font-size: 12px;
 }
 
+.mdl-layout__drawer.is-visible {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    text-align: left;
+}
+
 .notecontainer {
   /*display: block;
   position: fixed;
@@ -459,7 +466,7 @@ ol.progtrckr li.progtrckr-done:hover:before {
   cursor: pointer;
   display: inline-block;
   position: absolute;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 -1px 3px rgba(0, 0, 0, 0.4);
+  /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 -1px 3px rgba(0, 0, 0, 0.4);*/
 }
 .rangeslider .rangeslider__handle:hover .rangeslider__tooltip {
   opacity: 1;
@@ -605,4 +612,12 @@ ol.progtrckr li.progtrckr-done:hover:before {
   cursor: pointer;
   display: inline-block;
   top: 10px;
+}
+
+.bulletArea {
+  padding: 5px;
+}
+
+.bulletArea svg {
+  height: 55px;
 }
