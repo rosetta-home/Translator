@@ -47,7 +47,7 @@ export default class App extends Component {
 					</Provider>
 					{/* Provider for the redux storage end tag */}
 					</Layout>
-					{/* Footer for the whole applicaiton */}
+				{/* Footer for the whole applicaiton */}
         <Footer/>
       </div>
 		);

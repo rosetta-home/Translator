@@ -6,6 +6,10 @@ export default class Footer extends Component {
 	/* Where the footer body is located for the Rosetta Home project */
 	/* TODO: Put together the footer design with Joe maybe something like the smarthomechecklist.com design */
 	render() {
-		return (<div className="Footer"></div>);
+		return (
+		<div className="Footer">
+			<span>XXX</span>
+		</div>
+		);
 	}
 }

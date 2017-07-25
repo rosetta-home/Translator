@@ -19,7 +19,7 @@ class MultiDPChart extends Component {
     this.datatypes = this.props.datapoints.split(',');
     var uris = [];
     this.datatypes.forEach(function(element) {
-      uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/1d');
+      uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/12h');
     });
     authentication.multipromise(uris).then(data => {
         var self = this;

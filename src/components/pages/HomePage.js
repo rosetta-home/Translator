@@ -13,16 +13,7 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div>
-			<Card shadow={4} style="width:100%" padding={20}>
-				<Card.Title>
-					<Card.TitleText></Card.TitleText>
-				</Card.Title>
-				<div style="padding:20px;height:500px;">
-
-				</div>
-				<Card.Actions style="text-align:right">
-				</Card.Actions>
-			</Card>
+			
 			</div>
 		);
 	}

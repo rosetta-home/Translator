@@ -7,7 +7,7 @@ export default class SideMenu extends Component {
 	    super(props);
 	    this.closeMenu = this.closeMenu.bind(this);
       this.state = {
-        links:''
+        links:[]
       }
   }
   componentDidMount() {
@@ -42,6 +42,7 @@ export default class SideMenu extends Component {
         <Navigation.Link href="/" onClick={this.closeMenu}>Profile</Navigation.Link>
         <Navigation.Link href="/login" onClick={this.closeMenu}>Login</Navigation.Link>
         <Navigation.Link href="/setup" onClick={this.closeMenu}>Setup</Navigation.Link>
+        <Navigation.Link href="/about" onClick={this.closeMenu}>About</Navigation.Link>
       </Navigation>
     </Layout.Drawer>
 		);

@@ -27,6 +27,15 @@ text {
     text-align: left;
 }
 
+@media screen and (min-width: 1025px) {
+    .mdl-layout--fixed-drawer>.mdl-layout__drawer {
+        -webkit-transform:translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        text-align: left;
+    }
+}
+
 .notecontainer {
   /*display: block;
   position: fixed;
@@ -43,6 +52,7 @@ text {
 
 g.nvd3.nv-wrap.nv-sparkline path {
   stroke:red;
+  stroke-width: 3px;
 }
 
 .notewarning {
@@ -619,5 +629,13 @@ ol.progtrckr li.progtrckr-done:hover:before {
 }
 
 .bulletArea svg {
+  height: 55px;
+}
+
+.barchart {
+  padding: 5px;
+}
+
+.barchart svg {
   height: 55px;
 }

@@ -44,7 +44,7 @@ class SparkGraphLive extends Component {
   				   <div className="center-div"><label className="readingLabel">{this.lastValue + this.lastValueEnding}</label></div>
   			   </div>
            <div className="col-9">
-             <NVD3Chart stroke="#ef6c00" height={80} margin={{top: 10, right: 30, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
+             <NVD3Chart color={["#ef6c00"]} height={80} margin={{top: 10, right: 30, bottom: 10, left: 10}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
            </div>
         </div>
       </div>

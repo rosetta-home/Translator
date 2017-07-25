@@ -19,6 +19,7 @@ import ReactBroadcast from 'ReactBroadcast';
 import RadialCompare from '../elements/RadialCompare';
 import MultiDPChart from '../elements/MultiDPChart';
 import BulletChart from '../elements/BulletChart';
+import BarChart from '../elements/BarChart';
 
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer } from 'recharts';
 
@@ -75,7 +76,30 @@ export default class Dashboard extends Component {
 				<Card.Title>
 					<Card.TitleText></Card.TitleText>
 				</Card.Title>
-				<BulletChart datapoint="weather_station.humidity"/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>CO2</small></Card.TitleText>
+				</Card.Title>
+				<BarChart datapoint="ieq.co2" axisEnabled={true}/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>CO2</small></Card.TitleText>
+				</Card.Title>
+				<BarChart datapoint="ieq.co2" axisEnabled={false}/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>Bullet Chart</small></Card.TitleText>
+				</Card.Title>
+				<BulletChart datapoint="ieq.co2"/>
 				<BulletChart datapoint="weather_station.outdoor_temperature"/>
 				<BulletChart datapoint="weather_station.indoor_temperature"/>
 				<Card.Actions style="text-align:right"></Card.Actions>
