@@ -51,7 +51,7 @@ export default {
   },
   async getData(datapoint) {
     return new Promise((resolve, reject) => {
-      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/1d')
+      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/12h')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {

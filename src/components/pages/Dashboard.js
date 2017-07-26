@@ -23,11 +23,26 @@ import BarChart from '../elements/BarChart';
 
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,AreaChart,Area,XAxis,YAxis,CartesianGrid } from 'recharts';
 
-import 'react-dates/lib/css/_datepicker.css';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import DayPicker, { DateUtils } from 'react-day-picker';
 
+import 'react-day-picker/lib/style.css';
 
 export default class Dashboard extends Component {
+	state = {
+    from: null,
+    to: null,
+  };
+  handleDayClick = day => {
+    const range = DateUtils.addDayToRange(day, this.state);
+    this.setState(range);
+  };
+  handleResetClick = e => {
+    e.preventDefault();
+    this.setState({
+      from: null,
+      to: null,
+    });
+  };
 	constructor() {
 			super();
 			this.data = this.data.bind(this);
@@ -74,7 +89,7 @@ export default class Dashboard extends Component {
     { type: 'D', A: 39, B: 100, fullMark: 150 }
 		];
 
-		const data = [
+		/*const data = [
 		      {month: '2015.01', a: 4000, b: 2400, c: 2400},
 		      {month: '2015.02', a: 3000, b: 1398, c: 2210},
 		      {month: '2015.03', a: 2000, b: 9800, c: 2290},
@@ -91,11 +106,14 @@ export default class Dashboard extends Component {
 
 const toPercent = (decimal, fixed = 0) => {
 	return `${(decimal * 100).toFixed(fixed)}%`;
-};
+};*/
+
 
 var date = moment();
+const { from, to } = this.state;
 	return (
 			<div>
+
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
 					<Card.TitleText><small>Now</small></Card.TitleText>
@@ -111,11 +129,29 @@ var date = moment();
         <Area type='monotone' dataKey='c' stackId="1" stroke='#d0d0d5' fill='#d0d0d5' />
       	</AreaChart>
 				</ResponsiveContainer>*/}
-				<div className="row">
-					 <div className="col-3">
-
-					 </div>
-				</div>
+				<div className="RangeExample">
+			 {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
+			 {from && !to && <p>Please select the <strong>last day</strong>.</p>}
+			 {from &&
+				 to &&
+				 <p style="color:red;">
+					 You chose from
+					 {' '}
+					 {moment(from).format('L')}
+					 {' '}
+					 to
+					 {' '}
+					 {moment(to).format('L')}
+					 .
+					 {' '}<a href="." onClick={this.handleResetClick}>Reset</a>
+				 </p>}
+			 <DayPicker
+				 numberOfMonths={2}
+				 selectedDays={[from, { from, to }]}
+				 onDayClick={this.handleDayClick}
+				 fixedWeeks
+			 />
+		 </div>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>
