@@ -52,7 +52,7 @@ text {
 
 g.nvd3.nv-wrap.nv-sparkline path {
   stroke:red;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
 
 .notewarning {
@@ -523,6 +523,7 @@ ol.progtrckr li.progtrckr-done:hover:before {
   width: 30px;
   height: 30px;
   top: -10px;
+  border-radius: 15px;
 }
 .rangeslider-horizontal .rangeslider__handle:after {
   content: ' ';
@@ -622,6 +623,12 @@ ol.progtrckr li.progtrckr-done:hover:before {
   cursor: pointer;
   display: inline-block;
   top: 10px;
+}
+
+.currentvaluediv {
+  height: 100px;
+  background-color: red;
+  margin: 10px;
 }
 
 .bulletArea {

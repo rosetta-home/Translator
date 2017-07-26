@@ -11,7 +11,7 @@ export default {
     } else if (type === 'weather_station.humidity') {
       return 'Humidity';
     } else if (type === 'ieq.co2') {
-      return 'CO2 (Parts Per Million)';
+      return 'CO2 (PPM)';
     }
     return type;
   }

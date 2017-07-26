@@ -7,48 +7,47 @@ Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
 
 class BrushElement extends Component {
-
+  //TODO: Hard code for the wind vs ieq.co2 compoent. Cannot really be used yet for other cases.
   constructor(props){
     super(props);
     this.change = this.change.bind(this);
     this.dateformat = this.dateformat.bind(this);
     this.datatypes = ['ieq.co2','weather_station.wind.direction'];
     var uris = [];
-
     this.datatypes.forEach(function(element) {
       uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/6h');
     });
-
     this.data = [];
     authentication.multipromise(uris).then(data => {
-        var self = this;
-        data.forEach(function(item) {
-          if (self.data.length === 0) {
-            var series = item['results'][0].series;
-    	      var results = series[0].values;
-            var name = series[0].name;
-    				var tempdata = [];
-    				for (var i = 0; i < results.length; i++) {
-    			    var current = results[i];
-              var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
-              temppoint[name] = current[1];
-    			    self.data.push(temppoint);
-    			  }
-          } else {
-            var series = item['results'][0].series;
-    	      var results = series[0].values;
-            var name = series[0].name;
-            for (var i = 0; i < results.length; i++) {
-                var current = results[i];
-                self.data[i][name] = current[1];
-            }
+      var self = this;
+      data.forEach(function(item) {
+        if (self.data.length === 0) {
+          var series = item['results'][0].series;
+    	    var results = series[0].values;
+          var name = series[0].name;
+    			var tempdata = [];
+    			for (var i = 0; i < results.length; i++) {
+    			  var current = results[i];
+            var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
+            temppoint[name] = current[1];
+    			  self.data.push(temppoint);
+    			}
+        } else {
+          var series = item['results'][0].series;
+    	    var results = series[0].values;
+          var name = series[0].name;
+          for (var i = 0; i < results.length; i++) {
+            var current = results[i];
+            self.data[i][name] = current[1];
           }
-        });
-        this.setState();
+        }
+      });
+      this.setState();
     });
   }
   dateformat(date) { return ""; }
   change(range) { this.props.brushChange(this.data.slice(range.startIndex,range.endIndex)); }
+  /* Component lifecyle methods */
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }

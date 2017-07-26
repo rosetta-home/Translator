@@ -21,13 +21,18 @@ import MultiDPChart from '../elements/MultiDPChart';
 import BulletChart from '../elements/BulletChart';
 import BarChart from '../elements/BarChart';
 
-import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer } from 'recharts';
+import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,AreaChart,Area,XAxis,YAxis,CartesianGrid } from 'recharts';
+
+import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+
 
 export default class Dashboard extends Component {
 	constructor() {
 			super();
 			this.data = this.data.bind(this);
 			this.dx = [];
+			this.state = {date:Date()};
 			authentication.getData2('ieq.co2').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
 	  		var series = v['results'][0].series;
@@ -69,13 +74,48 @@ export default class Dashboard extends Component {
     { type: 'D', A: 39, B: 100, fullMark: 150 }
 		];
 
+		const data = [
+		      {month: '2015.01', a: 4000, b: 2400, c: 2400},
+		      {month: '2015.02', a: 3000, b: 1398, c: 2210},
+		      {month: '2015.03', a: 2000, b: 9800, c: 2290},
+		      {month: '2015.04', a: 2780, b: 3908, c: 2000},
+		      {month: '2015.05', a: 1890, b: 4800, c: 2181},
+		      {month: '2015.06', a: 2390, b: 3800, c: 2500},
+		      {month: '2015.07', a: 3490, b: 4300, c: 2100},
+		];
+		const getPercent = (value, total) => {
+	const ratio = total > 0 ? value / total : 0;
 
-		return (
+  return toPercent(ratio, 2);
+};
+
+const toPercent = (decimal, fixed = 0) => {
+	return `${(decimal * 100).toFixed(fixed)}%`;
+};
+
+var date = moment();
+	return (
 			<div>
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
-					<Card.TitleText></Card.TitleText>
+					<Card.TitleText><small>Now</small></Card.TitleText>
 				</Card.Title>
+				{/*<ResponsiveContainer width='100%' aspect={4.0/3.0}>
+				<AreaChart data={data} stackOffset="expand"
+            margin={{top: 0, right: 10, left: 0, bottom: 0}} >
+        <XAxis dataKey="month"/>
+        <YAxis tickFormatter={toPercent} />
+        <CartesianGrid strokeDasharray="3 3"/>
+        <Area type='monotone' dataKey='a' stackId="1" stroke='#03a9f4' fill='#03a9f4' />
+        <Area type='monotone' dataKey='b' stackId="1" stroke='#ff9800' fill='#ff9800' />
+        <Area type='monotone' dataKey='c' stackId="1" stroke='#d0d0d5' fill='#d0d0d5' />
+      	</AreaChart>
+				</ResponsiveContainer>*/}
+				<div className="row">
+					 <div className="col-3">
+
+					 </div>
+				</div>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>

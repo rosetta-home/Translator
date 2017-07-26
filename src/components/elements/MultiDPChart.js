@@ -22,30 +22,30 @@ class MultiDPChart extends Component {
       uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/12h');
     });
     authentication.multipromise(uris).then(data => {
-        var self = this;
-        data.forEach(function(item) {
-          if (self.data.length === 0) {
-            var series = item['results'][0].series;
-    	      var results = series[0].values;
-            var name = series[0].name;
-    				var tempdata = [];
-    				for (var i = 0; i < results.length; i++) {
-    			    var current = results[i];
-              var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
-              temppoint[name] = current[1];
-    			    self.data.push(temppoint);
-    			  }
-          } else {
-            var series = item['results'][0].series;
-    	      var results = series[0].values;
-            var name = series[0].name;
-            for (var i = 0; i < results.length; i++) {
-                var current = results[i];
-                self.data[i][name] = current[1];
-            }
+      var self = this;
+      data.forEach(function(item) {
+        if (self.data.length === 0) {
+          var series = item['results'][0].series;
+    	    var results = series[0].values;
+          var name = series[0].name;
+    			var tempdata = [];
+    			for (var i = 0; i < results.length; i++) {
+    			  var current = results[i];
+            var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
+            temppoint[name] = current[1];
+    			  self.data.push(temppoint);
+    			}
+        } else {
+          var series = item['results'][0].series;
+    	    var results = series[0].values;
+          var name = series[0].name;
+          for (var i = 0; i < results.length; i++) {
+            var current = results[i];
+            self.data[i][name] = current[1];
           }
-        });
-        this.setState();
+        }
+      });
+      this.setState();
     });
   }
   click(data) { console.log(data); }

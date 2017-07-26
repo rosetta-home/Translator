@@ -78,7 +78,7 @@ class BarChart extends Component {
     } else {
     return (
       <div>
-      <NVD3Chart margin={{top: 10, right: 10, bottom: 10, left: 10}} id="barchart" showXAxis={enable} showYAxis={enable} context={context} height={400} color={{name:'getColor', type:'function'}} type="discreteBarChart" datum={data} x="x" y="y" xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>
+      <NVD3Chart margin={{top: 0, right: 10, bottom: 0, left: 10}} id="barchart" showXAxis={enable} showYAxis={enable} context={context} height={400} color={{name:'getColor', type:'function'}} type="discreteBarChart" datum={data} x="x" y="y" xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>
       </div>
     );
     }
