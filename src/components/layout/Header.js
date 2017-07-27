@@ -16,7 +16,7 @@ export default class Header extends Component {
     const { title } = this.state;
 		return (
     <Layout.Header style="background-color: #ef6c00;">
-      {/* Layout for the header with the title */}
+      {/* Layout for the header with the title xc9vzcj6v2jGNc4McqbKD6hQEFLgxvrEhqYHdUDy */}
       <Layout.HeaderRow>
       {/* The title for the actual header, idea is to have an listener than will detect the state change and change the title like on the native mobile platform */}
       <Layout.Title><NavTitle/></Layout.Title>
