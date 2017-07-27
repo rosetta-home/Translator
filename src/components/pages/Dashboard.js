@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
 import StepZilla from 'react-stepzilla';
-import { Card, Button, Grid,Cell } from 'preact-mdl';
+import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import SparkGraphLive from '../elements/SparkGraphLive';
 import '../../style/Card.css';
 import Collapsible from 'react-collapsible';
@@ -22,9 +22,7 @@ import BulletChart from '../elements/BulletChart';
 import BarChart from '../elements/BarChart';
 
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,AreaChart,Area,XAxis,YAxis,CartesianGrid } from 'recharts';
-
 import DayPicker, { DateUtils } from 'react-day-picker';
-
 import 'react-day-picker/lib/style.css';
 
 export default class Dashboard extends Component {
@@ -43,8 +41,22 @@ export default class Dashboard extends Component {
       to: null,
     });
   };
-	constructor() {
-			super();
+
+
+	handleOpenDialog() {
+	    this.setState({
+	      openDialog: true
+	    });
+	  }
+
+	  handleCloseDialog() {
+	    this.setState({
+	      openDialog: false
+	    });
+	  }
+
+	constructor(props) {
+			super(props);
 			this.data = this.data.bind(this);
 			this.dx = [];
 			this.state = {date:Date()};
@@ -61,7 +73,11 @@ export default class Dashboard extends Component {
 	      /* Triggers a state change so the nvd3 chart will reload the data */
 	      this.setState();
 			});
+			this.state = {};
+		  this.handleOpenDialog = this.handleOpenDialog.bind(this);
+		  this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
+
 	componentDidMount() {
 		if (authentication.getToken() === '') {
       route('/login');
@@ -74,6 +90,19 @@ export default class Dashboard extends Component {
 		//route('/');
 		//this.setState();
 	}
+
+
+
+	openDialog = () => {
+			this.setState({ open: true });
+		};
+
+		close = () => {
+			this.setState({ open: false });
+		};
+
+
+
 	render() {
 		const nowdata = [
     { type: 'X', A: 80, B: 110, fullMark: 150 },
@@ -89,7 +118,7 @@ export default class Dashboard extends Component {
     { type: 'D', A: 39, B: 100, fullMark: 150 }
 		];
 
-		/*const data = [
+		const data = [
 		      {month: '2015.01', a: 4000, b: 2400, c: 2400},
 		      {month: '2015.02', a: 3000, b: 1398, c: 2210},
 		      {month: '2015.03', a: 2000, b: 9800, c: 2290},
@@ -106,11 +135,16 @@ export default class Dashboard extends Component {
 
 const toPercent = (decimal, fixed = 0) => {
 	return `${(decimal * 100).toFixed(fixed)}%`;
-};*/
+};
 
 
 var date = moment();
-const { from, to } = this.state;
+const { from, to,open } = this.state;
+
+
+	console.log("from: " + from);
+	console.log("to: " + to);
+
 	return (
 			<div>
 
@@ -118,7 +152,7 @@ const { from, to } = this.state;
 				<Card.Title>
 					<Card.TitleText><small>Now</small></Card.TitleText>
 				</Card.Title>
-				{/*<ResponsiveContainer width='100%' aspect={4.0/3.0}>
+				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
 				<AreaChart data={data} stackOffset="expand"
             margin={{top: 0, right: 10, left: 0, bottom: 0}} >
         <XAxis dataKey="month"/>
@@ -128,7 +162,7 @@ const { from, to } = this.state;
         <Area type='monotone' dataKey='b' stackId="1" stroke='#ff9800' fill='#ff9800' />
         <Area type='monotone' dataKey='c' stackId="1" stroke='#d0d0d5' fill='#d0d0d5' />
       	</AreaChart>
-				</ResponsiveContainer>*/}
+				</ResponsiveContainer>
 				<div className="RangeExample">
 			 {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
 			 {from && !to && <p>Please select the <strong>last day</strong>.</p>}
@@ -203,7 +237,6 @@ const { from, to } = this.state;
 				</Card.Title>
 				<SparkGraphLive type="weather_station.humidity"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
@@ -244,7 +277,6 @@ const { from, to } = this.state;
 				</Card.Title>
 				<SparkGraphLive type="weather_station.indoor_temperature"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
@@ -255,7 +287,6 @@ const { from, to } = this.state;
 				</Card.Title>
 				<SparkGraphLive type="weather_station.outdoor_temperature"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           {/*<RHLiveGraph nodeID="0000000081474d35" type="weather_station.outdoor_temperature"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
@@ -266,7 +297,6 @@ const { from, to } = this.state;
 				</Card.Title>
 				<SparkGraphLive type="ieq.co2"/>
 				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-           {/*<RHLiveGraph nodeID="0000000081474d35" type="ieq.co2"/>*/}
 				</Collapsible>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>

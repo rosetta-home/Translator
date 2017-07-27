@@ -73,6 +73,7 @@
     "react-rangeslider": "^2.1.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-skylight": "^0.4.2",
     "react-sparklines": "^1.6.0",
     "react-stepzilla": "^4.6.2",
     "react-swipeable-views": "^0.12.4",
