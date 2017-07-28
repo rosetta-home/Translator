@@ -36,6 +36,61 @@ text {
     }
 }
 
+/* Dialog */
+.dialog {
+    width: 90vw;
+    max-width: 20rem;
+
+    padding: 1em;
+
+    background: #fff;
+    color: #656e77;
+    box-shadow: 0 0 5px rgba(101, 110, 119, .2);
+    border: 0;
+    text-align: center;
+}
+
+.dialog[open] {
+    animation: .2s linear slidein;
+}
+
+.dialog::backdrop {
+    background: rgba(224, 228, 232, .9);
+    animation: .4s ease fade;
+}
+
+.dialog__title {
+    color: #50AAFF;
+}
+
+.dialog__txt {}
+
+.dialog__btn {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+
+@keyframes slidein {
+    from {
+        transform: translate3d(0, 5px, 0);
+    }
+    to {
+        transfrom: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: .3;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
 .notecontainer {
   /*display: block;
   position: fixed;
@@ -645,4 +700,20 @@ ol.progtrckr li.progtrckr-done:hover:before {
 
 .barchart svg {
   height: 55px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+}
+
+.box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
 }

@@ -20,6 +20,8 @@ import MultiDPChart from '../elements/MultiDPChart';
 import BulletChart from '../elements/BulletChart';
 import BarChart from '../elements/BarChart';
 
+import Modal from '../layout/Modal';
+
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,AreaChart,Area,XAxis,YAxis,CartesianGrid } from 'recharts';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -46,8 +48,9 @@ export default class Dashboard extends Component {
 	constructor(props) {
 			super(props);
 			this.data = this.data.bind(this);
-			this.state = {from: null,
+			this.state = {  visible: true,from: null,
 	    to: null,date:Date()};
+
 			authentication.getData2('ieq.co2','2017-07-17T19:46:17Z','2017-07-27T19:46:17Z').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
 	  		var series = v['results'][0].series;
@@ -62,8 +65,14 @@ export default class Dashboard extends Component {
 	      this.setState();
 			});
 			this.state = {};
-		  this.handleOpenDialog = this.handleOpenDialog.bind(this);
-		  this.handleCloseDialog = this.handleCloseDialog.bind(this);
+      this.showModal = this.showModal.bind(this);
+      this.hideModal = this.hideModal.bind(this);
+  }
+  showModal () {
+      this.setState({visible: true});
+  }
+  hideModal () {
+      this.setState({visible: false});
   }
 	componentDidMount() {
 		if (authentication.getToken() === '') {
@@ -116,20 +125,56 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 
 	var res = DRes.getResolution(fromValue,toValue);
 
-	//console.log("res: " + res);
-
-
 	return (
 			<div>
-      <Card shadow={4} style="width:100%">
+
+
+  {/*    <div className="row">
+         <div className="col-6">
+          <Card shadow={4} style="width:100%"></Card>
+         </div>
+         <div className="col-6">
+          <Card shadow={4} style="width:100%"></Card>
+         </div>
+       </div>
+
+       <div className="row">
+          <div className="col-6">
+            <Card shadow={4} style="width:100%"></Card>
+          </div>
+          <div className="col-6">
+            <Card shadow={4} style="width:100%"></Card>
+          </div>
+        </div> */}
+
+
+
+     <Card shadow={4} style="width:100%">
  		 <DayPicker
  			 numberOfMonths={2}
  			 selectedDays={[from, { from, to }]}
  			 onDayClick={this.handleDayClick}
- 			 fixedWeeks
- 		 />
+ 			 fixedWeeks/>
  		 </Card>
- 		 <br></br>
+     <br></br>
+     <div className="row">
+            <div className="col-6">
+             <Card shadow={4} style="width:100%"></Card>
+            </div>
+            <div className="col-6">
+             <Card shadow={4} style="width:100%"></Card>
+            </div>
+          </div>
+
+          <div className="row">
+             <div className="col-6">
+               <Card shadow={4} style="width:100%"></Card>
+             </div>
+             <div className="col-6">
+               <Card shadow={4} style="width:100%"></Card>
+             </div>
+           </div>
+     <br></br>
      <Card shadow={4} style="width:100%">
        <Card.Title>
          <Card.TitleText><small>{configs.title("weather_station.outdoor_temperature")}</small></Card.TitleText>
