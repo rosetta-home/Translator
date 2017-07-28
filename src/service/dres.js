@@ -14,6 +14,11 @@ export default {
     var duration = moment.duration(moment(end).diff(start));
     var hours = duration.asHours();
     var days = Math.round(hours / 24);
-    return this.minutes(30);;
+
+    if (days < 14) {
+      return this.minutes(30);;
+
+    }
+    return this.hours(6);
   }
 }

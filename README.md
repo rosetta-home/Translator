@@ -78,14 +78,14 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 ```
 /* Data points to graph */
 const points = "weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature";
-<MultiDPChart datapoints={points}/>
+<MultiDPChart datapoints={points} startDateTime={fromValue} endDateTime={toValue}/>
 ```
 <b>SparkGraphLive</b> is a mix of the sparkline and the live graph. The component has the most current value on the left side of the compoment and a sparkline to the right. Under the top two elements is a live is the LiveGraph.
 
 ```
 /* Id of the data point */
 const datapoint = "weather_station.humidity";
-<SparkGraphLive type={datapoint}/>
+<SparkGraphLive type={datapoint} startDateTime={fromValue} endDateTime={toValue}/>
 ```
 
 <b>LiveGraph</b> is a live graph component that interfaces with Satori and redux provider.
@@ -95,5 +95,5 @@ const datapoint = "weather_station.humidity";
 const nodeID = "0000000081474d35";
 /* Data points to stream */
 const points = "weather_station.outdoor_temperature";
-<RHLiveGraph nodeID={nodeID} type={points}/>
+<RHLiveGraph nodeID={nodeID} type={points} startDateTime={fromValue} endDateTime={toValue}/>
 ```

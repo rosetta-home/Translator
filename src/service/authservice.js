@@ -29,26 +29,6 @@ export default {
       }
     });
   },
-  promisebuild(uri) {
-    return new Promise((resolve, reject) => {
-      request.get(uri).set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
-      .send({}).end(function(err, res) { err ? reject(err) : resolve(JSON.parse(res.text)); });
-    });
-  },
-  multipromise(uris) {
-    return new Promise((resolve, reject) => {
-      var promises = [];
-      var self = this;
-      uris.forEach(function(element) {
-        promises.push(self.promisebuild(element));
-      });
-      Promise.all(promises).then((values) => {
-        resolve(values);
-      }, function() {
-        reject("Failed")
-      });
-    });
-  },
   async getData(datapoint) {
     return new Promise((resolve, reject) => {
       request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/12h')

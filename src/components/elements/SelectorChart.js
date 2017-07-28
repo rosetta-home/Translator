@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine,
   ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
   Label, LabelList,Surface } from 'recharts';
+import dataservice from '../../service/dataservice';
+import moment from 'moment';
 
 class SelectorChart extends Component {
 
@@ -12,13 +14,29 @@ class SelectorChart extends Component {
     this.valueformat = this.valueformat.bind(this);
     this.labelformat = this.labelformat.bind(this);
     this.click = this.click.bind(this);
-    
+    this.data = [];
   }
   click(data) { console.log(data); }
   /* React component lifecyle functions */
  	componentDidMount() { }
  	componentWillUnmount() { }
-  componentWillReceiveProps(nextProps) { }
+  componentWillReceiveProps(nextProps) {
+    this.data = [];
+    dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres).then(payload => {
+      var series = payload['results'][0].series;
+      if (series !== undefined) {
+      var results = series[0].values;
+      var data = [];
+      for (var i = 0; i < results.length; i++) {
+        var current = results[i];
+        data.push({ date:moment(current[0]).format("MMMM Do h:mm a"), value:current[1]  });
+      }
+      this.data = data;
+      /* Triggers a state change so the nvd3 chart will reload the data */
+      this.setState();
+      }
+    });
+  }
   /* Date formatter for the brush */
   dateformat(date) { return ""; }
   /* Formater for the value on the chart, rounds the value to nearest whole number */
@@ -30,7 +48,7 @@ class SelectorChart extends Component {
         {/* ResponsiveContainer for the linechart with brush to fit in container */}
         <ResponsiveContainer width='100%' aspect={4.0/3.0}>
         {/* Linchart with the the data and click callback defined */}
-        <LineChart data={this.props.data} onClick={this.click} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+        <LineChart data={this.data} onClick={this.click} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
           {/* XAxis with value for custom color and padding */}
           <XAxis dataKey="date" label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
           {/* YAxis with value for custom color and padding */}

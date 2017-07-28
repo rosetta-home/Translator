@@ -46,7 +46,6 @@ export default class Dashboard extends Component {
 	constructor(props) {
 			super(props);
 			this.data = this.data.bind(this);
-			this.dx = [];
 			this.state = {from: null,
 	    to: null,date:Date()};
 			authentication.getData2('ieq.co2','2017-07-17T19:46:17Z','2017-07-27T19:46:17Z').then(v => {
@@ -117,30 +116,56 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 
 	var res = DRes.getResolution(fromValue,toValue);
 
-	console.log("res: " + res);
+	//console.log("res: " + res);
 
-DRes
 
 	return (
 			<div>
       <Card shadow={4} style="width:100%">
+ 		 <DayPicker
+ 			 numberOfMonths={2}
+ 			 selectedDays={[from, { from, to }]}
+ 			 onDayClick={this.handleDayClick}
+ 			 fixedWeeks
+ 		 />
+ 		 </Card>
+ 		 <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
+       </Card.Title>
+       <SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>Bullet Chart</small></Card.TitleText>
+       </Card.Title>
+       <BulletChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue}/>
+       <BulletChart datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
+       <BulletChart datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>{configs.title("weather_station.humidity")}</small></Card.TitleText>
+       </Card.Title>
+       <SparkGraphLive datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue}/>
+       <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+       </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+      <Card shadow={4} style="width:100%">
         <Card.Title>
           <Card.TitleText><small>Weather Station</small></Card.TitleText>
         </Card.Title>
-        <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature"/>
+        <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
         <Card.Actions style="text-align:right"></Card.Actions>
       </Card>
       <br></br>
-		 <Card shadow={4} style="width:100%">
-		 <DayPicker
-			 numberOfMonths={2}
-			 selectedDays={[from, { from, to }]}
-			 onDayClick={this.handleDayClick}
-			 fixedWeeks
-		 />
-		 </Card>
-		 <br></br>
-
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
 					<Card.TitleText><small>CO2</small></Card.TitleText>
@@ -211,9 +236,9 @@ DRes
 				<Card.Title>
 					<Card.TitleText><small>Bullet Chart</small></Card.TitleText>
 				</Card.Title>
-				<BulletChart datapoint="ieq.co2"/>
-				<BulletChart datapoint="weather_station.outdoor_temperature"/>
-				<BulletChart datapoint="weather_station.indoor_temperature"/>
+				<BulletChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue}/>
+				<BulletChart datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
+				<BulletChart datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>

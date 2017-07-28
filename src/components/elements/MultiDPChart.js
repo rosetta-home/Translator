@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine,
   ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
   Label, LabelList,Surface } from 'recharts';
-import authentication from '../../service/authentication';
 import dataservice from '../../service/dataservice';
 import moment from 'moment';
 
@@ -18,44 +17,45 @@ class MultiDPChart extends Component {
     this.click = this.click.bind(this);
     /* Gets all data via authservice and multipromise function */
     this.datatypes = this.props.datapoints.split(',');
-    var uris = dataservice.urlMaker(this.datatypes,props.startDateTime,props.endDateTime,props.dres);
-
-
-
-    authentication.multipromise(uris).then(data => {
-      var self = this;
-      data.forEach(function(item) {
-        if (self.data.length === 0) {
-          var series = item['results'][0].series;
-    	    var results = series[0].values;
-          var name = series[0].name;
-    			var tempdata = [];
-    			for (var i = 0; i < results.length; i++) {
-    			  var current = results[i];
-            var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
-            temppoint[name] = current[1];
-    			  self.data.push(temppoint);
-    			}
-        } else {
-          var series = item['results'][0].series;
-    	    var results = series[0].values;
-          var name = series[0].name;
-          for (var i = 0; i < results.length; i++) {
-            var current = results[i];
-            self.data[i][name] = current[1];
-          }
-        }
-      });
-      this.setState();
-    });
-
   }
   click(data) { console.log(data); }
   /* React component lifecyle functions */
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) {
-
+    this.data = [];
+    this.datatypes = this.props.datapoints.split(',');
+    var uris = dataservice.urlMaker(this.datatypes,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres);
+    dataservice.multipromise(uris).then(data => {
+      var self = this;
+      data.forEach(function(item) {
+        if (self.data.length === 0) {
+          var series = item['results'][0].series;
+          if (series !== undefined) {
+            var results = series[0].values;
+            var name = series[0].name;
+            var tempdata = [];
+            for (var i = 0; i < results.length; i++) {
+              var current = results[i];
+              var temppoint = { date:moment(current[0]).format("MMMM Do h:mm a") };
+              temppoint[name] = current[1];
+              self.data.push(temppoint);
+            }
+          }
+        } else {
+          var series = item['results'][0].series;
+          if (series !== undefined) {
+            var results = series[0].values;
+            var name = series[0].name;
+            for (var i = 0; i < results.length; i++) {
+              var current = results[i];
+              self.data[i][name] = current[1];
+            }
+          }
+        }
+      });
+      this.setState();
+    });
   }
   /* Date formatter for the brush */
   dateformat(date) { return ""; }

@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
 import NVD3Chart from 'react-nvd3';
 import React from 'preact';
-import authentication from '../../service/authservice';
 import * as ReactDOM from 'react-dom';
 import * as d3 from "d3";
 import configs from '../../configs';
+import dataservice from '../../service/dataservice';
 
 class BulletChart extends Component {
   constructor(props){
@@ -20,39 +20,34 @@ class BulletChart extends Component {
       title:configs.title(this.props.datapoint),
       subtitle:sub, min:0, mean:0, max:0, current:0
     }
-    /* Array for all the uris */
-    var uris = [];
-    // Temp the range
-    var from = '2017-07-05T12:12:12Z';
-    var to = '2017-07-06T12:12:12Z';
-    uris.push("http://35.167.180.46:8080/data/percentile5/"+ this.props.datapoint + "/" + from + "/" + to + "/30d");
-    uris.push("http://35.167.180.46:8080/data/max/"+ this.props.datapoint + "/" + from + "/" + to + "/30d");
-    uris.push("http://35.167.180.46:8080/data/mean/"+ this.props.datapoint + "/" + from + "/" + to + "/30d");
-    uris.push("http://35.167.180.46:8080/data/last/"+ this.props.datapoint + "/" + from + "/" + to + "/30d");
-    authentication.multipromise(uris).then(data => {
-      var max,min,mean,last = 0;
-      for (var i = 0; i < data.length; i++) {
-        var payload = data[i];
-        var series = payload['results'][0].series;
-        var results = series[0].values;
-        if (i === 0) { min = results[0][1]; }
-        if (i === 1) { max = results[0][1]; }
-        if (i === 2) { mean = results[0][1]; }
-        if (i === 3) { last = results[0][1]; }
-      }
-      console.log("--------------------------------------------------------");
-      console.log("Datapoint: " + this.props.datapoint);
-      console.log("Min: " + min);
-      console.log("Max: " + max);
-      console.log("Mean: " + mean);
-      console.log("Current: " + last);
-      this.setState({ min:min, max:max, mean:mean, current:last });
-    });
   }
   /* React component lifecyle functions */
  	componentDidMount() { }
  	componentWillUnmount() { }
-  componentWillReceiveProps(nextProps) { }
+  componentWillReceiveProps(nextProps) {
+    var uris = dataservice.bulletUri(this.props.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres);
+
+    dataservice.multipromise(uris).then(data => {
+      var max,min,mean,last = 0;
+      var valid = true;
+      for (var i = 0; i < data.length; i++) {
+        var payload = data[i];
+        var series = payload['results'][0].series;
+        if (series !== undefined) {
+        var results = series[0].values;
+          if (i === 0) { min = results[0][1]; }
+          if (i === 1) { max = results[0][1]; }
+          if (i === 2) { mean = results[0][1]; }
+          if (i === 3) { last = results[0][1]; }
+        } else {
+          valid = false;
+        }
+      }
+      if (valid) {
+        this.setState({ min:min, max:max, mean:mean, current:last });
+      }
+    });
+  }
   handleColor = (d,i) => { return '#0277bd'; }
   /* Renders the component */
 	render () {
