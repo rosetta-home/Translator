@@ -132,6 +132,26 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
  		 <br></br>
      <Card shadow={4} style="width:100%">
        <Card.Title>
+         <Card.TitleText><small>{configs.title("weather_station.outdoor_temperature")}</small></Card.TitleText>
+       </Card.Title>
+       <SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
+       <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+       </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>{configs.title("weather_station.indoor_temperature")}</small></Card.TitleText>
+       </Card.Title>
+       <SparkGraphLive datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
+       <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+       </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
          <Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
        </Card.Title>
        <SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
