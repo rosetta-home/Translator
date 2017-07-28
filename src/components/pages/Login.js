@@ -5,45 +5,51 @@ import { route } from 'preact-router';
 import ReactBroadcast from "ReactBroadcast";
 
 export default class Login extends Component {
+	/* Component lifecyle methods */
 	constructor(props) {
-			super(props);
-			this.formdata = {};
-			this.login = this.login.bind(this);
-    }
+		super(props);
+		this.formdata = {};
+		/* Bind the login method to the component */
+		this.login = this.login.bind(this);
+  }
 	componentDidMount() {
+		/* ReactBroadcast the updated title  */
 		ReactBroadcast.broadcast('SetTitle', 'Login');
 	}
+	/* Login in via the elixir backend */
 	login() {
 		authentication.login(this.formdata).then(v => {
+			/* Gets the token */
 			var token = JSON.parse(v.text).success;
+			/* Sets the token for the user */
 			authentication.setCachedToken(token);
 			this.formdata = {}
+			/* Re-route to the dashboard */
 			route('/dashboard');
     });
 	}
 	onChange(event) {
+		/* Updates the formdata as user is entering creds */
 		this.formdata[event.target.name] = event.target.value;
   }
 	render() {
 		return (
 			<div>
 			<Card shadow={4} style="width:100%;padding:20px;">
-								<Card.Title>
-								</Card.Title>
-								<div className="row">
-									<div className="col-12">
-									   <TextField name="email" placeholder="Email / Username" onChange={this.onChange.bind(this)}></TextField>
-									</div>
-									<div className="col-12">
-									   <TextField name="password" placeholder="Password" onChange={this.onChange.bind(this)}></TextField>
-									</div>
-								</div>
-								<Card.Actions style="text-align:right">
-								<Button onClick={this.login}>Login</Button>
-								</Card.Actions>
-						</Card>
-
-			</div>
+				<Card.Title><small>Rosetta Home Portal</small></Card.Title>
+					<div className="row">
+						<div className="col-12">
+							<TextField name="email" placeholder="Email / Username" onChange={this.onChange.bind(this)}></TextField>
+						</div>
+						<div className="col-12">
+							<TextField name="password" placeholder="Password" onChange={this.onChange.bind(this)}></TextField>
+						</div>
+					</div>
+				<Card.Actions style="text-align:right">
+					<Button onClick={this.login}>Login</Button>
+				</Card.Actions>
+			</Card>
+		  </div>
 		);
 	}
 }

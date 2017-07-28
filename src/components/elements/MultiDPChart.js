@@ -2,7 +2,8 @@ import { h, Component } from 'preact';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine,
   ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
   Label, LabelList,Surface } from 'recharts';
-import authentication from '../../service/authservice';
+import authentication from '../../service/authentication';
+import dataservice from '../../service/dataservice';
 import moment from 'moment';
 
 class MultiDPChart extends Component {
@@ -17,10 +18,10 @@ class MultiDPChart extends Component {
     this.click = this.click.bind(this);
     /* Gets all data via authservice and multipromise function */
     this.datatypes = this.props.datapoints.split(',');
-    var uris = [];
-    this.datatypes.forEach(function(element) {
-      uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/12h');
-    });
+    var uris = dataservice.urlMaker(this.datatypes,props.startDateTime,props.endDateTime,props.dres);
+
+
+
     authentication.multipromise(uris).then(data => {
       var self = this;
       data.forEach(function(item) {
@@ -47,12 +48,15 @@ class MultiDPChart extends Component {
       });
       this.setState();
     });
+
   }
   click(data) { console.log(data); }
   /* React component lifecyle functions */
  	componentDidMount() { }
  	componentWillUnmount() { }
-  componentWillReceiveProps(nextProps) { }
+  componentWillReceiveProps(nextProps) {
+
+  }
   /* Date formatter for the brush */
   dateformat(date) { return ""; }
   /* Formater for the value on the chart, rounds the value to nearest whole number */

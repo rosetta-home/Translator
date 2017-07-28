@@ -3,6 +3,9 @@ import 'rxjs/add/operator/map';
 
 
 export default {
+  api_endpoint() {
+    return "http://35.167.180.46:8080";
+  },
   title(type) {
     if (type === 'weather_station.outdoor_temperature') {
       return 'Outdoor Temperature';

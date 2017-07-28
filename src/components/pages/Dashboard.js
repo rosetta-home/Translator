@@ -4,7 +4,6 @@ import NVD3Chart from 'react-nvd3';
 import StepZilla from 'react-stepzilla';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import SparkGraphLive from '../elements/SparkGraphLive';
-import '../../style/Card.css';
 import Collapsible from 'react-collapsible';
 import RHLiveGraph from '../elements/LiveGraph';
 import DashboardCard from '../elements/DashboardCard';
@@ -25,42 +24,32 @@ import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveCon
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+
 export default class Dashboard extends Component {
-	state = {
-    from: null,
-    to: null,
-  };
   handleDayClick = day => {
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
   };
   handleResetClick = e => {
-    e.preventDefault();
-    this.setState({
-      from: null,
-      to: null,
-    });
+    this.setState();
   };
-
-
 	handleOpenDialog() {
-	    this.setState({
-	      openDialog: true
-	    });
-	  }
-
-	  handleCloseDialog() {
-	    this.setState({
-	      openDialog: false
-	    });
-	  }
-
+	  this.setState({
+	    openDialog: true
+	  });
+	}
+	handleCloseDialog() {
+	  this.setState({
+	    openDialog: false
+	 	});
+	}
 	constructor(props) {
 			super(props);
 			this.data = this.data.bind(this);
 			this.dx = [];
-			this.state = {date:Date()};
-			authentication.getData2('ieq.co2').then(v => {
+			this.state = {from: null,
+	    to: null,date:Date()};
+			authentication.getData2('ieq.co2','2017-07-17T19:46:17Z','2017-07-27T19:46:17Z').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
 	  		var series = v['results'][0].series;
 	      var results = series[0].values;
@@ -77,33 +66,15 @@ export default class Dashboard extends Component {
 		  this.handleOpenDialog = this.handleOpenDialog.bind(this);
 		  this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
-
 	componentDidMount() {
 		if (authentication.getToken() === '') {
       route('/login');
     }
 		ReactBroadcast.broadcast('SetTitle', 'Dashboard');
 	}
-	data() {
-		//console.log(DRes.minutes(60));
-		//ReactBroadcast.broadcast('SetTitle', 'Dashboard');
-		//route('/');
-		//this.setState();
-	}
-
-
-
-	openDialog = () => {
-			this.setState({ open: true });
-		};
-
-		close = () => {
-			this.setState({ open: false });
-		};
-
-
-
+	data() { }
 	render() {
+
 		const nowdata = [
     { type: 'X', A: 80, B: 110, fullMark: 150 },
     { type: 'Y', A: 58, B: 130, fullMark: 150 },
@@ -141,18 +112,57 @@ const toPercent = (decimal, fixed = 0) => {
 var date = moment();
 const { from, to,open } = this.state;
 
+var fromValue = moment(from).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 
-	console.log("from: " + from);
-	console.log("to: " + to);
+	var res = DRes.getResolution(fromValue,toValue);
+
+	console.log("res: " + res);
+
+DRes
 
 	return (
 			<div>
+      <Card shadow={4} style="width:100%">
+        <Card.Title>
+          <Card.TitleText><small>Weather Station</small></Card.TitleText>
+        </Card.Title>
+        <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature"/>
+        <Card.Actions style="text-align:right"></Card.Actions>
+      </Card>
+      <br></br>
+		 <Card shadow={4} style="width:100%">
+		 <DayPicker
+			 numberOfMonths={2}
+			 selectedDays={[from, { from, to }]}
+			 onDayClick={this.handleDayClick}
+			 fixedWeeks
+		 />
+		 </Card>
+		 <br></br>
 
+			<Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>CO2</small></Card.TitleText>
+				</Card.Title>
+				<BarChart datapoint="ieq.co2" axisEnabled={false} startDateTime={fromValue} endDateTime={toValue}/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+      <Card shadow={4} style="width:100%">
+				<Card.Title>
+					<Card.TitleText><small>CO2</small></Card.TitleText>
+				</Card.Title>
+				<BarChart datapoint="ieq.co2" axisEnabled={true} startDateTime={fromValue} endDateTime={toValue} dres="12h"/>
+				<Card.Actions style="text-align:right"></Card.Actions>
+			</Card>
+			<br></br>
+{/*
 			<Card shadow={4} style="width:100%">
 				<Card.Title>
 					<Card.TitleText><small>Now</small></Card.TitleText>
 				</Card.Title>
-				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
+			<ResponsiveContainer width='100%' aspect={4.0/3.0}>
 				<AreaChart data={data} stackOffset="expand"
             margin={{top: 0, right: 10, left: 0, bottom: 0}} >
         <XAxis dataKey="month"/>
@@ -194,14 +204,6 @@ const { from, to,open } = this.state;
 					<Card.TitleText><small>CO2</small></Card.TitleText>
 				</Card.Title>
 				<BarChart datapoint="ieq.co2" axisEnabled={true}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>CO2</small></Card.TitleText>
-				</Card.Title>
-				<BarChart datapoint="ieq.co2" axisEnabled={false}/>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>
@@ -308,7 +310,7 @@ const { from, to,open } = this.state;
 				<SelectorChart data={this.dx} threshold={1000}/>
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
-			<br></br>
+			<br></br>*/}
 			</div>
 		);
 	}

@@ -59,9 +59,9 @@ export default {
       });
     });
   },
-  async getData2(datapoint) {
+  async getData2(datapoint,start,end) {
     return new Promise((resolve, reject) => {
-      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/60m')
+      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/'+ start +'/' + end + '/60m')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {

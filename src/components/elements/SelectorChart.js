@@ -12,6 +12,7 @@ class SelectorChart extends Component {
     this.valueformat = this.valueformat.bind(this);
     this.labelformat = this.labelformat.bind(this);
     this.click = this.click.bind(this);
+    
   }
   click(data) { console.log(data); }
   /* React component lifecyle functions */
