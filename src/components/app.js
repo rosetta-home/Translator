@@ -11,6 +11,7 @@ import Login from "../auth/login";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
+import Modal from './layout/Modal';
 import NotificationCenter from './NotificationCenter';
 import ReactBroadcast from "ReactBroadcast";
 import '../style/App.css';
@@ -19,11 +20,14 @@ require("babel-polyfill");
 
 export default class App extends Component {
 	start = () => { };
-	componentDidMount() { }
+	componentDidMount() {
+		
+	}
 	constructor(props) {
 	   super(props);
 		 /* Binds startt function to the scope to help with debug processes outside the redux container */
 		 this.start = this.start.bind(this);
+		 this.state = { isOpen: false };
   }
 	/* Renders the component*/
 	render() {

@@ -45,11 +45,18 @@ export default class Dashboard extends Component {
 	    openDialog: false
 	 	});
 	}
+  toggleModal = () => {
+    //ReactBroadcast.broadcast('Modal', 'Dashboard');
+    this.setState({
+     isOpen: !this.state.isOpen
+    });
+  }
+
 	constructor(props) {
 			super(props);
 			this.data = this.data.bind(this);
 			this.state = {  visible: true,from: null,
-	    to: null,date:Date()};
+	    to: null,date:Date(),isOpen: false};
 
 			authentication.getData2('ieq.co2','2017-07-17T19:46:17Z','2017-07-27T19:46:17Z').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
@@ -127,6 +134,7 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 
 	return (
 			<div>
+<div style="padding:10px;">
 
 
   {/*    <div className="row">
@@ -147,16 +155,25 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
           </div>
         </div> */}
 
+        <div style="text-align: right;">
+
+        <button onClick={this.toggleModal}>
+                  <i class="fa fa-clock-o" aria-hidden="true" style="font-size:36px;color:gray;"></i>
+                </button>
+
+                </div>
+
+                <Modal show={this.state.isOpen}
+                  onClose={this.toggleModal}>
+
+                  <DayPicker
+                    numberOfMonths={2}
+                    selectedDays={[from, { from, to }]}
+                    onDayClick={this.handleDayClick}
+                    fixedWeeks/>
+                  </Modal>
 
 
-     <Card shadow={4} style="width:100%">
- 		 <DayPicker
- 			 numberOfMonths={2}
- 			 selectedDays={[from, { from, to }]}
- 			 onDayClick={this.handleDayClick}
- 			 fixedWeeks/>
- 		 </Card>
-     <br></br>
      <div className="row">
             <div className="col-6">
              <Card shadow={4} style="width:100%"></Card>
@@ -401,7 +418,7 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>*/}
-			</div>
+			</div></div>
 		);
 	}
 }
