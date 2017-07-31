@@ -723,8 +723,8 @@ ol.progtrckr li.progtrckr-done:hover:before {
   background-repeat: repeat-x;
   background: -webkit-linear-gradient(top, #ef6c00,#ff9800,#ffcc80, #81d4fa,#03a9f4,#0277bd);
   /*position: absolute;*/
-  bottom: 0;
+/*  bottom: 0;
   right: 0;
   left: 0;
-  top:0;
+  top:0;*/
 }

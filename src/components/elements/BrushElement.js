@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3';
-import authentication from '../../service/authservice';
+import dataservice from '../../service/dataservice';
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,LineChart,Line,Brush,YAxis,
 Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
@@ -18,7 +18,7 @@ class BrushElement extends Component {
       uris.push('http://35.167.180.46:8080/data/mean/' + element + '/2017-07-06T12:12:12Z/now/6h');
     });
     this.data = [];
-    authentication.multipromise(uris).then(data => {
+    dataservice.multipromise(uris).then(data => {
       var self = this;
       data.forEach(function(item) {
         if (self.data.length === 0) {

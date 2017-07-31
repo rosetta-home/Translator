@@ -156,9 +156,8 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
         </div> */}
 
         <div style="text-align: right;">
-
         <button onClick={this.toggleModal}>
-                  <i class="fa fa-clock-o" aria-hidden="true" style="font-size:36px;color:gray;"></i>
+                  <i class="fa fa-clock-o" aria-hidden="true" style="font-size:36px;color:white;"></i>
                 </button>
 
                 </div>
@@ -176,19 +175,55 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 
      <div className="row">
             <div className="col-6">
-             <Card shadow={4} style="width:100%"></Card>
+             <Card shadow={4} style="width:100%">
+
+            <div class="nowcard" style="height:200px;padding: 35px;">
+							<h3 style="font-size: 55px;color:#0277bd;">58%</h3>
+							<small>Humidity</small>
+						</div>
+
+
+             </Card>
             </div>
             <div className="col-6">
-             <Card shadow={4} style="width:100%"></Card>
+             <Card shadow={4} style="width:100%">
+
+
+             <div class="nowcard" style="height:200px;padding: 35px;">
+               <h3 style="font-size: 55px;color:#0277bd;">558</h3>
+               <small>CO2 (PPM)</small>
+             </div>
+
+
+
+             </Card>
             </div>
           </div>
 
           <div className="row">
              <div className="col-6">
-               <Card shadow={4} style="width:100%"></Card>
+               <Card shadow={4} style="width:100%">
+
+
+               <div class="nowcard" style="height:200px;padding: 35px;">
+                 <h3 style="font-size: 55px;color:#0277bd;">68°C</h3>
+                 <small>Indoor Temperature</small>
+               </div>
+
+
+               </Card>
              </div>
              <div className="col-6">
-               <Card shadow={4} style="width:100%"></Card>
+               <Card shadow={4} style="width:100%">
+
+
+               <div class="nowcard" style="height:200px;padding: 35px;">
+                 <h3 style="font-size: 55px;color:#0277bd;">97°C</h3>
+                 <small>Outdoor Temperature</small>
+               </div>
+
+
+               </Card>
              </div>
            </div>
      <br></br>
@@ -199,6 +234,14 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
        <SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
        </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
+       </Card.Title>
+       <RadialCompare/>
        <Card.Actions style="text-align:right"></Card.Actions>
      </Card>
      <br></br>
@@ -264,160 +307,7 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 				<Card.Actions style="text-align:right"></Card.Actions>
 			</Card>
 			<br></br>
-{/*
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>Now</small></Card.TitleText>
-				</Card.Title>
-			<ResponsiveContainer width='100%' aspect={4.0/3.0}>
-				<AreaChart data={data} stackOffset="expand"
-            margin={{top: 0, right: 10, left: 0, bottom: 0}} >
-        <XAxis dataKey="month"/>
-        <YAxis tickFormatter={toPercent} />
-        <CartesianGrid strokeDasharray="3 3"/>
-        <Area type='monotone' dataKey='a' stackId="1" stroke='#03a9f4' fill='#03a9f4' />
-        <Area type='monotone' dataKey='b' stackId="1" stroke='#ff9800' fill='#ff9800' />
-        <Area type='monotone' dataKey='c' stackId="1" stroke='#d0d0d5' fill='#d0d0d5' />
-      	</AreaChart>
-				</ResponsiveContainer>
-				<div className="RangeExample">
-			 {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
-			 {from && !to && <p>Please select the <strong>last day</strong>.</p>}
-			 {from &&
-				 to &&
-				 <p style="color:red;">
-					 You chose from
-					 {' '}
-					 {moment(from).format('L')}
-					 {' '}
-					 to
-					 {' '}
-					 {moment(to).format('L')}
-					 .
-					 {' '}<a href="." onClick={this.handleResetClick}>Reset</a>
-				 </p>}
-			 <DayPicker
-				 numberOfMonths={2}
-				 selectedDays={[from, { from, to }]}
-				 onDayClick={this.handleDayClick}
-				 fixedWeeks
-			 />
-		 </div>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>CO2</small></Card.TitleText>
-				</Card.Title>
-				<BarChart datapoint="ieq.co2" axisEnabled={true}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>Bullet Chart</small></Card.TitleText>
-				</Card.Title>
-				<BulletChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue}/>
-				<BulletChart datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-				<BulletChart datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
-				</Card.Title>
-				<RadialCompare/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>Weather Station</small></Card.TitleText>
-				</Card.Title>
-				<MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature"/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>{configs.title("weather_station.humidity")}</small></Card.TitleText>
-				</Card.Title>
-				<SparkGraphLive type="weather_station.humidity"/>
-				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-				</Collapsible>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>Now</small></Card.TitleText>
-				</Card.Title>
 
-
-				<div className="row">
-				<div className="col-6">
-				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
-				<RadarChart data={nowdata}>
-          <Radar name="A" dataKey="A" stroke="#0277bd" fill="#0277bd" fillOpacity={0.5}/>
-          <PolarGrid />
-          <PolarAngleAxis axisLine={false} dataKey="type" />
-        </RadarChart>
-				</ResponsiveContainer>
-				</div>
-				<div className="col-6">
-				<ResponsiveContainer width='100%' aspect={4.0/3.0}>
-				<RadarChart data={nowdata2}>
-          <Radar name="A" dataKey="A" stroke="#0277bd" fill="#0277bd" fillOpacity={0.5}/>
-          <PolarGrid />
-          <PolarAngleAxis axisLine={false} dataKey="type" />
-        </RadarChart>
-				</ResponsiveContainer>
-				</div>
-				</div>
-
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>{configs.title("weather_station.indoor_temperature")}</small></Card.TitleText>
-				</Card.Title>
-				<SparkGraphLive type="weather_station.indoor_temperature"/>
-				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-				</Collapsible>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>{configs.title("weather_station.outdoor_temperature")}</small></Card.TitleText>
-				</Card.Title>
-				<SparkGraphLive type="weather_station.outdoor_temperature"/>
-				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-				</Collapsible>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
-				</Card.Title>
-				<SparkGraphLive type="ieq.co2"/>
-				<Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-				</Collapsible>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>
-			<Card shadow={4} style="width:100%">
-				<Card.Title>
-					<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
-				</Card.Title>
-				<SelectorChart data={this.dx} threshold={1000}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
-			</Card>
-			<br></br>*/}
 			</div></div>
 		);
 	}

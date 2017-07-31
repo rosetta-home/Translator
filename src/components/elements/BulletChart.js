@@ -26,7 +26,6 @@ class BulletChart extends Component {
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) {
     var uris = dataservice.bulletUri(this.props.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres);
-
     dataservice.multipromise(uris).then(data => {
       var max,min,mean,last = 0;
       var valid = true;
@@ -35,17 +34,15 @@ class BulletChart extends Component {
         var series = payload['results'][0].series;
         if (series !== undefined) {
         var results = series[0].values;
-          if (i === 0) { min = results[0][1]; }
-          if (i === 1) { max = results[0][1]; }
+          if (i === 0) { min  = results[0][1]; }
+          if (i === 1) { max  = results[0][1]; }
           if (i === 2) { mean = results[0][1]; }
           if (i === 3) { last = results[0][1]; }
         } else {
           valid = false;
         }
       }
-      if (valid) {
-        this.setState({ min:min, max:max, mean:mean, current:last });
-      }
+      if (valid) { this.setState({ min:min, max:max, mean:mean, current:last }); }
     });
   }
   handleColor = (d,i) => { return '#0277bd'; }

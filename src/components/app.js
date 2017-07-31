@@ -20,9 +20,7 @@ require("babel-polyfill");
 
 export default class App extends Component {
 	start = () => { };
-	componentDidMount() {
-		
-	}
+	componentDidMount() { }
 	constructor(props) {
 	   super(props);
 		 /* Binds startt function to the scope to help with debug processes outside the redux container */

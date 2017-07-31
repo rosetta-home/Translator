@@ -7,8 +7,6 @@ class Modal extends Component {
     if(!this.props.show) {
       return null;
     }
-
-    // The gray background
     const backdropStyle = {
       position: 'fixed',
       top: 0,
@@ -20,8 +18,6 @@ class Modal extends Component {
       'z-index':10,
       'padding-top':80
     };
-
-    // The modal "window"
     const modalStyle = {
       backgroundColor: '#fff',
       borderRadius: 5,
@@ -29,12 +25,15 @@ class Modal extends Component {
       minHeight: 300,
       margin: '0 auto'
     };
-
+    const buttonstyle = {
+      'font-size':'25px',
+      'color':'gray'
+    };
     return (
       <div className="backdrop" style={backdropStyle}>
         <div style={modalStyle}>
           <div style="text-align: right;">
-            <button onClick={this.props.onClose} style="font-size:25px;color:gray;">✖</button>
+            <button onClick={this.props.onClose} style={buttonstyle}>✖</button>
           </div>
           {this.props.children}
         </div>

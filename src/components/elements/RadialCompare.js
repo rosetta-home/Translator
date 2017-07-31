@@ -74,6 +74,12 @@ class RadialCompare extends Component {
 
     //console.log(Math.round(current_direction / 30));
 
+    //var radarray = ['E','60','30','N','330','300','W','240','210','S','150','120'];
+
+
+
+
+
   if (current_direction < 90 && current_direction > 60) {
     rad.push({ angle: 'E', value: current_co2,  fullMark: 150 });
   } else {
