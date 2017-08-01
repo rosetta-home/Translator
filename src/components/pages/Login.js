@@ -35,21 +35,22 @@ export default class Login extends Component {
 	render() {
 		return (
 			<div>
-			<Card shadow={4} style="width:100%;padding:20px;">
-				<Card.Title><small>Rosetta Home Portal</small></Card.Title>
-					<div className="row">
+			<div style="width:100%;padding:10px;">
+			<Card shadow={4} style="width:100%;">
+				<Card.Title>Rosetta Home Portal</Card.Title>
+					<div className="row" style="padding:10px;">
 						<div className="col-12">
-							<TextField name="email" placeholder="Email / Username" onChange={this.onChange.bind(this)}></TextField>
+							<TextField name="email" placeholder="Email" onChange={this.onChange.bind(this)}></TextField>
 						</div>
 						<div className="col-12">
 							<TextField name="password" placeholder="Password" onChange={this.onChange.bind(this)}></TextField>
 						</div>
 					</div>
 				<Card.Actions style="text-align:right">
-					<Button onClick={this.login}>Login</Button>
+					<Button raised={true} onClick={this.login}>Login</Button>
 				</Card.Actions>
 			</Card>
-		  </div>
+		  </div> </div>
 		);
 	}
 }
