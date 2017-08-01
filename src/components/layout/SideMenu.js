@@ -1,45 +1,69 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
 import ReactBroadcast from "ReactBroadcast";
+import authentication from '../../service/authservice';
 
 export default class SideMenu extends Component {
   constructor(props) {
 	    super(props);
 	    this.closeMenu = this.closeMenu.bind(this);
+      var tempbool = false;
+      if (authentication.getToken() !== '') {
+        tempbool = true;
+      }
       this.state = {
-        links:[]
+        guestlinks:[
+          {'title':'Home','route':'/'},
+          {'title':'About','route':'/about'},
+          {'title':'Setup','route':'/setup'},
+          {'title':'Login','route':'/login'},
+          {'title':'Register','route':'/register'}
+        ],
+        userlinks:[
+          {'title':'Home','route':'/'},
+          {'title':'Now','route':'/now'},
+          {'title':'Dashboard','route':'/dashboard'},
+          {'title':'Touchstones','route':'/devices'}
+        ],
+        isLoggedIn:tempbool
       }
   }
   componentDidMount() {
     ReactBroadcast.on('Change_Links', payload => {
       this.setState({
-        links:payload
+        isLoggedIn:payload
       });
     });
   }
- 	componentWillUnmount() { }
+ 	componentWillUnmount() {
+    console.log("componentWillUnmount");
+  }
   componentWillReceiveProps(nextProps) { }
   closeMenu() {
     var menuDiv = document.getElementById("menu");
     menuDiv.classList.remove("is-visible");
     menuDiv.setAttribute("aria-hidden", "true");
   }
-  /* TODO: Need to detect different auth status to display the different login in option the Authentication class will help with this */
 	render() {
-    const { links } = this.state;
+    const { guestlinks,userlinks,isLoggedIn } = this.state;
+
+    var link = [];
+    if (isLoggedIn) {
+      for (var i = 0; i < userlinks.length; i++) {
+        link.push(<Navigation.Link href={userlinks[i].route} onClick={this.closeMenu}>{userlinks[i].title}</Navigation.Link>);
+      }
+    } else {
+      for (var i = 0; i < guestlinks.length; i++) {
+        link.push(<Navigation.Link href={guestlinks[i].route} onClick={this.closeMenu}>{guestlinks[i].title}</Navigation.Link>);
+      }
+    }
 		return (
     <Layout.Drawer id="menu">
       {/* Beginning of the menu layout */}
       <Layout.Title>Rosetta Home</Layout.Title>
       {/* Where the nav link are located */}
       <Navigation>
-        <Navigation.Link href="/" onClick={this.closeMenu}>Home</Navigation.Link>
-        <Navigation.Link href="/now" onClick={this.closeMenu}>Now</Navigation.Link>
-        <Navigation.Link href="/dashboard" onClick={this.closeMenu}>Dashboard</Navigation.Link>
-        <Navigation.Link href="/" onClick={this.closeMenu}>Profile</Navigation.Link>
-        <Navigation.Link href="/login" onClick={this.closeMenu}>Login</Navigation.Link>
-        <Navigation.Link href="/setup" onClick={this.closeMenu}>Setup</Navigation.Link>
-        <Navigation.Link href="/about" onClick={this.closeMenu}>About</Navigation.Link>
+        {link}
       </Navigation>
     </Layout.Drawer>
 		);

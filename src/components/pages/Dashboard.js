@@ -5,7 +5,7 @@ import StepZilla from 'react-stepzilla';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import SparkGraphLive from '../elements/SparkGraphLive';
 import Collapsible from 'react-collapsible';
-import RHLiveGraph from '../elements/LiveGraph';
+import LiveGraph from '../elements/LiveGraph';
 import DashboardCard from '../elements/DashboardCard';
 import Authentication from '../../service/authservice';
 import { route } from 'preact-router';
@@ -84,8 +84,11 @@ export default class Dashboard extends Component {
 	componentDidMount() {
 		if (authentication.getToken() === '') {
       route('/login');
+      ReactBroadcast.broadcast('Change_Links', false);
+    } else {
+      ReactBroadcast.broadcast('Change_Links', true);
+      ReactBroadcast.broadcast('SetTitle', 'Dashboard');
     }
-		ReactBroadcast.broadcast('SetTitle', 'Dashboard');
 	}
 	data() { }
 	render() {

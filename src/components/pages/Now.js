@@ -4,6 +4,8 @@ import DRes from '../../service/dres';
 import ReactBroadcast from "ReactBroadcast";
 import d3 from 'd3';
 
+import CustomSelector from '../elements/Selector';
+
 export default class Now extends Component {
 	constructor() {
 		super();
@@ -32,6 +34,12 @@ export default class Now extends Component {
 		ReactBroadcast.broadcast('SetTitle', 'Now');
 	}
 	render() {
-		return ( <div><div id="now"></div></div> );
+		return (
+			<div>
+			{/*<div style="width:100%;height:50px;">
+			</div>*/}
+			<div id="now">
+			</div>
+			</div> );
 	}
 }

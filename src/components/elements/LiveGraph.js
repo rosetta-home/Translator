@@ -13,7 +13,7 @@ function mapDispatchToProps(dispatch) { return { actions: bindActionCreators(bin
 
 /* Connects the component to the redux */
 @connect(reduce, bindActions(actions))
-class RHLiveGraph extends Component {
+class LiveGraph extends Component {
 	constructor(props){
 		super(props);
 		/* Binds functions to compoent for its use */
@@ -67,4 +67,4 @@ class RHLiveGraph extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(RHLiveGraph);
+export default connect(mapStateToProps, mapDispatchToProps)(LiveGraph);

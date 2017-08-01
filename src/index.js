@@ -27,6 +27,7 @@ const Root = () => (
       <OtherComponent path="/other" />
       <Setup path="/setup" />
       <Now path="/now" />
+      <Error404 path="/not-found" />
     </Router>
   </App>
 );
