@@ -10,6 +10,15 @@ class SparkGraphLive extends Component {
     this.data = [];
     this.lastValue = 0;
     this.lastValueEnding = '';
+    this.round = true;
+  }
+  roundNumber = (n, digits) => {
+    if (digits === undefined) {
+        digits = 0;
+    }
+    var multiplicator = Math.pow(10, digits);
+    n = parseFloat((n * multiplicator).toFixed(11));
+    return (Math.round(n) / multiplicator).toFixed(2);
   }
   /* React component lifecyle functions */
  	componentDidMount() { }
@@ -18,6 +27,14 @@ class SparkGraphLive extends Component {
     if (this.props.datapoint === 'weather_station.outdoor_temperature') { this.lastValueEnding = '°C'; }
     if (this.props.datapoint === 'weather_station.indoor_temperature') { this.lastValueEnding = '°C'; }
     if (this.props.datapoint === 'weather_station.humidity') { this.lastValueEnding = '%'; }
+    if (this.props.datapoint === 'smart_meter.kw') {
+      this.lastValueEnding = 'kw';
+      this.round = false;
+    }
+    if (this.props.datapoint === 'smart_meter.price') {
+      this.lastValueEnding = '¢';
+      this.round = false;
+    }
     /* (Promise Object) Fetchs the data for the RH api */
     this.data = [];
     dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres).then(payload => {
@@ -28,7 +45,11 @@ class SparkGraphLive extends Component {
         for (var i = 0; i < results.length; i++) {
            var currentobj = results[i];
            this.data.push({x:new Date(currentobj[0]),y:currentobj[1]});
-           this.lastValue = Math.round(currentobj[1]);
+           if (this.round) {
+             this.lastValue = Math.round(currentobj[1]);
+           } else {
+             this.lastValue = this.roundNumber(currentobj[1],2);
+           }
         }
         /* Triggers a state change so the nvd3 chart will reload the data */
         this.setState();

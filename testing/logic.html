@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+	    <title>Testing</title>
+	</head>
+  <body>
+   <script>
+
+
+
+   function process(data) {
+     console.log(data);
+   }
+
+
+
+   var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBY2NvdW50OjU5NjRkNjljMGQwZTA0MDAwODVmOWMwNCIsImV4cCI6MTUwNDE5Nzc3NiwiaWF0IjoxNTAxNjA1Nzc2LCJpc3MiOiJCcm9vZCIsImp0aSI6ImI5YWNkODQ2LTExZWQtNDA1Yi1hN2NiLTdiYzhhZDI5Mzc4ZCIsInBlbSI6e30sInN1YiI6IkFjY291bnQ6NTk2NGQ2OWMwZDBlMDQwMDA4NWY5YzA0IiwidHlwIjoiYWNjZXNzIn0.NnksVHnDIlqmrxahhGta7WanifGZKBw-biins3-hDmgeJ0SR8lYNsDXq1bYbmXAO6Zkte_mbmdZbWpYasSe_7w";
+
+   var bearerXMLHttpRequest = (function (jwtoken) {
+     function getXMLHttpRequest(method, url, async){
+       var xmlHttpRequest = new XMLHttpRequest();
+       xmlHttpRequest.open(method, url, async);
+       xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + jwtoken);
+       return xmlHttpRequest;
+     } return getXMLHttpRequest;
+   })(token);
+
+   function load() {
+     var xmlHttpRequest = bearerXMLHttpRequest('GET','http://35.167.180.46:8080/data/count/hvac.fan_state/2017-07-31T00:00:00Z/2017-08-01T00:00:00Z/1m',true);
+     xmlHttpRequest.send();
+     xmlHttpRequest.onreadystatechange = function() {
+         if (xmlHttpRequest.readyState == XMLHttpRequest.DONE) {
+             var data = JSON.parse(xmlHttpRequest.responseText);
+             process(data['results'][0].series);
+         }
+     }
+   }
+
+   load();
+
+	 </script>
+	</body>
+</html>

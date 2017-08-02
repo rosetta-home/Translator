@@ -15,6 +15,10 @@ export default {
       return 'Humidity';
     } else if (type === 'ieq.co2') {
       return 'CO2 (PPM)';
+    } else if (type === 'smart_meter.kw') {
+      return 'Smart Meter Kilowatt';
+    } else if (type === 'smart_meter.price') {
+      return 'Kilowatt Price';
     }
     return type;
   }

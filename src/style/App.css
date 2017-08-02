@@ -472,7 +472,6 @@ ol.progtrckr li:before {
 }
 
 ol.progtrckr li.progtrckr-todo:before {
-  content: "\039F";
   color: silver;
   background-color: white;
   width: 1.2em;
@@ -484,7 +483,6 @@ ol.progtrckr li.progtrckr-todo:hover:before {
 }
 
 ol.progtrckr li.progtrckr-doing:before {
-  content: "\2022";
   color: white;
   background-color: #CCCCCC;
   width: 1.2em;
@@ -497,7 +495,6 @@ ol.progtrckr li.progtrckr-doing:hover:before {
 }
 
 ol.progtrckr li.progtrckr-done:before {
-  content: "\2713";
   color: white;
   background-color: #5cb85c;
   width: 1.2em;

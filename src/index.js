@@ -13,23 +13,27 @@ import OtherComponent from './components/pages/OtherComponent';
 import Error404 from './components/pages/Error404';
 import Dashboard from './components/pages/Dashboard';
 import Login from './components/pages/Login';
+import About from './components/pages/About';
 import Register from './components/pages/Register';
 import Setup from './components/setup/Setup';
 import Now from './components/pages/Now';
+import NowDetail from './components/pages/NowDetail';
 import { Router } from 'preact-router';
 import { Link } from 'preact-router/match';
 
 const Root = () => (
   <App>
     <Router>
-      <HomePage path="/" />
-      <Login path="/login" />
-      <Register path="/register" />
-      <Dashboard path="/dashboard" />
-      <OtherComponent path="/other" />
-      <Setup path="/setup" />
-      <Now path="/now" />
-      <Error404 path="/not-found" />
+      <HomePage path="/"/>
+      <About path="/about"/>
+      <Login path="/login"/>
+      <Register path="/register"/>
+      <Dashboard path="/dashboard"/>
+      <OtherComponent path="/other"/>
+      <Setup path="/setup"/>
+      <Now path="/now"/>
+      <NowDetail path="/now/:id"/>
+      <Error404 path="/not-found"/>
     </Router>
   </App>
 );

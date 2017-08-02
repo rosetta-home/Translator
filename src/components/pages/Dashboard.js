@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import ReactDOM from 'preact-compat';
 import NVD3Chart from 'react-nvd3';
-import StepZilla from 'react-stepzilla';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import SparkGraphLive from '../elements/SparkGraphLive';
 import Collapsible from 'react-collapsible';
@@ -55,8 +54,14 @@ export default class Dashboard extends Component {
 	constructor(props) {
 			super(props);
 			this.data = this.data.bind(this);
-			this.state = {  visible: true,from: null,
-	    to: null,date:Date(),isOpen: false};
+      var tempfrom = new Date();
+      tempfrom.setDate(tempfrom.getDate()-14);
+      var tempto = new Date();
+			this.state = {  visible:true,
+                      from: tempfrom,
+	                    to: tempto,
+                      date:Date(),
+                      isOpen: false};
 
 			authentication.getData2('ieq.co2','2017-07-17T19:46:17Z','2017-07-27T19:46:17Z').then(v => {
 	      /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
@@ -71,7 +76,6 @@ export default class Dashboard extends Component {
 	      /* Triggers a state change so the nvd3 chart will reload the data */
 	      this.setState();
 			});
-			this.state = {};
       this.showModal = this.showModal.bind(this);
       this.hideModal = this.hideModal.bind(this);
   }
@@ -132,6 +136,9 @@ const { from, to,open } = this.state;
 
 var fromValue = moment(from).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+
+console.log(fromValue);
+console.log(toValue);
 
 	var res = DRes.getResolution(fromValue,toValue);
 
@@ -232,6 +239,26 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
      <br></br>
      <Card shadow={4} style="width:100%">
        <Card.Title>
+         <Card.TitleText><small>{configs.title("smart_meter.kw")}</small></Card.TitleText>
+       </Card.Title>
+       <SparkGraphLive datapoint="smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
+       <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+       </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>{configs.title("smart_meter.price")}</small></Card.TitleText>
+       </Card.Title>
+       <SparkGraphLive datapoint="smart_meter.price" startDateTime={fromValue} endDateTime={toValue}/>
+       <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+       </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
          <Card.TitleText><small>{configs.title("weather_station.outdoor_temperature")}</small></Card.TitleText>
        </Card.Title>
        <SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
@@ -283,6 +310,14 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
        <SparkGraphLive datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue}/>
        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
        </Collapsible>
+       <Card.Actions style="text-align:right"></Card.Actions>
+     </Card>
+     <br></br>
+     <Card shadow={4} style="width:100%">
+       <Card.Title>
+         <Card.TitleText><small>Smart Meter</small></Card.TitleText>
+       </Card.Title>
+       <MultiDPChart datapoints="smart_meter.price,smart_meter.kw_delivered,smart_meter.kw_received,smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
        <Card.Actions style="text-align:right"></Card.Actions>
      </Card>
      <br></br>
