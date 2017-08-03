@@ -11,6 +11,9 @@ export default class Header extends Component {
       title:'Rosetta Home'
     };
   }
+  action = () => {
+    console.log("action");
+  }
   componentDidMount() { }
 	render() {
     const { title } = this.state;
@@ -20,6 +23,8 @@ export default class Header extends Component {
       <Layout.HeaderRow>
       {/* The title for the actual header, idea is to have an listener than will detect the state change and change the title like on the native mobile platform */}
       <Layout.Title><NavTitle/></Layout.Title>
+      <Layout.Spacer />
+      <i className="fa fa-clock-o" aria-hidden="true" style="font-size:36px;color:white;"></i>
       </Layout.HeaderRow>
     </Layout.Header>
 		);

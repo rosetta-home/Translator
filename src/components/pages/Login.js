@@ -38,7 +38,7 @@ export default class Login extends Component {
 			<div style="width:100%;padding:10px;">
 			<Card shadow={4} style="width:100%;">
 				<Card.Title>Rosetta Home Portal</Card.Title>
-					<div className="row" style="padding:10px;">
+					<div className="row" style="padding:20px;">
 						<div className="col-12">
 							<TextField name="email" placeholder="Email" onChange={this.onChange.bind(this)}></TextField>
 						</div>

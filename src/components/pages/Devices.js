@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from "ReactBroadcast";
-import { Card, Button } from 'preact-mdl';
+import ReactBroadcast from 'ReactBroadcast';
+import { Card, Button, TextField } from 'preact-mdl';
 
-export default class NowDetail extends Component {
+export default class Devices extends Component {
   componentDidMount() {
-		ReactBroadcast.broadcast('SetTitle', 'Now Details');
+		ReactBroadcast.broadcast('SetTitle', 'My Touchstones');
 	}
 	render() {
 		return (
@@ -35,4 +35,5 @@ export default class NowDetail extends Component {
       </div>
     );
 	}
+
 }

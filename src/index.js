@@ -1,13 +1,11 @@
 import { h, render } from 'preact';
 import { Provider } from 'preact-redux';
+import { Router } from 'preact-router';
 import store from './store';
-import App from './components/App';
-//import "material-design-lite";
-//import "material-design-lite/dist/material.indigo-pink.min.css";
-
 import createBrowserHistory from 'history/createBrowserHistory';
 import "bootstrap/dist/css/bootstrap.css";
 
+import App from './components/App';
 import HomePage from './components/pages/HomePage';
 import OtherComponent from './components/pages/OtherComponent';
 import Error404 from './components/pages/Error404';
@@ -18,8 +16,9 @@ import Register from './components/pages/Register';
 import Setup from './components/setup/Setup';
 import Now from './components/pages/Now';
 import NowDetail from './components/pages/NowDetail';
-import { Router } from 'preact-router';
-import { Link } from 'preact-router/match';
+import Confirm from './components/pages/Confirm';
+import Devices from './components/pages/Devices';
+import Help from './components/pages/Help';
 
 const Root = () => (
   <App>
@@ -34,12 +33,13 @@ const Root = () => (
       <Now path="/now"/>
       <NowDetail path="/now/:id"/>
       <Error404 path="/not-found"/>
+      <Confirm path="/confirm/:token"/>
+      <Devices path="/devices"/>
+      <Help path="/help"/>
     </Router>
   </App>
 );
 
 render((
-	<div id="outer">
-    <Root></Root>
-	</div>
+  <Root></Root>
 ), document.body);

@@ -17,13 +17,15 @@ export default class SideMenu extends Component {
           {'title':'About','route':'/about'},
           {'title':'Setup','route':'/setup'},
           {'title':'Login','route':'/login'},
-          {'title':'Register','route':'/register'}
+          {'title':'Register','route':'/register'},
+          {'title':'Help','route':'/help'}
         ],
         userlinks:[
           {'title':'Home','route':'/'},
           {'title':'Now','route':'/now'},
           {'title':'Dashboard','route':'/dashboard'},
-          {'title':'Touchstones','route':'/devices'}
+          {'title':'Touchstones','route':'/devices'},
+          {'title':'Help','route':'/help'}
         ],
         isLoggedIn:tempbool
       }

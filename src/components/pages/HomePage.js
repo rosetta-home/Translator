@@ -5,8 +5,8 @@ import ReactBroadcast from "ReactBroadcast";
 import d3 from 'd3';
 
 export default class HomePage extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
   }
 	componentDidMount() {
 		ReactBroadcast.broadcast('SetTitle', 'Rosetta Home');
@@ -21,8 +21,8 @@ export default class HomePage extends Component {
 		return (
 			<div>
 			<br></br>
-			<Button onClick={this.handleIn}>IN</Button>
-			<Button onClick={this.handleOut}>OUT</Button>
+			<button onClick={this.handleIn}>IN</button>
+			<button onClick={this.handleOut}>OUT</button>
 			</div>
 		);
 	}
