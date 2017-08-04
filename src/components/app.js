@@ -13,6 +13,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import SideMenu from './layout/SideMenu';
 import Modal from './layout/Modal';
+import Layover from './layout/Layover';
 import NotificationCenter from './NotificationCenter';
 import ReactBroadcast from "ReactBroadcast";
 import '../style/App.css';
@@ -39,6 +40,7 @@ export default class App extends Component {
 					{/* SideMenu with the options and router links */}
 					<SideMenu/>
 					{/* Provider for the redux storage */}
+					<Layover/>
 					<Provider store={store}>
 					{/* Layout content area for the preact component */}
           <Layout.Content>

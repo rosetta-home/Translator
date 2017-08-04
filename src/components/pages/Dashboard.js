@@ -13,7 +13,7 @@ import SelectorChart from '../elements/SelectorChart';
 import authentication from '../../service/authservice';
 import configs from '../../configs';
 import moment from 'moment';
-import ReactBroadcast from 'ReactBroadcast';
+import ReactBroadcast from '../../service/reactbroadcast';
 import RadialCompare from '../elements/RadialCompare';
 import MultiDPChart from '../elements/MultiDPChart';
 import BulletChart from '../elements/BulletChart';
@@ -25,6 +25,37 @@ import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveCon
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+
+class RangePicker extends Component {
+		constructor() {
+			super();
+			var tempfrom = new Date();
+      tempfrom.setDate(tempfrom.getDate()-14);
+      var tempto = new Date();
+			this.state = {  from: tempfrom,to: tempto };
+		}
+		handleDayClick = day => {
+			console.log(this);
+	    const range = DateUtils.addDayToRange(day, this.state);
+	    this.setState(range);
+	  };
+		done = () => { this.props.onDone(this.state); }
+    render() {
+			  const { from,to } = this.state;
+        return (
+            <div>
+						<DayPicker
+							numberOfMonths={2}
+							selectedDays={[from, { from, to }]}
+							onDayClick={this.handleDayClick}
+							fixedWeeks/>
+							<br></br>
+							<button onClick={this.done}>Set</button>
+							<br></br>
+						</div>
+        );
+    }
+}
 
 export default class Dashboard extends Component {
   handleDayClick = day => {
@@ -85,14 +116,32 @@ export default class Dashboard extends Component {
   hideModal () {
       this.setState({visible: false});
   }
+  componentWillUnmount() {
+    ReactBroadcast.broadcast('SetRightItem', null);
+  }
 	componentDidMount() {
+
 		if (authentication.getToken() === '') {
       route('/login');
       ReactBroadcast.broadcast('Change_Links', false);
     } else {
       ReactBroadcast.broadcast('Change_Links', true);
       ReactBroadcast.broadcast('SetTitle', 'Dashboard');
+
+
+      var callbackname = "CallRight";
+  		var payload = {icon:'fa fa-clock-o',callback:callbackname};
+  		ReactBroadcast.broadcast('SetRightItem', payload);
+
+  		ReactBroadcast.on(callbackname, item => {
+  			ReactBroadcast.broadcast('OpenModal', RangePicker);
+  			ReactBroadcast.on('ModalData', payload => {
+  				ReactBroadcast.remove('ModalData');
+          this.setState(payload);
+  			});
+  		});
     }
+
 	}
 	data() { }
 	render() {
@@ -163,7 +212,7 @@ console.log(toValue);
           <div className="col-6">
             <Card shadow={4} style="width:100%"></Card>
           </div>
-        </div> */}
+        </div>
 
         <div style="text-align: right;">
         <button onClick={this.toggleModal}>
@@ -180,7 +229,7 @@ console.log(toValue);
                     selectedDays={[from, { from, to }]}
                     onDayClick={this.handleDayClick}
                     fixedWeeks/>
-                  </Modal>
+                  </Modal> */}
 
 
      <div className="row">

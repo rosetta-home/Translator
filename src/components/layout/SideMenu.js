@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from '../../service/reactbroadcast';
 import authentication from '../../service/authservice';
 
 export default class SideMenu extends Component {
