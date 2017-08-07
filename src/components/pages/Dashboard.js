@@ -26,6 +26,8 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 
+import NowCard from '../elements/NowCard';
+
 class RangePicker extends Component {
 		constructor() {
 			super();
@@ -193,99 +195,30 @@ console.log(toValue);
 
 	return (
 			<div>
+
 <div style="padding:10px;">
 
-
-  {/*    <div className="row">
-         <div className="col-6">
-          <Card shadow={4} style="width:100%"></Card>
-         </div>
-         <div className="col-6">
-          <Card shadow={4} style="width:100%"></Card>
-         </div>
-       </div>
-
-       <div className="row">
-          <div className="col-6">
-            <Card shadow={4} style="width:100%"></Card>
-          </div>
-          <div className="col-6">
-            <Card shadow={4} style="width:100%"></Card>
-          </div>
-        </div>
-
-        <div style="text-align: right;">
-        <button onClick={this.toggleModal}>
-                  <i class="fa fa-clock-o" aria-hidden="true" style="font-size:36px;color:white;"></i>
-                </button>
-
-                </div>
-
-                <Modal show={this.state.isOpen}
-                  onClose={this.toggleModal}>
-
-                  <DayPicker
-                    numberOfMonths={2}
-                    selectedDays={[from, { from, to }]}
-                    onDayClick={this.handleDayClick}
-                    fixedWeeks/>
-                  </Modal> */}
-
+<div class="nowcard" style="padding-right:15px;padding-left:15px;">
+<label style="font-size:15px;">{moment(from).format('MMMM Do YYYY')} - {moment(to).format('MMMM Do YYYY')}</label>
+</div>
 
      <div className="row">
             <div className="col-6">
-             <Card shadow={4} style="width:100%">
-
-            <div class="nowcard" style="height:200px;padding: 35px;">
-							<h3 style="font-size: 55px;color:#0277bd;">58%</h3>
-							<small>Humidity</small>
-						</div>
-
-
-             </Card>
+          		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} map={true}/>
             </div>
             <div className="col-6">
-             <Card shadow={4} style="width:100%">
+						<NowCard datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue} map={false}/>
 
-
-             <div class="nowcard" style="height:200px;padding: 35px;">
-               <h3 style="font-size: 55px;color:#0277bd;">558</h3>
-               <small>CO2 (PPM)</small>
-             </div>
-
-
-
-             </Card>
             </div>
           </div>
-
-          <div className="row">
-             <div className="col-6">
-               <Card shadow={4} style="width:100%">
-
-
-               <div class="nowcard" style="height:200px;padding: 35px;">
-                 <h3 style="font-size: 55px;color:#0277bd;">68°C</h3>
-                 <small>Indoor Temperature</small>
-               </div>
-
-
-               </Card>
-             </div>
-             <div className="col-6">
-               <Card shadow={4} style="width:100%">
-
-
-               <div class="nowcard" style="height:200px;padding: 35px;">
-                 <h3 style="font-size: 55px;color:#0277bd;">97°C</h3>
-                 <small>Outdoor Temperature</small>
-               </div>
-
-
-               </Card>
-             </div>
-           </div>
-     <br></br>
+					<Card shadow={4} style="width:100%">
+						<Card.Title>
+							<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
+						</Card.Title>
+						<SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
+						<Card.Actions style="text-align:right"></Card.Actions>
+					</Card>
+					<br></br>
      <Card shadow={4} style="width:100%">
        <Card.Title>
          <Card.TitleText><small>{configs.title("smart_meter.kw")}</small></Card.TitleText>
@@ -331,14 +264,6 @@ console.log(toValue);
        <SparkGraphLive datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
        </Collapsible>
-       <Card.Actions style="text-align:right"></Card.Actions>
-     </Card>
-     <br></br>
-     <Card shadow={4} style="width:100%">
-       <Card.Title>
-         <Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
-       </Card.Title>
-       <SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
        <Card.Actions style="text-align:right"></Card.Actions>
      </Card>
      <br></br>

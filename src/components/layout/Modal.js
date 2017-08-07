@@ -16,11 +16,11 @@ class Modal extends Component {
       backgroundColor: 'rgba(0,0,0,0.3)',
       padding: 20,
       'z-index':10,
-      'padding-top':20
+      'padding-top':20,
+      'overflow': 'scroll'
     };
     const modalStyle = {
       backgroundColor: '#fff',
-      borderRadius: 5,
       maxWidth: 500,
       minHeight: 300,
       margin: '0 auto'

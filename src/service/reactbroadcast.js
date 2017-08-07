@@ -1,8 +1,9 @@
 var broadcasted = {};
 var broadcastContains = {};
-
+// Event broadcast emitter
 var ReactBroadcast = {
 	broadcast: function(name, value){
+    //broadcast vales or object to all components with channel name
 		if (!broadcasted.hasOwnProperty(name)) broadcasted[name] = {value: value, callbacks: []};
 		broadcasted[name].value = value;
 		var i;
@@ -19,18 +20,17 @@ var ReactBroadcast = {
 		}
 	},
 	on: function(name, callback){
+    // Sets the channel for receiving the data
 		if (!broadcasted.hasOwnProperty(name)) broadcasted[name] = {value: '', callbacks: [callback]};
 		else broadcasted[name].callbacks.push(callback);
 	},
   remove: function(id) {
+    // Removes the callbacks for the channel name
     broadcasted[id].callbacks = [];
   },
 	onContains: function(name, callback){
 		if (!broadcastContains.hasOwnProperty(name)) broadcastContains[name] = {callbacks: []};
 		broadcastContains[name].callbacks.push(callback);
-	},
-	getAllNames: function(){
-		return Object.keys(broadcasted);
 	}
 }
 

@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 
 export default {
   getColor(datapoint,currentval) {
-    var color = 'black';
+    var color = '#0277bd';
 
     if (datapoint === "ieq.co2") {
     if (0 < currentval && currentval < 600) { color = '#0277bd'; }
