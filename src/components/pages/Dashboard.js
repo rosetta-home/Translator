@@ -42,18 +42,23 @@ class RangePicker extends Component {
 	    this.setState(range);
 	  };
 		done = () => { this.props.onDone(this.state); }
+		close = () => { this.props.close(); }
     render() {
 			  const { from,to } = this.state;
         return (
             <div>
+						<Card shadow={4} style="width:100%">
 						<DayPicker
 							numberOfMonths={2}
 							selectedDays={[from, { from, to }]}
 							onDayClick={this.handleDayClick}
 							fixedWeeks/>
-							<br></br>
+			        <Card.Actions style="text-align:right">
 							<button onClick={this.done}>Set</button>
-							<br></br>
+								&nbsp;
+							<button onClick={this.close}>Cancel</button>
+							</Card.Actions>
+			      </Card>
 						</div>
         );
     }
@@ -191,7 +196,7 @@ var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 console.log(fromValue);
 console.log(toValue);
 
-	var res = DRes.getResolution(fromValue,toValue);
+
 
 	return (
 			<div>
@@ -199,7 +204,7 @@ console.log(toValue);
 <div style="padding:10px;">
 
 <div class="nowcard" style="padding-right:15px;padding-left:15px;">
-<label style="font-size:15px;">{moment(from).format('MMMM Do YYYY')} - {moment(to).format('MMMM Do YYYY')}</label>
+<label style="font-size:15px;">{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</label>
 </div>
 
      <div className="row">

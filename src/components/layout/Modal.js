@@ -31,12 +31,13 @@ class Modal extends Component {
     };
     return (
       <div className="backdrop" style={backdropStyle}>
-        <div style={modalStyle}>
+        {/*<div style={modalStyle}>
           <div style="text-align: right;">
             <button onClick={this.props.onClose} style={buttonstyle}>✖</button>
           </div>
           {this.props.children}
-        </div>
+        </div>*/}
+        {this.props.children}
       </div>
     );
   }

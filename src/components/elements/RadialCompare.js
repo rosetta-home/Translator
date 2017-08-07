@@ -33,7 +33,7 @@ class RadialCompare extends Component {
     authentication.getData('ieq.co2').then(v => {
       /* Once the promise object is resolved then the results are parse and series to used for the sparklinePlus */
       var series = v['results'][0].series;
-      var results = series[0].values;
+      if (series !== undefined) {
       var dx = [];
       for (var i = 0; i < results.length; i++) {
         var current = results[i];
@@ -42,6 +42,7 @@ class RadialCompare extends Component {
       this.dx = dx;
       /* Triggers a state change so the nvd3 chart will reload the data */
       this.setState();
+      };
     });
   }
  	componentDidMount() { }

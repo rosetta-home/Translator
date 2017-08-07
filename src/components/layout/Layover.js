@@ -31,7 +31,7 @@ export default class Layover extends Component {
     const Body = body;
 		return (
       <Modal show={open} onClose={this.close}>
-        <Body onDone={this.onDone}/>
+        <Body onDone={this.onDone} close={this.close}/>
       </Modal>
     );
 	}
