@@ -7,11 +7,11 @@ import Modal from './Modal';
 export default class Layover extends Component {
   constructor(props) {
 	  super(props);
-    this.state = { open:false,body:null };
+    this.state = { open:false,body:null,callback:null,props:null };
   }
   componentDidMount() {
     ReactBroadcast.on('OpenModal', payload => {
-      this.setState({ open:true,body:payload });
+      this.setState({ open:true,body:payload.component, callback:payload.callback, props:payload.props });
     });
   }
   componentWillUnmount() {
@@ -21,17 +21,16 @@ export default class Layover extends Component {
     this.setState({ open:false });
   }
   onDone = (state) => {
-    ReactBroadcast.broadcast('ModalData', state);
     this.setState({ open:false });
   }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
 	render() {
-    const { open,body } = this.state;
+    const { open,body,callback,props } = this.state;
     const Body = body;
 		return (
       <Modal show={open} onClose={this.close}>
-        <Body onDone={this.onDone} close={this.close}/>
+        <Body onDone={this.onDone} close={this.close} callback={callback} data={props}/>
       </Modal>
     );
 	}

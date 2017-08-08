@@ -12,9 +12,6 @@ export default class Header extends Component {
       title:'Rosetta Home'
     };
   }
-  action = () => {
-    console.log("action");
-  }
   componentDidMount() { }
 	render() {
     const { title } = this.state;

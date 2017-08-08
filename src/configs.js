@@ -8,9 +8,9 @@ export default {
   },
   title(type) {
     if (type === 'weather_station.outdoor_temperature') {
-      return 'Outdoor Temperature';
+      return 'Outdoor';
     } else if (type === 'weather_station.indoor_temperature') {
-      return 'Indoor Temperature';
+      return 'Indoor';
     } else if (type === 'weather_station.humidity') {
       return 'Humidity';
     } else if (type === 'ieq.co2') {

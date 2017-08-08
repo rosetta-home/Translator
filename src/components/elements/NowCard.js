@@ -31,7 +31,6 @@ export default class NowCard extends Component {
 
     dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,'12h').then(payload => {
       var series = payload['results'][0].series;
-      console.log(series);
       if (series !== undefined) {
         var results = series[0].values;
         var dx = [];
@@ -67,7 +66,7 @@ export default class NowCard extends Component {
         <Card.Title>
           <Card.TitleText></Card.TitleText>
         </Card.Title>
-        <div className="row">
+        <div className="row" style="margin-right:0px;margin-left:0px;">
            <div className="col-12" style="padding-top: 0px;padding-bottom: 0px;">
              <div class="nowcard" style="padding-bottom:15px;padding-right:15px;padding-left:15px;">
                 <h3 style="font-size: 55px;color:#0277bd;">{currentValue + this.lastValueEnding}</h3>
@@ -75,8 +74,8 @@ export default class NowCard extends Component {
              </div>
            </div>
         </div>
-        <div className="row">
-           <div className="col-12" style="padding-top: 0px;padding-bottom: 0px;">
+        <div className="row" style="margin-right:0px;margin-left:0px;">
+           <div className="col-12 full" style="padding-top: 0px;padding-bottom: 0px;">
               <NVD3Chart showLastValue={false} showXAxis={false} showYAxis={false}  margin={{top: 0, right: 10, bottom: 0, left: 10}} height={50}  color={this.handleColor} type={type} datum={dd} x="x" y={y} xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>
            </div>
         </div>
