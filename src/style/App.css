@@ -3,12 +3,16 @@
   width: 100%;
 }
 
+body {
+  /*background: linear-gradient(#ef6c00 50%, white 50%);*/
+  background-color: white;
+}
+
 h2 {
   width: 100%;
 }
 
 main {
-  /*padding: 10px; */
   background-color:lightgray;
 }
 
@@ -756,6 +760,16 @@ ol.progtrckr li.progtrckr-done:hover:before {
   top:0;*/
 }
 
+.nvd3.nv-sparklineplus .nv-minValue {
+  r: 4;
+  fill:#0277bd;
+  stroke:#0277bd;
+}
+.nvd3.nv-sparklineplus .nv-maxValue {
+    stroke: #ef6c00;
+    fill: #ef6c00;
+    r: 4;
+}
 
 /* Base for label styling */
 [type="checkbox"]:not(:checked),

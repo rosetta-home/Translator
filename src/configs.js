@@ -8,9 +8,9 @@ export default {
   },
   title(type) {
     if (type === 'weather_station.outdoor_temperature') {
-      return 'Outdoor';
+      return 'Outdoor Temp.';
     } else if (type === 'weather_station.indoor_temperature') {
-      return 'Indoor';
+      return 'Indoor Temp.';
     } else if (type === 'weather_station.humidity') {
       return 'Humidity';
     } else if (type === 'ieq.co2') {
@@ -19,6 +19,10 @@ export default {
       return 'Smart Meter Kilowatt';
     } else if (type === 'smart_meter.price') {
       return 'Kilowatt Price';
+    } else if (type === 'weather_station.pressure') {
+      return 'Pressure';
+    } else if (type === 'weather_station.uv') {
+      return 'UV';
     }
     return type;
   }

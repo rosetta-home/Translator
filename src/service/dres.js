@@ -17,10 +17,19 @@ export default {
     var hours = duration.asHours();
     var days = Math.round(hours / 24);
 
-    if (days < 14) {
-      return this.minutes(30);;
+    if (days < 2) {
+      return this.hours(1);;
 
     }
-    return this.days(1);
+
+    if (days < 14) {
+      return this.hours(12);;
+
+    }
+    if (days > 30) {
+      return this.days(7);;
+
+    }
+    return this.days(2);
   }
 }

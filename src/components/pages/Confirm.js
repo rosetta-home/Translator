@@ -11,6 +11,7 @@ export default class Confirm extends Component {
 		/* ReactBroadcast the updated title  */
 		ReactBroadcast.broadcast('SetTitle', 'Confirm');
 	}
+  
   setup = () => {
     route('/setup');
   }

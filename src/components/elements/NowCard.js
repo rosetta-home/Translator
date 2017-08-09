@@ -1,19 +1,28 @@
 import { h, Component } from 'preact';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import NVD3Chart from 'react-nvd3';
-
+import moment from 'moment';
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
 import configs from '../../configs';
+
+Array.prototype.sum = function() {
+    return this.reduce(function(a,b){return a+b;});
+};
 
 export default class NowCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentValue:0,
-      data:[]
+      data:[],
+      min:0,
+      mean:0,
+      max:0
     };
     this.lastValueEnding = '';
+    this.isC = true;
+    this.isTemp = false;
   }
   componentDidMount() {
 
@@ -23,33 +32,96 @@ export default class NowCard extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.lastValueEnding = '';
-    if (this.props.datapoint === 'weather_station.outdoor_temperature') { this.lastValueEnding = '°C'; }
-    if (this.props.datapoint === 'weather_station.indoor_temperature') { this.lastValueEnding = '°C'; }
+
+    if (this.props.datapoint === 'weather_station.outdoor_temperature') {
+      var options = nextProps.options;
+      this.isTemp = true;
+      if (options.unit !== undefined) {
+        if (options.unit === 'F') {
+          this.lastValueEnding = '°F';
+          this.isC = false;
+        } else {
+          this.lastValueEnding = '°C';
+          this.isC = true;
+        }
+      }
+    }
+    if (this.props.datapoint === 'weather_station.indoor_temperature') {
+      var options = nextProps.options;
+      this.isTemp = true;
+      if (options.unit !== undefined) {
+        if (options.unit === 'F') {
+          this.lastValueEnding = '°F';
+          this.isC = false;
+        } else {
+          this.lastValueEnding = '°C';
+          this.isC = true;
+        }
+      }
+    }
     if (this.props.datapoint === 'weather_station.humidity') { this.lastValueEnding = '%'; }
     if (this.props.datapoint === 'smart_meter.kw') { this.lastValueEnding = 'kw'; }
     if (this.props.datapoint === 'smart_meter.price') { this.lastValueEnding = '¢'; }
 
-    dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,'12h').then(payload => {
+    dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres).then(payload => {
       var series = payload['results'][0].series;
       if (series !== undefined) {
         var results = series[0].values;
         var dx = [];
         var current = 0;
+        var allvals = [];
+        var min = null;
+        var max = null;
         for (var i = 0; i < results.length; i++) {
            var currentobj = results[i];
-           dx.push({x:new Date(currentobj[0]),y:10,value:currentobj[1]});
-            current = Math.round(currentobj[1]);
+           var val;
+           if (this.isTemp) {
+             if (this.isC) {
+               val = currentobj[1]
+             } else {
+               val = currentobj[1] * 9 / 5 + 32;
+             }
+           } else {
+             val = currentobj[1]
+           }
+           dx.push({x:new Date(currentobj[0]),y:10,value:val});
+           current = Math.round(val);
+           allvals.push(current);
+           if (min === null) {
+             min = currentobj;
+           } else {
+             if (min[1] > current) {
+               min = currentobj;
+             }
+           }
+
+           if (max === null) {
+             max = currentobj;
+           } else {
+             if (max[1] < current) {
+               max = currentobj;
+             }
+           }
         }
-        this.setState({data:dx,currentValue:current});
+        this.setState({
+          data:dx,
+          currentValue:
+          current,
+          min:min,
+          mean:Math.round(allvals.sum() / allvals.length),
+          max:max
+        });
       }
     });
   }
   handleColor = (i) => {
-
+    if (!this.props.map) {
+      return "black";
+    }
     return theme.getColor(this.props.datapoint,i['value']);
   }
 	render() {
-    const { currentValue,data } = this.state;
+    const { currentValue,data,min,mean,max } = this.state;
     var dd;
     var y;
     if (this.props.map) {
@@ -63,23 +135,70 @@ export default class NowCard extends Component {
 		return (
       <div>
       <Card shadow={4} style="width:100%">
-        <Card.Title>
-          <Card.TitleText></Card.TitleText>
-        </Card.Title>
         <div className="row" style="margin-right:0px;margin-left:0px;">
-           <div className="col-12" style="padding-top: 0px;padding-bottom: 0px;">
-             <div class="nowcard" style="padding-bottom:15px;padding-right:15px;padding-left:15px;">
-                <h3 style="font-size: 55px;color:#0277bd;">{currentValue + this.lastValueEnding}</h3>
-                <small>{configs.title(this.props.datapoint)}</small>
+           <div className="col-12" style="padding-top: 10px;padding-bottom: 0px;">
+             <div class="nowcard" style="padding-bottom:0px;padding-right:15px;padding-left:15px;">
+                <h3 style="line-height:1.0;margin-bottom:0;font-size: 55px;color:rgb(41, 43, 44);">{currentValue + this.lastValueEnding}</h3>
+                <small style="color: rgb(0, 0, 0);opacity: 1;">{configs.title(this.props.datapoint)}</small>
              </div>
            </div>
         </div>
+        {this.props.map === false &&
+        <div>
+        <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
+          <div className="col-12 full" style="padding-top: 0px;padding-bottom: 0px;">
+            <small style="font-size: 80%;font-weight: bold;">Avg: {mean + this.lastValueEnding}</small>
+          </div>
+        </div>
+        <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
+          <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+            <small style="color:#0277bd;font-size: 80%;font-weight: bold;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
+            <br></br>
+            <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
+          </div>
+          <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+            <small style="color:#ef6c00;font-size: 80%;font-weight: bold;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
+            <br></br>
+            <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
+          </div>
+        </div>
+        </div>
+        }
+        {this.props.map === true &&
+          <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
+            <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+              <small style="color:#0277bd;font-size: 80%;font-weight: bold;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
+              <br></br>
+              <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
+            </div>
+            <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+              <small style="color:#ef6c00;font-size: 80%;font-weight: bold;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
+              <br></br>
+              <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
+            </div>
+          </div>
+        }
         <div className="row" style="margin-right:0px;margin-left:0px;">
            <div className="col-12 full" style="padding-top: 0px;padding-bottom: 0px;">
-              <NVD3Chart showLastValue={false} showXAxis={false} showYAxis={false}  margin={{top: 0, right: 10, bottom: 0, left: 10}} height={50}  color={this.handleColor} type={type} datum={dd} x="x" y={y} xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>
+              <NVD3Chart showLastValue={false} showXAxis={false} showYAxis={false}  margin={{top: 10, right: 10, bottom: 10, left: 10}} height={50}  color={this.handleColor} type={type} datum={dd} x="x" y={y} xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>
            </div>
         </div>
-        <Card.Actions style="text-align:right"></Card.Actions>
+        {this.props.map === true &&
+        <div className="row" style="background: -webkit-linear-gradient(right, #ef6c00,#ff9800,#ffcc80, #81d4fa,#03a9f4,#0277bd);margin-top:5px;margin-right:10px;margin-left:10px;">
+          <div className="col-4 full" style="padding-left: 5px;text-align: left;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>Low</b></small>
+          </div>
+          <div className="col-4 full" style="text-align: center;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>Normal</b></small>
+          </div>
+          <div className="col-4 full" style="padding-right: 5px;text-align: right;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>High</b></small>
+          </div>
+        </div>
+        }
+        <Card.Actions>
+            <button><small><b>More</b></small></button>
+        </Card.Actions>
       </Card>
       </div>
     );
