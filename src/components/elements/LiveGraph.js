@@ -46,7 +46,7 @@ class LiveGraph extends Component {
 	}
 
   tick() { this.props.graphAddPoint(this.id); }
-
+	/* Component lifecyle function */
  	componentDidMount() {
 		this.timer = setInterval(this.tick, 1000);
 	}

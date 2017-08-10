@@ -23,6 +23,7 @@ class BarChart extends Component {
         var series = payload['results'][0].series;
         var results = series[0].values;
         for (var i = 0; i < results.length; i++) {
+          // Gets current object in array
           var currentobj = results[i];
           this.data.push({x:new Date(currentobj[0]),y:currentobj[1],value:currentobj[1]});
         }
@@ -33,6 +34,7 @@ class BarChart extends Component {
     }
   }
   handleColor = (i) => {
+    // Gets the color from the theme class
     return theme.getColor(this.datapoint,i['value']);
   }
   /* Renders the component */

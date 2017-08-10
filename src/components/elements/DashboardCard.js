@@ -20,6 +20,7 @@ import DRes from '../../service/dres';
 
 class DashboardCard extends Component {
   constructor(props){ super(props); }
+  /* Component lifecyle function */
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }

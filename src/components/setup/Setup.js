@@ -10,35 +10,21 @@ export default class Setup extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.sampleStore = {
-      email: '',
-      gender: '',
-      savedToCloud: false
-    };
   }
-
+  /* Component lifecyle function */
   componentDidMount() {
     ReactBroadcast.broadcast('SetTitle', 'Setup Rosetta Home');
   }
-
   componentWillUnmount() {}
-
-  getStore() {
-    return this.sampleStore;
-  }
-
   updateStore(update) {
     this.sampleStore = {
       ...this.sampleStore,
       ...update,
     }
   }
-
   updateState = (props) => {
     console.log(props);
   }
-
   render() {
     const steps =
     [
@@ -46,14 +32,12 @@ export default class Setup extends Component {
       {name: 'Touchstones', component: <Intro update={(props) => (this.updateState(props))}/>},
       {name: 'Finish', component: <Intro update={(props) => (this.updateState(props))}/>}
     ]
-
     return (
       <div>
       <div style="width:100%;padding:10px;">
         <Card shadow={4} style="width:100%">
           <Wizard initialStep={1} steps={steps}/>
           <Card.Actions style="text-align:right">
-
           </Card.Actions>
         </Card>
       </div>

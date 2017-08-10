@@ -45,6 +45,7 @@ class RadialCompare extends Component {
       };
     });
   }
+  /* Component lifecyle function */
  	componentDidMount() { }
  	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }

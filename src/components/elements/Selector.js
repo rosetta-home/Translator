@@ -3,22 +3,13 @@ import { h, Component } from 'preact';
 class CustomSelector extends Component {
 	constructor(props) {
 		super(props);
-
 	}
-
-	handleSelect(e) {
-		 
-	}
-
+	handleSelect(e) { }
 	render (){
-
 			return (
 				<div>
-
 				</div>
 			);
-
-
 	}
 }
 

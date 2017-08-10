@@ -23,11 +23,13 @@ export default class NowCard extends Component {
     this.isC = true;
     this.isTemp = false;
   }
+  /* Component lifecyle function */
   componentDidMount() { }
   componentWillUnmount() { }
   componentWillReceiveProps(nextProps) {
+    /* Resets the ending value */
     this.lastValueEnding = '';
-
+    /* Checks the props to see what the datapoint is */
     if (this.props.datapoint === 'weather_station.outdoor_temperature') {
       var options = nextProps.options;
       this.isTemp = true;
@@ -57,17 +59,20 @@ export default class NowCard extends Component {
     if (this.props.datapoint === 'weather_station.humidity') { this.lastValueEnding = '%'; }
     if (this.props.datapoint === 'smart_meter.kw') { this.lastValueEnding = 'kw'; }
     if (this.props.datapoint === 'smart_meter.price') { this.lastValueEnding = '¢'; }
-
+    /* Uses the props and checks to make data service request */
     dataservice.getData(nextProps.datapoint,nextProps.startDateTime,nextProps.endDateTime,nextProps.dres).then(payload => {
       var series = payload['results'][0].series;
       if (series !== undefined) {
         var results = series[0].values;
+        /* Init the values and array */
         var dx = [];
         var current = 0;
         var allvals = [];
         var min = null;
         var max = null;
+        /* Goes through the results */
         for (var i = 0; i < results.length; i++) {
+           /* Gets the current object in array */
            var currentobj = results[i];
            var val;
            if (this.isTemp) {
@@ -79,9 +84,11 @@ export default class NowCard extends Component {
            } else {
              val = currentobj[1]
            }
+
            dx.push({x:new Date(currentobj[0]),y:10,value:val});
            current = Math.round(val);
            allvals.push(current);
+
            if (min === null) {
              min = currentobj;
            } else {
@@ -98,6 +105,7 @@ export default class NowCard extends Component {
              }
            }
         }
+        /* Update the state of the component */
         this.setState({
           data:dx,
           currentValue:
@@ -110,9 +118,9 @@ export default class NowCard extends Component {
     });
   }
   handleColor = (i) => {
-    if (!this.props.map) {
-      return "black";
-    }
+    /* If true, is sparkline and return black */
+    if (!this.props.map) { return "black"; }
+    /* If heatmap type gets the color from the theme */
     return theme.getColor(this.props.datapoint,i['value']);
   }
 	render() {
