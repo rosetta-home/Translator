@@ -760,6 +760,20 @@ ol.progtrckr li.progtrckr-done:hover:before {
   top:0;*/
 }
 
+.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
+.react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
+.react-calendar-heatmap .color-scale-3 { fill: #44a340; }
+.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
+.react-calendar-heatmap .color-empty { fill: #eee; }
+
+
+.react-calendar-heatmap .color-600 { fill: #0277bd; }
+.react-calendar-heatmap .color-800 { fill: #03a9f4; }
+.react-calendar-heatmap .color-1000 { fill: #81d4fa; }
+.react-calendar-heatmap .color-1200 { fill: #ffcc80; }
+.react-calendar-heatmap .color-1400 { fill: #ff9800; }
+
+
 .nvd3.nv-sparklineplus .nv-minValue {
   r: 4;
   fill:#0277bd;

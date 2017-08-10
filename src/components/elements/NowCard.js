@@ -133,7 +133,7 @@ export default class NowCard extends Component {
         <div className="row" style="margin-right:0px;margin-left:0px;">
            <div className="col-12" style="padding-top: 10px;padding-bottom: 0px;">
              <div class="nowcard" style="padding-bottom:0px;padding-right:15px;padding-left:15px;">
-                <h3 style="line-height:1.0;margin-bottom:0;font-size: 55px;color:rgb(41, 43, 44);">{currentValue + this.lastValueEnding}</h3>
+                <h3 style="line-height:1.0;margin-bottom:0;font-size: 55px;color:rgb(41, 43, 44);font-weight: 200;">{currentValue + this.lastValueEnding}</h3>
                 <small style="color: rgb(0, 0, 0);opacity: 1;">{configs.title(this.props.datapoint)}</small>
              </div>
            </div>
@@ -142,17 +142,17 @@ export default class NowCard extends Component {
         <div>
         <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
           <div className="col-12 full" style="padding-top: 0px;padding-bottom: 0px;">
-            <small style="font-size: 80%;font-weight: bold;">Avg: {mean + this.lastValueEnding}</small>
+            <small style="font-size: 80%;font-weight: lighter;">Avg: {mean + this.lastValueEnding}</small>
           </div>
         </div>
         <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
           <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-            <small style="color:#0277bd;font-size: 80%;font-weight: bold;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
+            <small style="color:#0277bd;font-size: 80%;font-weight: lighter;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
             <br></br>
             <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
           </div>
           <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-            <small style="color:#ef6c00;font-size: 80%;font-weight: bold;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
+            <small style="color:#ef6c00;font-size: 80%;font-weight: lighter;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
             <br></br>
             <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
           </div>
@@ -162,12 +162,12 @@ export default class NowCard extends Component {
         {this.props.map === true &&
           <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
             <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-              <small style="color:#0277bd;font-size: 80%;font-weight: bold;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
+              <small style="color:#0277bd;font-size: 80%;font-weight: lighter;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
               <br></br>
               <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
             </div>
             <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-              <small style="color:#ef6c00;font-size: 80%;font-weight: bold;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
+              <small style="color:#ef6c00;font-size: 80%;font-weight: lighter;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
               <br></br>
               <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
             </div>
@@ -192,7 +192,7 @@ export default class NowCard extends Component {
         </div>
         }
         <Card.Actions>
-            <button><small><b>More</b></small></button>
+            <button><small style="font-weight: lighter;">More</small></button>
         </Card.Actions>
       </Card>
       </div>

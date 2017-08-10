@@ -16,5 +16,29 @@ export default {
 
     return color;
 
+  },
+  getColorHeatMap(datapoint,currentval) {
+    var color = 'color-empty';
+    if (datapoint === "ieq.co2") {
+      if (0 < currentval && currentval < 600) {
+        color = 'color-600';
+      }
+      if (600 < currentval && currentval < 800) {
+        color = 'color-800';
+      }
+      if (800 < currentval && currentval < 1000) {
+        color = 'color-1000';
+      }
+      if (1000 < currentval && currentval < 1200) {
+        color = 'color-1200';
+      }
+      if (1200 < currentval && currentval < 1400) {
+        color = 'color-1400';
+      }
+      if (currentval > 1400) {
+        color = 'color-1400';
+      }
+    }
+    return color;
   }
 }

@@ -19,6 +19,7 @@ import BulletChart from '../elements/BulletChart';
 import BarChart from '../elements/BarChart';
 import SelectorChart from '../elements/SelectorChart';
 import NowCard from '../elements/NowCard';
+import HeatMap from '../elements/HeatMap';
 
 import Authentication from '../../service/authservice';
 import DRes from '../../service/dres';
@@ -28,6 +29,8 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import SwipeableViews from 'react-swipeable-views';
+
+import CalendarHeatmap from 'react-calendar-heatmap';
 
 class RangePicker extends Component {
 		constructor(props) {
@@ -217,10 +220,10 @@ export default class Dashboard extends Component {
 
 			<div className="row" style="margin-right:0px;margin-left:0px;margin-top:0px;">
         <div className="col-6" style=" text-align: left;padding-left: 0px;">
-					<label style="color: #505050;font-size:15px;margin: 8px;/*font-weight:bold;*/"><b>{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</b></label>
+					<label style="font-weight: 400;color: #505050;font-size:15px;margin: 8px;/*font-weight:bold;*/">{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</label>
         </div>
         <div className="col-6" style="text-align:right;padding-right: 0px;">
-					<button onClick={this.advanced} style="height: 100%;color: #505050;"><b>Advanced</b></button>
+					<button onClick={this.advanced} style="height: 100%;color: #505050;">Advanced</button>
 				</div>
       </div>
 
@@ -263,6 +266,16 @@ export default class Dashboard extends Component {
 			</div>
 
 			<Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card.Title>
+          <Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
+        </Card.Title>
+        <HeatMap datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
+      </Card>
+
+			<Card shadow={4} style="width:100%;margin-top:10px;">
 			<SwipeableViews>
       		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
 					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
@@ -303,7 +316,9 @@ export default class Dashboard extends Component {
 			  	<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
 				</Card.Title>
 				<SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
 			</Card>
 
 			<Card shadow={4} style="width:100%;margin-top:10px;">
@@ -311,7 +326,9 @@ export default class Dashboard extends Component {
           <Card.TitleText><small>Weather Station</small></Card.TitleText>
         </Card.Title>
         <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
 		  <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -321,7 +338,9 @@ export default class Dashboard extends Component {
         <SparkGraphLive datapoint="smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
         <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
         </Collapsible>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
 		  <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -331,7 +350,9 @@ export default class Dashboard extends Component {
         <SparkGraphLive datapoint="smart_meter.price" startDateTime={fromValue} endDateTime={toValue}/>
         <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
         </Collapsible>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -341,7 +362,9 @@ export default class Dashboard extends Component {
         <SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
         <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
         </Collapsible>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -349,7 +372,9 @@ export default class Dashboard extends Component {
           <Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
         </Card.Title>
         <RadialCompare/>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -359,7 +384,9 @@ export default class Dashboard extends Component {
         <SparkGraphLive datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
         <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
         </Collapsible>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
 		  <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -369,7 +396,9 @@ export default class Dashboard extends Component {
         <BulletChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue}/>
         <BulletChart datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
         <BulletChart datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -379,7 +408,9 @@ export default class Dashboard extends Component {
         <SparkGraphLive datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue}/>
         <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
         </Collapsible>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -387,7 +418,9 @@ export default class Dashboard extends Component {
           <Card.TitleText><small>Smart Meter</small></Card.TitleText>
         </Card.Title>
         <MultiDPChart datapoints="smart_meter.price,smart_meter.kw_delivered,smart_meter.kw_received,smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
-        <Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
       </Card>
 
 			<Card shadow={4} style="width:100%;margin-top:10px;">
@@ -395,7 +428,9 @@ export default class Dashboard extends Component {
 					<Card.TitleText><small>CO2</small></Card.TitleText>
 				</Card.Title>
 				<BarChart datapoint="ieq.co2" axisEnabled={false} startDateTime={fromValue} endDateTime={toValue}/>
-				<Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
 			</Card>
 
       <Card shadow={4} style="width:100%;margin-top:10px;">
@@ -403,7 +438,9 @@ export default class Dashboard extends Component {
 					<Card.TitleText><small>CO2</small></Card.TitleText>
 				</Card.Title>
 				<BarChart datapoint="ieq.co2" axisEnabled={true} startDateTime={fromValue} endDateTime={toValue} dres="12h"/>
-				<Card.Actions style="text-align:right"></Card.Actions>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
 			</Card>
 
 			</div>
