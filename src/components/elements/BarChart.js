@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import NVD3Chart from 'react-nvd3';
 import React from 'preact';
+
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
 

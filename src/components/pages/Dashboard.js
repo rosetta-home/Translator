@@ -18,6 +18,7 @@ import MultiDPChart from '../elements/MultiDPChart';
 import BulletChart from '../elements/BulletChart';
 import BarChart from '../elements/BarChart';
 import SelectorChart from '../elements/SelectorChart';
+import NowCard from '../elements/NowCard';
 
 import Authentication from '../../service/authservice';
 import DRes from '../../service/dres';
@@ -26,8 +27,7 @@ import authentication from '../../service/authservice';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-
-import NowCard from '../elements/NowCard';
+import SwipeableViews from 'react-swipeable-views';
 
 class RangePicker extends Component {
 		constructor(props) {
@@ -51,13 +51,16 @@ class RangePicker extends Component {
       return (
         <div>
 					<Card shadow={4} style="width:100%">
+					<Card.Title>
+	          <Card.TitleText>Time Range</Card.TitleText>
+	        </Card.Title>
 				  <DayPicker
 						numberOfMonths={2}
 						selectedDays={[from, { from, to }]}
 						onDayClick={this.handleDayClick}
 					 fixedWeeks/>
 			    <Card.Actions style="text-align:right">
-						<button className="button" style="background-color: #4CAF50;" onClick={this.done}><b>Set</b></button>
+						<button className="button" style="background-color: #4CAF50;" onClick={this.done}>Set</button>
 						&nbsp;
 						<button className="button" style="background-color: #292b2c;" onClick={this.close}>Cancel</button>
 					</Card.Actions>
@@ -66,6 +69,49 @@ class RangePicker extends Component {
         );
     }
 }
+
+class Advanced extends Component {
+		constructor(props) {
+			super(props);
+			this.state = props.data;
+		}
+		handleDayClick = day => {
+	    const range = DateUtils.addDayToRange(day, this.state);
+	    this.setState(range);
+	  };
+		done = () => {
+			this.props.onDone(this.state);
+			this.props.callback(this.state);
+		}
+		close = () => { this.props.close(); }
+		componentWillReceiveProps(nextProps) {
+			this.setState(nextProps.data);
+		}
+    render() {
+			const { from,to } = this.state;
+      return (
+        <div>
+					<Card shadow={4} style="width:100%">
+					<Card.Title>
+	          <Card.TitleText>Advanced</Card.TitleText>
+	        </Card.Title>
+				  <DayPicker
+						numberOfMonths={2}
+						selectedDays={[from, { from, to }]}
+						onDayClick={this.handleDayClick}
+					 fixedWeeks/>
+			    <Card.Actions style="text-align:right">
+						<button className="button" style="background-color: #4CAF50;" onClick={this.done}>Run</button>
+						&nbsp;
+						<button className="button" style="background-color: #292b2c;" onClick={this.close}>Cancel</button>
+					</Card.Actions>
+			    </Card>
+				</div>
+        );
+    }
+}
+
+
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -84,6 +130,9 @@ export default class Dashboard extends Component {
 		var newpayload = payload;
 		newpayload['timerangeindex'] = 0;
 		this.setState(newpayload);
+	}
+	advancedCallBack = (payload) => {
+		console.log(payload);
 	}
 	componentDidMount() {
 		if (authentication.getToken() === '') {
@@ -127,13 +176,37 @@ export default class Dashboard extends Component {
 	}
 	advanced = () => {
 		const { from, to } = this.state;
-		ReactBroadcast.broadcast('OpenModal', { component:RangePicker, callback:this.modalCallBack, props:{'from':from,'to':to} });
+		ReactBroadcast.broadcast('OpenModal', { component:Advanced, callback:this.advancedCallBack, props:{'from':from,'to':to} });
 	}
 	render() {
 		const { from, to,open,timerangeindex,tempindex,tempmeasure } = this.state;
 		var dres = DRes.getResolution(from, to);
 		var fromValue = moment(from).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 		var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+
+
+
+		const styles = {
+  		slide: {
+    		minHeight: 100,
+    		color: '#fff',
+  		},
+  		slide1: {
+    		background: '#FEA900',
+  		},
+  		slide2: {
+    		background: '#B3DC4A',
+  		},
+  		slide3: {
+    		background: '#6AC0FF',
+  		},
+		};
+
+
+
+
+
+
 		return (
 			<div>
 
@@ -144,14 +217,14 @@ export default class Dashboard extends Component {
 
 			<div className="row" style="margin-right:0px;margin-left:0px;margin-top:0px;">
         <div className="col-6" style=" text-align: left;padding-left: 0px;">
-					<label style="color: gray;font-size:15px;margin: 8px;/*font-weight:bold;*/"><b>{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</b></label>
+					<label style="color: #505050;font-size:15px;margin: 8px;/*font-weight:bold;*/"><b>{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</b></label>
         </div>
         <div className="col-6" style="text-align:right;padding-right: 0px;">
-					<button onClick={this.advanced} style="height: 100%;color: gray;"><b>Advanced</b></button>
+					<button onClick={this.advanced} style="height: 100%;color: #505050;"><b>Advanced</b></button>
 				</div>
       </div>
 
-			<div class="segmented-control" style="width: 100%; color: gray;">
+			<div class="segmented-control" style="width: 100%; color: #505050;">
 				{timerangeindex == 1 ?
 					<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)} checked />
 					:
@@ -172,7 +245,7 @@ export default class Dashboard extends Component {
 				<label for="sb-3" data-value="Last 24hrs" style="margin-bottom:0px;">Last 24 hrs</label>
 		  </div>
 			<br></br>
-			<div class="segmented-control" style="width: 100%; color:gray;">
+			<div class="segmented-control" style="width: 100%; color:#505050;">
 				{tempindex == 1 ?
 					<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)} checked />
 					:
@@ -188,6 +261,14 @@ export default class Dashboard extends Component {
 		  </div>
 
 			</div>
+
+			<Card shadow={4} style="width:100%;margin-top:10px;">
+			<SwipeableViews>
+      		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+				  <NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+  		</SwipeableViews>
+			</Card>
 
 
       <div className="row" style="margin-right:0px;margin-left:0px;margin-top:10px;">

@@ -1,8 +1,5 @@
 import { h, Component } from 'preact';
-import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3';
-import authentication from '../../service/authservice';
-import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,LineChart,Line,Brush,YAxis,Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
 import Slider from 'react-rangeslider';
 

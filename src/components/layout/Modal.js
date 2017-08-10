@@ -3,10 +3,10 @@ import { Button , Layout, Navigation} from 'preact-mdl';
 
 class Modal extends Component {
   render() {
-    // Render nothing if the "show" prop is false
     if(!this.props.show) {
       return null;
     }
+    /* Styling for the modal component*/
     const backdropStyle = {
       position: 'fixed',
       top: 0,
@@ -31,12 +31,6 @@ class Modal extends Component {
     };
     return (
       <div className="backdrop" style={backdropStyle}>
-        {/*<div style={modalStyle}>
-          <div style="text-align: right;">
-            <button onClick={this.props.onClose} style={buttonstyle}>✖</button>
-          </div>
-          {this.props.children}
-        </div>*/}
         {this.props.children}
       </div>
     );

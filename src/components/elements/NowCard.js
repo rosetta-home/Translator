@@ -2,13 +2,12 @@ import { h, Component } from 'preact';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import NVD3Chart from 'react-nvd3';
 import moment from 'moment';
+
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
 import configs from '../../configs';
 
-Array.prototype.sum = function() {
-    return this.reduce(function(a,b){return a+b;});
-};
+Array.prototype.sum = function() { return this.reduce(function(a,b){return a+b;}); };
 
 export default class NowCard extends Component {
   constructor(props) {
@@ -24,12 +23,8 @@ export default class NowCard extends Component {
     this.isC = true;
     this.isTemp = false;
   }
-  componentDidMount() {
-
-	}
-  componentWillUnmount() {
-
-  }
+  componentDidMount() { }
+  componentWillUnmount() { }
   componentWillReceiveProps(nextProps) {
     this.lastValueEnding = '';
 

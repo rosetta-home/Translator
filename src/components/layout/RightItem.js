@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
+
 import ReactBroadcast from '../../service/reactbroadcast';
 import configs from '../../configs';
 
@@ -27,11 +28,9 @@ export default class RightItem extends Component {
   componentWillReceiveProps(nextProps) { }
 	render() {
     const { icon,callback } = this.state;
-
     if (icon === null) {
       return (<div></div>);
     }
-
 		return (<i className={icon} onClick={this.click} aria-hidden="true" style="font-size:36px;color:white;"></i>);
 	}
 }

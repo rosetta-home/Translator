@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
-import ReactFauxDOM from 'react-faux-dom'
 import d3 from 'd3';
-import dataservice from '../../service/dataservice';
 import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,LineChart,Line,Brush,YAxis,
 Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
+
+import dataservice from '../../service/dataservice';
 
 class BrushElement extends Component {
   //TODO: Hard code for the wind vs ieq.co2 compoent. Cannot really be used yet for other cases.
