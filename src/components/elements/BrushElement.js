@@ -10,8 +10,6 @@ class BrushElement extends Component {
   //TODO: Hard code for the wind vs ieq.co2 compoent. Cannot really be used yet for other cases.
   constructor(props){
     super(props);
-    this.change = this.change.bind(this);
-    this.dateformat = this.dateformat.bind(this);
     this.datatypes = ['ieq.co2','weather_station.wind.direction'];
     var uris = [];
     this.datatypes.forEach(function(element) {
@@ -45,8 +43,8 @@ class BrushElement extends Component {
       this.setState();
     });
   }
-  dateformat(date) { return ""; }
-  change(range) { this.props.brushChange(this.data.slice(range.startIndex,range.endIndex)); }
+  dateformat = (date) => { return ""; }
+  change = (range) => { this.props.brushChange(this.data.slice(range.startIndex,range.endIndex)); }
   /* Component lifecyle methods */
  	componentDidMount() { }
  	componentWillUnmount() { }

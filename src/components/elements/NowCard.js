@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
+import { route } from 'preact-router';
 import NVD3Chart from 'react-nvd3';
 import moment from 'moment';
 
@@ -123,6 +124,9 @@ export default class NowCard extends Component {
     /* If heatmap type gets the color from the theme */
     return theme.getColor(this.props.datapoint,i['value']);
   }
+  more = () => {
+    route('/more');
+  }
 	render() {
     const { currentValue,data,min,mean,max } = this.state;
     var dd;
@@ -200,7 +204,7 @@ export default class NowCard extends Component {
         </div>
         }
         <Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
+            <button onClick={this.more}><small style="font-weight: lighter;">More</small></button>
         </Card.Actions>
       </Card>
       </div>

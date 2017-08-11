@@ -19,7 +19,9 @@ import { Card, Button, Grid,Cell } from 'preact-mdl';
 import DRes from '../../service/dres';
 
 class DashboardCard extends Component {
-  constructor(props){ super(props); }
+  constructor(props){
+    super(props);
+  }
   /* Component lifecyle function */
  	componentDidMount() { }
  	componentWillUnmount() { }

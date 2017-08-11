@@ -19,6 +19,7 @@ import NowDetail from './components/pages/NowDetail';
 import Confirm from './components/pages/Confirm';
 import Devices from './components/pages/Devices';
 import Help from './components/pages/Help';
+import More from './components/pages/More';
 
 const Root = () => (
   <App>
@@ -36,6 +37,7 @@ const Root = () => (
       <Confirm path="/confirm/:token"/>
       <Devices path="/devices"/>
       <Help path="/help"/>
+      <More path="/more"/>
     </Router>
   </App>
 );

@@ -73,6 +73,14 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 
 ### Documentation
 
+<b>Now</b> is a overview of the current datapoint with min max avg and tend via sparkline.
+
+```
+const point = "weather_station.humidity";
+const dres = '1d';
+<NowCard datapoint={point} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+```
+
 <b>MultiDPChart</b> is a simple line chart which has the option for a threshold and populates more than one data point. For example all the data points from the weather station.
 
 ```

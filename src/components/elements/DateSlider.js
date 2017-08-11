@@ -6,9 +6,15 @@ import Slider from 'react-rangeslider';
 class DateSlider extends Component {
   constructor (props, context) {
     super(props, context)
-    this.state = { value: 0,date: Date(),min:0,max:1 };
+    this.state = {
+      value: 0,
+      date: Date(),
+      min:0,
+      max:1
+    };
   }
   handleChange = (value) => {
+    /* Handles the changes the slider props */
     if (this.props.value.length !== 0) {
       var obj = this.props.value[value];
       this.props.dateChange(obj,value);

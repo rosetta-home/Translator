@@ -277,37 +277,37 @@ export default class Dashboard extends Component {
 
 			<Card shadow={4} style="width:100%;margin-top:10px;">
 			<SwipeableViews>
-      		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
-					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
-				  <NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+      		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+				  <NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
   		</SwipeableViews>
 			</Card>
 
 
       <div className="row" style="margin-right:0px;margin-left:0px;margin-top:10px;">
         <div className="col-6 left">
-          <NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+          <NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
         </div>
         <div className="col-6 right">
-					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 				</div>
       </div>
 
 			<div className="row" style="margin-right:0px;margin-left:0px;margin-top:10px;">
 		    <div className="col-6 left">
-		      <NowCard datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+		      <NowCard datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 		    </div>
 		    <div className="col-6 right">
-		 			<NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+		 			<NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 				</div>
 		  </div>
 
 			<div className="row" style="margin-right:0px;margin-left:0px;margin-top:10px;">
 		    <div className="col-6 left">
-		      <NowCard datapoint="weather_station.pressure" startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+		      <NowCard datapoint="weather_station.pressure" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 		    </div>
 		    <div className="col-6 right">
-		 			<NowCard datapoint="weather_station.uv" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres} map={false}/>
+		 			<NowCard datapoint="weather_station.uv" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 				</div>
 		  </div>
 
