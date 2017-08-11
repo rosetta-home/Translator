@@ -73,6 +73,22 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 
 ### Documentation
 
+<b>BulletChart</b>
+
+```
+const point = "ieq.co2";
+const dres = '1d';
+<BulletChart datapoint={point} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+```
+
+<b>BarChart</b>
+
+```
+const point = "ieq.co2";
+const dres = '1d';
+<BarChart datapoint={point} axisEnabled={false} startDateTime={fromValue} endDateTime={toValue}/>
+```
+
 <b>Now</b> is a overview of the current datapoint with min max avg and tend via sparkline.
 
 ```
@@ -81,19 +97,29 @@ const dres = '1d';
 <NowCard datapoint={point} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 ```
 
+<b>HeatMap</b> allows the user to see and HeatMap of the datapoint that was selected, as well as in the given date range.
+
+```
+const point = "ieq.co2";
+const dres = '1d';
+<HeatMap datapoint={point} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+```
+
 <b>MultiDPChart</b> is a simple line chart which has the option for a threshold and populates more than one data point. For example all the data points from the weather station.
 
 ```
 /* Data points to graph */
+const dres = '1d';
 const points = "weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature";
-<MultiDPChart datapoints={points} startDateTime={fromValue} endDateTime={toValue}/>
+<MultiDPChart datapoints={points} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 ```
 <b>SparkGraphLive</b> is a mix of the sparkline and the live graph. The component has the most current value on the left side of the compoment and a sparkline to the right. Under the top two elements is a live is the LiveGraph.
 
 ```
 /* Id of the data point */
 const datapoint = "weather_station.humidity";
-<SparkGraphLive type={datapoint} startDateTime={fromValue} endDateTime={toValue}/>
+const dres = '1d';
+<SparkGraphLive type={datapoint} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 ```
 
 <b>LiveGraph</b> is a live graph component that interfaces with Satori and redux provider.

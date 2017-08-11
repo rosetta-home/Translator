@@ -8,6 +8,10 @@ import moment from 'moment';
 import BrushElement from './BrushElement';
 import DateSlider from './DateSlider';
 
+import { Card, Button, Grid,Cell } from 'preact-mdl';
+import configs from '../../configs';
+import Collapsible from 'react-collapsible';
+
 class RadialCompare extends Component {
   constructor(props){
     super(props);
@@ -186,6 +190,10 @@ class RadialCompare extends Component {
       const { value,raddata,current } = this.state;
     	return (
         <div>
+        <Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card.Title>
+          <Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
+        </Card.Title>
         <ResponsiveContainer width='100%' aspect={4.0/3.0}>
         <RadarChart data={raddata}>
           <Radar name="Mike" isAnimationActive={false} dataKey="value" stroke="#ef6c00" fill="#ef6c00" fillOpacity={0.6}/>
@@ -196,6 +204,10 @@ class RadialCompare extends Component {
         </ResponsiveContainer>
         <BrushElement brushChange={this.handleBrushChange}/>
         <DateSlider value={value} current={current} dateChange={this.handleDateChange}/>
+        <Card.Actions>
+          <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
+        </Card>
         </div>
       );
   }

@@ -3,6 +3,10 @@ import NVD3Chart from 'react-nvd3';
 import React from 'preact';
 import dataservice from '../../service/dataservice';
 
+import { Card, Button, Grid,Cell } from 'preact-mdl';
+import configs from '../../configs';
+import Collapsible from 'react-collapsible';
+
 class SparkGraphLive extends Component {
   constructor(props){
     super(props);
@@ -60,7 +64,11 @@ class SparkGraphLive extends Component {
 	render () {
     return (
       <div>
-      {/* Renders the nvd3 chart creates a row */}
+      <Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card.Title>
+          <Card.TitleText><small>{configs.title(this.props.datapoint)}</small></Card.TitleText>
+        </Card.Title>
+        {/* Renders the nvd3 chart creates a row */}
         <div className="row">
            {/* */}
   			   <div className="col-3">
@@ -70,6 +78,12 @@ class SparkGraphLive extends Component {
              <NVD3Chart color={["#ef6c00"]} height={80} margin={{top: 10, right: 30, bottom: 10, left: 20}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
            </div>
         </div>
+        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
+        </Collapsible>
+				<Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
+      </Card>
       </div>
     );
   }

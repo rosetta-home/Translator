@@ -1,6 +1,8 @@
 import { h, Component } from 'preact';
-import CalendarHeatmap from 'react-calendar-heatmap';
+import { Card, Button, Grid,Cell } from 'preact-mdl';
+import configs from '../../configs';
 
+import CalendarHeatmap from 'react-calendar-heatmap';
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
 
@@ -36,6 +38,10 @@ export default class HeatMap extends Component {
     const { data } = this.state;
 		return (
 			<div>
+      <Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card.Title>
+          <Card.TitleText><small>{configs.title(this.props.datapoint)}</small></Card.TitleText>
+        </Card.Title>
         <div style="padding-left:10px;padding-right:10px;">
           {/* Creates the heatmap. */}
           <CalendarHeatmap values={data} endDate={new Date()} classForValue={(value) => {
@@ -45,6 +51,21 @@ export default class HeatMap extends Component {
             return theme.getColorHeatMap(this.props.datapoint,value.count);
           }}/>
         </div>
+        <div className="row" style="background: -webkit-linear-gradient(right, #ef6c00,#ff9800,#ffcc80, #81d4fa,#03a9f4,#0277bd);margin-top:5px;margin-right:10px;margin-left:10px;">
+          <div className="col-4 full" style="padding-left: 5px;text-align: left;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>Low</b></small>
+          </div>
+          <div className="col-4 full" style="text-align: center;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>Normal</b></small>
+          </div>
+          <div className="col-4 full" style="padding-right: 5px;text-align: right;padding-top: 0px;padding-bottom: 0px;">
+            <small><b>High</b></small>
+          </div>
+        </div>
+        <Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
+      </Card>
       </div>
 		);
 	}

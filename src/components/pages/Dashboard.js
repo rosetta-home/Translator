@@ -5,8 +5,6 @@ import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 import { route } from 'preact-router';
 import moment from 'moment';
 
-import Collapsible from 'react-collapsible';
-
 import configs from '../../configs';
 import ReactBroadcast from '../../service/reactbroadcast';
 
@@ -29,8 +27,6 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import SwipeableViews from 'react-swipeable-views';
-
-import CalendarHeatmap from 'react-calendar-heatmap';
 
 class RangePicker extends Component {
 		constructor(props) {
@@ -110,7 +106,7 @@ class Advanced extends Component {
 					</Card.Actions>
 			    </Card>
 				</div>
-        );
+      );
     }
 }
 
@@ -186,103 +182,63 @@ export default class Dashboard extends Component {
 		var dres = DRes.getResolution(from, to);
 		var fromValue = moment(from).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 		var toValue = moment(to).utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
-
-
-
-		const styles = {
-  		slide: {
-    		minHeight: 100,
-    		color: '#fff',
-  		},
-  		slide1: {
-    		background: '#FEA900',
-  		},
-  		slide2: {
-    		background: '#B3DC4A',
-  		},
-  		slide3: {
-    		background: '#6AC0FF',
-  		},
-		};
-
-
-
-
-
-
 		return (
 			<div>
-
 			<div style="padding:10px;">
 
 			<div class="nowcard" style="text-align:left;padding: 5px;background-color:white;box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);">
-
-
-			<div className="row" style="margin-right:0px;margin-left:0px;margin-top:0px;">
-        <div className="col-6" style=" text-align: left;padding-left: 0px;">
-					<label style="font-weight: 400;color: #505050;font-size:15px;margin: 8px;/*font-weight:bold;*/">{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</label>
-        </div>
-        <div className="col-6" style="text-align:right;padding-right: 0px;">
-					<button onClick={this.advanced} style="height: 100%;color: #505050;">Advanced</button>
-				</div>
-      </div>
-
-			<div class="segmented-control" style="width: 100%; color: #505050;">
-				{timerangeindex == 1 ?
-					<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)} checked />
-					:
-					<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)}/>
-				}
-				{timerangeindex == 2 ?
-					<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)} checked />
-					:
-					<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)}/>
-				}
-				{timerangeindex == 3 ?
-					<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)} checked />
-					:
-					<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)}/>
-				}
-				<label for="sb-1" data-value="Last Month" style="margin-bottom:0px;">Last Month</label>
-				<label for="sb-2" data-value="Last Week" style="margin-bottom:0px;">Last Week</label>
-				<label for="sb-3" data-value="Last 24hrs" style="margin-bottom:0px;">Last 24 hrs</label>
-		  </div>
-			<br></br>
-			<div class="segmented-control" style="width: 100%; color:#505050;">
-				{tempindex == 1 ?
-					<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)} checked />
-					:
-					<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)}/>
-				}
-				{tempindex == 2 ?
-					<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)} checked />
-					:
-					<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)}/>
-				}
-				<label for="measure-1" data-value="Celsius (°C)" style="margin-bottom:0px;">Celsius (°C)</label>
-				<label for="measure-2" data-value="Fahrenheit (°F)" style="margin-bottom:0px;">Fahrenheit (°F)</label>
-		  </div>
-
+				<div className="row" style="margin-right:0px;margin-left:0px;margin-top:0px;">
+        	<div className="col-6" style=" text-align: left;padding-left: 0px;">
+						<label style="font-weight: 400;color: #505050;font-size:15px;margin: 8px;/*font-weight:bold;*/">{moment(from).format('MM/D/YY')} - {moment(to).format('MM/D/YY')}</label>
+        	</div>
+        	<div className="col-6" style="text-align:right;padding-right: 0px;">
+						<button onClick={this.advanced} style="height: 100%;color: #505050;">Advanced</button>
+					</div>
+      	</div>
+				<div class="segmented-control" style="width: 100%; color: #505050;">
+					{timerangeindex == 1 ?
+						<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)} checked />
+						:
+						<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)}/>
+					}
+					{timerangeindex == 2 ?
+						<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)} checked />
+						:
+						<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)}/>
+					}
+					{timerangeindex == 3 ?
+						<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)} checked />
+						:
+						<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)}/>
+					}
+					<label for="sb-1" data-value="Last Month" style="margin-bottom:0px;">Last Month</label>
+					<label for="sb-2" data-value="Last Week" style="margin-bottom:0px;">Last Week</label>
+					<label for="sb-3" data-value="Last 24hrs" style="margin-bottom:0px;">Last 24 hrs</label>
+		  	</div>
+				<br></br>
+				<div class="segmented-control" style="width: 100%; color:#505050;">
+					{tempindex == 1 ?
+						<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)} checked />
+						:
+						<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)}/>
+					}
+					{tempindex == 2 ?
+						<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)} checked />
+						:
+						<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)}/>
+					}
+					<label for="measure-1" data-value="Celsius (°C)" style="margin-bottom:0px;">Celsius (°C)</label>
+					<label for="measure-2" data-value="Fahrenheit (°F)" style="margin-bottom:0px;">Fahrenheit (°F)</label>
+		  	</div>
 			</div>
 
 			<Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
-        </Card.Title>
-        <HeatMap datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
-
-			<Card shadow={4} style="width:100%;margin-top:10px;">
-			<SwipeableViews>
+				<SwipeableViews>
       		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 				  <NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-  		</SwipeableViews>
+  			</SwipeableViews>
 			</Card>
-
 
       <div className="row" style="margin-right:0px;margin-left:0px;margin-top:10px;">
         <div className="col-6 left">
@@ -311,83 +267,21 @@ export default class Dashboard extends Component {
 				</div>
 		  </div>
 
-			<Card shadow={4} style="width:100%;margin-top:10px;">
-				<Card.Title>
-			  	<Card.TitleText><small>{configs.title("ieq.co2")}</small></Card.TitleText>
-				</Card.Title>
-				<SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-			</Card>
+			<HeatMap datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 
-			<Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>Weather Station</small></Card.TitleText>
-        </Card.Title>
-        <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+			<SelectorChart datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} threshold={1000}/>
 
-		  <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("smart_meter.kw")}</small></Card.TitleText>
-        </Card.Title>
-        <SparkGraphLive datapoint="smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+      <MultiDPChart datapoints="weather_station.humidity,weather_station.outdoor_temperature,weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
 
-		  <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("smart_meter.price")}</small></Card.TitleText>
-        </Card.Title>
-        <SparkGraphLive datapoint="smart_meter.price" startDateTime={fromValue} endDateTime={toValue}/>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+			<SparkGraphLive datapoint="smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("weather_station.outdoor_temperature")}</small></Card.TitleText>
-        </Card.Title>
-        <SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+			<SparkGraphLive datapoint="smart_meter.price" startDateTime={fromValue} endDateTime={toValue}/>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
-        </Card.Title>
-        <RadialCompare/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+			<SparkGraphLive datapoint="weather_station.outdoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("weather_station.indoor_temperature")}</small></Card.TitleText>
-        </Card.Title>
-        <SparkGraphLive datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+      <RadialCompare startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
+
+      <SparkGraphLive datapoint="weather_station.outdoor_temperature" datapoint="weather_station.indoor_temperature" startDateTime={fromValue} endDateTime={toValue}/>
 
 		  <Card shadow={4} style="width:100%;margin-top:10px;">
         <Card.Title>
@@ -401,47 +295,13 @@ export default class Dashboard extends Component {
         </Card.Actions>
       </Card>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>{configs.title("weather_station.humidity")}</small></Card.TitleText>
-        </Card.Title>
-        <SparkGraphLive datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue}/>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+      <SparkGraphLive datapoint="weather_station.humidity" startDateTime={fromValue} endDateTime={toValue}/>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-        <Card.Title>
-          <Card.TitleText><small>Smart Meter</small></Card.TitleText>
-        </Card.Title>
-        <MultiDPChart datapoints="smart_meter.price,smart_meter.kw_delivered,smart_meter.kw_received,smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-      </Card>
+      <MultiDPChart datapoints="smart_meter.price,smart_meter.kw_delivered,smart_meter.kw_received,smart_meter.kw" startDateTime={fromValue} endDateTime={toValue}/>
 
-			<Card shadow={4} style="width:100%;margin-top:10px;">
-				<Card.Title>
-					<Card.TitleText><small>CO2</small></Card.TitleText>
-				</Card.Title>
-				<BarChart datapoint="ieq.co2" axisEnabled={false} startDateTime={fromValue} endDateTime={toValue}/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-			</Card>
+			<BarChart datapoint="ieq.co2" axisEnabled={false} startDateTime={fromValue} endDateTime={toValue}/>
 
-      <Card shadow={4} style="width:100%;margin-top:10px;">
-				<Card.Title>
-					<Card.TitleText><small>CO2</small></Card.TitleText>
-				</Card.Title>
-				<BarChart datapoint="ieq.co2" axisEnabled={true} startDateTime={fromValue} endDateTime={toValue} dres="12h"/>
-				<Card.Actions>
-            <button><small style="font-weight: lighter;">More</small></button>
-        </Card.Actions>
-			</Card>
+			<BarChart datapoint="ieq.co2" axisEnabled={true} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 
 			</div>
 			</div>

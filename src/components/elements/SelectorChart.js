@@ -5,6 +5,9 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine,
 import dataservice from '../../service/dataservice';
 import moment from 'moment';
 
+import { Card, Button, Grid,Cell } from 'preact-mdl';
+import configs from '../../configs';
+
 class SelectorChart extends Component {
 
   constructor(props){
@@ -45,6 +48,10 @@ class SelectorChart extends Component {
   render () {
     return (
         <div>
+        <Card shadow={4} style="width:100%;margin-top:10px;">
+  			<Card.Title>
+  			  <Card.TitleText><small>{configs.title(this.props.datapoint)}</small></Card.TitleText>
+  			</Card.Title>
         {/* ResponsiveContainer for the linechart with brush to fit in container */}
         <ResponsiveContainer width='100%' aspect={4.0/3.0}>
         {/* Linchart with the the data and click callback defined */}
@@ -71,6 +78,10 @@ class SelectorChart extends Component {
           </Brush>
         </LineChart>
         </ResponsiveContainer>
+        <Card.Actions>
+            <button><small style="font-weight: lighter;">More</small></button>
+        </Card.Actions>
+			  </Card>
         </div>
       );
     }
