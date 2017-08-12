@@ -3,7 +3,6 @@ import NVD3Chart from 'react-nvd3';
 import React from 'preact';
 import * as ReactDOM from 'react-dom';
 import * as d3 from "d3";
-
 import configs from '../../configs';
 import dataservice from '../../service/dataservice';
 

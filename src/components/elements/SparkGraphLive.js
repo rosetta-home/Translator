@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import NVD3Chart from 'react-nvd3';
 import React from 'preact';
 import dataservice from '../../service/dataservice';
-
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 import configs from '../../configs';
 import Collapsible from 'react-collapsible';

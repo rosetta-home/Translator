@@ -7,7 +7,6 @@ Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
 import BrushElement from './BrushElement';
 import DateSlider from './DateSlider';
-
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 import configs from '../../configs';
 import Collapsible from 'react-collapsible';

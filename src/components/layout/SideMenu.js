@@ -38,7 +38,6 @@ export default class SideMenu extends Component {
       });
     });
   }
- 	componentWillUnmount() { }
   componentWillReceiveProps(nextProps) { }
   closeMenu = () => {
     var menuDiv = document.getElementById("menu");

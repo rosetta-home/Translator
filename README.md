@@ -14,7 +14,6 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
   - <a href="https://momentjs.com/">moment</a>
   - <a href="https://github.com/visionmedia/superagent">superagent</a>
 
-
 ### Supporting Documentation
 
 - <a href="https://facebook.github.io/react/docs/installation.html">React installation</a>
@@ -38,14 +37,14 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
   - [x] Multi Data Points with Brush
   - [x] Radial Compare
   - [x] Spark Graph
-  - [ ] Now Card
-  - [ ] Date Range Picker
+  - [x] Now Card
+  - [x] Date Range Picker
 - [ ] Web App Life Cycle
   - [x] Detect UnAuth User
   - [x] Changes Current Route
   - [x] NavBar Title Change (Uses on-broadcast-emitter)
   - [x] SideMenu Options Change (Uses on-broadcast-emitter)
-  - [ ] Footer
+  - [x] Footer
   - [x] Login Page
   - [x] Dashboard Page
   - [x] Setup Page

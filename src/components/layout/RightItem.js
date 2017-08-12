@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
-
 import ReactBroadcast from '../../service/reactbroadcast';
 import configs from '../../configs';
 

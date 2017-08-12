@@ -171,20 +171,20 @@ export default class NowCard extends Component {
         </div>
         </div>
         }
-        {this.props.map === true &&
-          <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
-            <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-              <small style="color:#0277bd;font-size: 80%;font-weight: lighter;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
-              <br></br>
-              <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
-            </div>
-            <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
-              <small style="color:#ef6c00;font-size: 80%;font-weight: lighter;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
-              <br></br>
-              <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
-            </div>
+
+        <div className="row" style="margin-bottom:5px;margin-right:0px;margin-left:0px;">
+          <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+            <small style="color:#0277bd;font-size: 80%;font-weight: lighter;">Low: {Math.round(min[1]) + this.lastValueEnding}</small>
+            <br></br>
+            <small style="color:#0277bd;font-size: 60%;">{moment(min[0]).format('L')}</small>
           </div>
-        }
+          <div className="col-6 full" style="padding-top: 0px;padding-bottom: 0px;">
+            <small style="color:#ef6c00;font-size: 80%;font-weight: lighter;">High: {Math.round(max[1]) + this.lastValueEnding}</small>
+            <br></br>
+            <small style="color:#ef6c00;font-size: 60%;">{moment(max[0]).format('L')}</small>
+          </div>
+        </div>
+
         <div className="row" style="margin-right:0px;margin-left:0px;">
            <div className="col-12 full" style="padding-top: 0px;padding-bottom: 0px;">
               <NVD3Chart showLastValue={false} showXAxis={false} showYAxis={false}  margin={{top: 10, right: 10, bottom: 10, left: 10}} height={50}  color={this.handleColor} type={type} datum={dd} x="x" y={y} xAxis={{ tickFormat: (d) => d3.time.format('%Y-%m-%d %H:%M:%S %p')(new Date(d)), ticks:6,rotateLabels: -35  }}/>

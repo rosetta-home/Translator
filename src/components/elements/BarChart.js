@@ -1,14 +1,11 @@
 import { h, Component } from 'preact';
 import NVD3Chart from 'react-nvd3';
 import React from 'preact';
-
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
-
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 import configs from '../../configs';
 import Collapsible from 'react-collapsible';
-
 
 class BarChart extends Component {
   constructor(props){

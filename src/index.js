@@ -21,6 +21,8 @@ import Devices from './components/pages/Devices';
 import Help from './components/pages/Help';
 import More from './components/pages/More';
 
+import Dashboard2 from './components/pages/Dashboard2';
+
 const Root = () => (
   <App>
     <Router>
@@ -38,6 +40,7 @@ const Root = () => (
       <Devices path="/devices"/>
       <Help path="/help"/>
       <More path="/more"/>
+      <Dashboard2 path="/dashboard2"/>
     </Router>
   </App>
 );
