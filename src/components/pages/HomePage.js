@@ -34,9 +34,9 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div>
-			{/* <br></br>
+			<br></br>
 			<button onClick={this.handleIn}>IN</button>
-			<button onClick={this.handleOut}>OUT</button> */}
+			<button onClick={this.handleOut}>OUT</button>
 			</div>
 		);
 	}

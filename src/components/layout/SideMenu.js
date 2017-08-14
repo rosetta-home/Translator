@@ -24,6 +24,7 @@ export default class SideMenu extends Component {
           {'title':'Home','route':'/'},
           {'title':'Now','route':'/now'},
           {'title':'Dashboard','route':'/dashboard'},
+          {'title':'Dashboard 2','route':'/dashboard2'},
           {'title':'Touchstones','route':'/devices'},
           {'title':'Help','route':'/help'}
         ],

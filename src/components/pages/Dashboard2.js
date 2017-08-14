@@ -195,18 +195,15 @@ export default class Dashboard2 extends Component {
       	</div>
 				<div class="segmented-control" style="width: 100%; color: #505050;">
 					{timerangeindex == 1 ?
-						<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)} checked />
-						:
+						<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)} checked /> :
 						<input type="radio" name="sb" id="sb-1" onClick={this.segmented.bind(this)}/>
 					}
 					{timerangeindex == 2 ?
-						<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)} checked />
-						:
+						<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)} checked /> :
 						<input type="radio" name="sb" id="sb-2" onClick={this.segmented.bind(this)}/>
 					}
 					{timerangeindex == 3 ?
-						<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)} checked />
-						:
+						<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)} checked /> :
 						<input type="radio" name="sb" id="sb-3" onClick={this.segmented.bind(this)}/>
 					}
 					<label for="sb-1" data-value="Last Month" style="margin-bottom:0px;">Last Month</label>
@@ -216,13 +213,11 @@ export default class Dashboard2 extends Component {
 				<br></br>
 				<div class="segmented-control" style="width: 100%; color:#505050;">
 					{tempindex == 1 ?
-						<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)} checked />
-						:
+						<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)} checked /> :
 						<input type="radio" name="sb1" id="measure-1" onClick={this.segmented.bind(this)}/>
 					}
 					{tempindex == 2 ?
-						<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)} checked />
-						:
+						<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)} checked /> :
 						<input type="radio" name="sb1" id="measure-2" onClick={this.segmented.bind(this)}/>
 					}
 					<label for="measure-1" data-value="Celsius (°C)" style="margin-bottom:0px;">Celsius (°C)</label>

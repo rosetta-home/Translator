@@ -76,6 +76,7 @@
     "react-nvd3": "^0.5.7",
     "react-outside-event": "^1.2.5",
     "react-rangeslider": "^2.1.0",
+    "react-responsive-tabs": "^1.0.1",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-skylight": "^0.4.2",
