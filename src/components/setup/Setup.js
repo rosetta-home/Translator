@@ -4,12 +4,14 @@ import Intro from './Intro';
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 import ReactBroadcast from "ReactBroadcast";
 import CheckList from './CheckList';
+import Touchstone from './Touchstone';
+import Done from './Done';
 import Wizard from './Wizard';
 
 export default class Setup extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { };
   }
   /* Component lifecyle function */
   componentDidMount() {
@@ -28,9 +30,11 @@ export default class Setup extends Component {
   render() {
     const steps =
     [
-      {name: 'Checklist', component: <CheckList update={(props) => (this.updateState(props))}/>},
-      {name: 'Touchstones', component: <Intro update={(props) => (this.updateState(props))}/>},
-      {name: 'Finish', component: <Intro update={(props) => (this.updateState(props))}/>}
+      {name: 'Checklist', component: <CheckList/>},
+      {name: 'Touchstones', component: <Touchstone/>},
+      {name: 'Touchstones', component: <Touchstone/>},
+      {name: 'Touchstones', component: <Touchstone/>},
+      {name: 'Finish', component: <Done/>}
     ]
     return (
       <div>

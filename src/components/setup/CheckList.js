@@ -2,11 +2,25 @@ import { h, Component } from 'preact';
 import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 
 export default class CheckList extends Component {
+	constructor(props) {
+		super(props);
+		console.log(props);
+		this.state = { enableNext:false };
+	}
+	componentDidMount() {
+
+	}
+	componentWillReceiveProps(nextProps) {
+
+	}
+	done = () => {
+		this.props.next(true);
+	}
 	render() {
 		return (
       <div>
         <p style="color:black;margin:0px;">Here are a few things you need to check off to insure a proper setup of your Rosetta Home.</p>
-        <div style="text-align:left;padding:10px;">
+				<div style="text-align:left;padding:10px;">
 						<div style="padding: 10px;">
               <input type="checkbox" id="s1"></input>
               <label for="s1">Statement #1</label>
@@ -28,9 +42,10 @@ export default class CheckList extends Component {
               <label for="s5">Statement #5</label>
             </div>
 						<div style="padding: 10px;">
-              <input type="checkbox" id="s6"></input>
+              <input type="checkbox" id="s6" onClick={this.done}></input>
               <label for="s6">Statement #6</label>
             </div>
+						{/*<button onClick={this.done}>Done</button>*/}
 				</div>
       </div>
     );

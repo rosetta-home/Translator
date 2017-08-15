@@ -8,7 +8,8 @@ export default class Wizard extends Component {
     super(props);
     this.state = {
       showPreviousBtn: false,
-      showNextBtn: true,
+      showNextBtn: false,
+      showDoneBtn: false,
       compState: 0,
       navState: this.getNavStates(0, this.props.steps.length)
     };
@@ -41,19 +42,22 @@ export default class Wizard extends Component {
     if(currentStep > 0 && currentStep < this.props.steps.length - 1){
       this.setState({
         showPreviousBtn: true,
-        showNextBtn: true
+        showNextBtn: true,
+        showDoneBtn: false
       })
     }
     else if(currentStep === 0) {
       this.setState({
         showPreviousBtn: false,
-        showNextBtn: true
+        showNextBtn: true,
+        showDoneBtn: false
       })
     }
     else {
       this.setState({
         showPreviousBtn: true,
-        showNextBtn: false
+        showNextBtn: false,
+        showDoneBtn: true
       })
     }
   }
@@ -108,20 +112,44 @@ export default class Wizard extends Component {
     ));
   }
 
+  enableNext = (status) => {
+    this.setState({showNextBtn:status});
+  }
+  enablePrevious = (status) => {
+    this.setState({showPreviousBtn:status});
+  }
+
+
   render() {
-    console.log(this.props);
+    var step = this.props.steps[this.state.compState].component;
+    step.attributes['next'] = this.enableNext;
+    step.attributes['previous'] = this.enablePrevious;
+    step.attributes['done'] = this.enablePrevious;
     return (
       <div onKeyDown={this.handleKeyDown}>
         <ol className="progtrckr">
           {this.renderSteps()}
         </ol>
-        {this.props.steps[this.state.compState].component}
+        {step}
         <div style={this.props.showNavigation ? {} : this.hidden}>
-          <Button raised={true} style={this.state.showPreviousBtn ? {} : this.hidden}
+          <div className="row" style="margin-right:0px;margin-left:0px;">
+          <div className="col-4 full" style="padding-left: 5px;text-align: left;padding-top: 0px;padding-bottom: 0px;">
+          <Button style={this.state.showPreviousBtn ? {} : this.hidden}
                   onClick={this.previous}>Previous</Button>
-
-          <Button raised={true} style={this.state.showNextBtn ? {} : this.hidden}
+          </div>
+          <div className="col-4 full">
+          </div>
+          <div className="col-4 full" style="padding-right: 5px;text-align: right;padding-top: 0px;padding-bottom: 0px;">
+          <Button style={this.state.showNextBtn ? {} : this.hidden}
                   onClick={this.next}>Next</Button>
+
+                  <Button style={this.state.showDoneBtn ? {} : this.hidden}
+                          onClick={this.next}>Save</Button>
+          </div>
+          </div>
+
+
+
         </div>
       </div>
     );
