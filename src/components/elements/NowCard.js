@@ -13,6 +13,7 @@ Array.prototype.sum = function() { return this.reduce(function(a,b){return a+b;}
 export default class NowCard extends Component {
   constructor(props) {
     super(props);
+    /* Default state for component */
     this.state = {
       currentValue:0,
       data:[],

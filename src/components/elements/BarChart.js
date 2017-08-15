@@ -1,17 +1,17 @@
 import { h, Component } from 'preact';
+import { Card, Button, Grid,Cell } from 'preact-mdl';
 import NVD3Chart from 'react-nvd3';
-import React from 'preact';
+import Collapsible from 'react-collapsible';
+
 import dataservice from '../../service/dataservice';
 import theme from '../../theme';
-import { Card, Button, Grid,Cell } from 'preact-mdl';
 import configs from '../../configs';
-import Collapsible from 'react-collapsible';
 
 class BarChart extends Component {
   constructor(props){
     super(props);
+    /* Default state */
     this.state = { data:[] };
-
   }
   /* React component lifecyle functions */
  	componentDidMount() { }

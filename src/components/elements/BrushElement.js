@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import d3 from 'd3';
-import { RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,ResponsiveContainer,LineChart,Line,Brush,YAxis,
-Tooltip,XAxis,Surface } from 'recharts';
+import { ResponsiveContainer,LineChart,Line,Brush,YAxis,Tooltip,XAxis,Surface } from 'recharts';
 import moment from 'moment';
 import dataservice from '../../service/dataservice';
 

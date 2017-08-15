@@ -40,6 +40,7 @@ export default class SideMenu extends Component {
     });
   }
   componentWillReceiveProps(nextProps) { }
+  /* Once a button is selected it go to route and this remove the layover */
   closeMenu = () => {
     var menuDiv = document.getElementById("menu");
     menuDiv.classList.remove("is-visible");
