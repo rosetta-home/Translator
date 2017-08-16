@@ -5,7 +5,15 @@ export default class CheckList extends Component {
 	constructor(props) {
 		super(props);
 		console.log(props);
-		this.state = { enableNext:false };
+		this.list =
+			[
+				{'name':'Statement #1',checked:false},
+				{'name':'Statement #2',checked:false},
+				{'name':'Statement #3',checked:false},
+				{'name':'Statement #4',checked:false},
+				{'name':'Statement #5',checked:false},
+				{'name':'Statement #6',checked:false}
+			];
 	}
 	componentDidMount() {
 
@@ -15,37 +23,30 @@ export default class CheckList extends Component {
 	}
 	done = () => {
 		this.props.next(true);
+		this.props.getTouchstones();
+	}
+	checked = (element) => {
+		//console.log(this.list[element.target.id] );
+		this.list[element.target.id].checked = true;
+		var done = true;
+		for (var i = 0; i < this.list.length; i++) {
+			 done = this.list[i].checked;
+		}
+		if (done) {
+			this.props.next(true);
+			this.props.getTouchstones();
+		}
 	}
 	render() {
+		var checklist = [];
+		for (var i = 0; i < this.list.length; i++) {
+			checklist.push(<div style="padding: 10px;"><input type="checkbox" id={i} onClick={this.checked}></input><label for={i}>{this.list[i].name}</label></div>);
+		}
 		return (
       <div>
         <p style="color:black;margin:0px;">Here are a few things you need to check off to insure a proper setup of your Rosetta Home.</p>
 				<div style="text-align:left;padding:10px;">
-						<div style="padding: 10px;">
-              <input type="checkbox" id="s1"></input>
-              <label for="s1">Statement #1</label>
-            </div>
-						<div style="padding: 10px;">
-              <input type="checkbox" id="s2"></input>
-              <label for="s2">Statement #2</label>
-            </div>
-						<div style="padding: 10px;">
-              <input type="checkbox" id="s3"></input>
-              <label for="s3">Statement #3</label>
-            </div>
- 					  <div style="padding: 10px;">
-              <input type="checkbox" id="s4"></input>
-              <label for="s4">Statement #4</label>
-            </div>
-						<div style="padding: 10px;">
-              <input type="checkbox" id="s5"></input>
-              <label for="s5">Statement #5</label>
-            </div>
-						<div style="padding: 10px;">
-              <input type="checkbox" id="s6" onClick={this.done}></input>
-              <label for="s6">Statement #6</label>
-            </div>
-						{/*<button onClick={this.done}>Done</button>*/}
+					{ checklist }
 				</div>
       </div>
     );

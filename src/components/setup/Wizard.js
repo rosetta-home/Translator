@@ -144,7 +144,7 @@ export default class Wizard extends Component {
                   onClick={this.next}>Next</Button>
 
                   <Button style={this.state.showDoneBtn ? {} : this.hidden}
-                          onClick={this.next}>Save</Button>
+                          onClick={this.props.save}>Save</Button>
           </div>
           </div>
 
