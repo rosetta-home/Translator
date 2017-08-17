@@ -7,6 +7,10 @@ import CheckList from './CheckList';
 import Touchstone from './Touchstone';
 import Done from './Done';
 import Wizard from './Wizard';
+import { route } from 'preact-router';
+import Configs from '../../configs';
+import authservice from '../../service/authservice';
+import WebSocketAsPromised from '../../service/wsp';
 
 export default class Setup extends Component {
   constructor(props) {
@@ -18,6 +22,17 @@ export default class Setup extends Component {
         {'touchstone_id':'id#3'}
       ]
     };
+    const wsp = new WebSocketAsPromised(Configs.ws_url());
+    wsp.open().then(() => {
+
+
+      wsp.request('Bearer ' + authservice.getToken()).then(response => {
+
+        console.log(response);
+
+      });
+
+    });
   }
   /* Component lifecyle function */
   componentDidMount() {
@@ -32,14 +47,22 @@ export default class Setup extends Component {
   }
   updateState = (props) => {
     //console.log(props);
-    this.setState({refresh:false});
+    //this.setState({refresh:false});
+
   }
   updateTouchstone = (payload) => {
     console.log(payload);
+    return new Promise((resolve, reject) => {
+      setTimeout(function(){
+        resolve("Good");
+      }, 3000);
+    });
   }
   save = () => {
     console.log("save");
+    route('/dashboard');
   }
+
   render() {
     const { refresh,touchstones } = this.state;
     var steps;

@@ -52,6 +52,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bootstrap": "^4.0.0-alpha.6",
+    "chnl": "^0.4.0",
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "injection-js": "^2.1.0",
@@ -59,6 +60,7 @@
     "moment": "^2.18.1",
     "net": "^1.0.2",
     "npm": "^5.1.0",
+    "pendings": "^0.2.6",
     "preact": "^8.1.0",
     "preact-compat": "^3.16.0",
     "preact-mdl": "^2.2.1",
@@ -95,7 +97,10 @@
     "superagent": "^3.5.2",
     "superagent-cors-proxy": "0.0.1",
     "tls": "0.0.1",
-    "victory": "^0.21.2"
+    "victory": "^0.21.2",
+    "websocket-as-promised": "^0.3.1",
+    "ws": "^3.1.0",
+    "ws-promise": "^1.5.1"
   },
   "main": "webpack.config.babel.js"
 }

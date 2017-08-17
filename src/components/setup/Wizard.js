@@ -42,7 +42,7 @@ export default class Wizard extends Component {
     if(currentStep > 0 && currentStep < this.props.steps.length - 1){
       this.setState({
         showPreviousBtn: true,
-        showNextBtn: true,
+        showNextBtn: false,
         showDoneBtn: false
       })
     }
@@ -121,6 +121,7 @@ export default class Wizard extends Component {
 
 
   render() {
+    console.log(this.state);
     var step = this.props.steps[this.state.compState].component;
     step.attributes['next'] = this.enableNext;
     step.attributes['previous'] = this.enablePrevious;

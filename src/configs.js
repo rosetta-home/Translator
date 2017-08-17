@@ -6,6 +6,9 @@ export default {
   api_endpoint() {
     return "http://35.167.180.46:8080";
   },
+  ws_url() {
+    return "ws://35.167.180.46:8080/ws";
+  },
   title(type) {
     if (type === 'weather_station.outdoor_temperature') {
       return 'Outdoor Temp.';
