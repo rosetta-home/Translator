@@ -17,13 +17,15 @@ const wsp = new WebSocketAsPromised(Configs.ws_url());
 export default class Setup extends Component {
   constructor(props) {
     super(props);
+    //Defaults and the touchstones linked to the hub
     this.state = { refresh:true,
       touchstones:[
-        {'touchstone_id':'id#1'},
-        {'touchstone_id':'id#2'},
-        {'touchstone_id':'id#3'}
+        {'touchstone_id':'5T7aal0wKVc56fvidAuITqOd6hBYEf0AsTAVwaAp'},
+        {'touchstone_id':'y9yVpwNlbTn45vGpViqDyugY0Sco5NPUQLdClslm'},
+        {'touchstone_id':'FijevwmkmViMctxlxlOje73IctAgzE0ycE6mT6Zs'}
       ]
     };
+    //Setting the timer to ping the server and keep connection open
     this.pingtimer = setInterval(this.ping, 30000);
     wsp.open().then(() => {
       this.auth();
@@ -31,18 +33,19 @@ export default class Setup extends Component {
   }
   /* Component lifecyle function */
   ping = () => {
-    console.log("ping");
+    // Pings the websocket to keep it alive
     var data = { type:'ping', payload:{} };
     const dataStr = JSON.stringify(data)
     wsp.request(dataStr).then(response => {
       console.log(response);
     });
   }
+  // Auth the web socket connect
   auth = () => {
     wsp.request('Bearer ' + authservice.getToken()).then(response => {
-
     });
   }
+  //Component lifecyle methods
   componentDidMount() {
     ReactBroadcast.broadcast('SetTitle', 'Setup Rosetta Home');
   }
@@ -52,16 +55,9 @@ export default class Setup extends Component {
 
     });
   }
-  updateStore(update) {
-    this.sampleStore = {
-      ...this.sampleStore,
-      ...update,
-    }
-  }
+  // Temp, but would get the list of touchstone connected to hub and reconfig the wizard for setup
   updateState = (props) => {
-    //console.log(props);
     this.setState({refresh:false});
-
   }
   updateTouchstone = (payload) => {
     console.log(payload);
@@ -74,15 +70,14 @@ export default class Setup extends Component {
     const dataStr = JSON.stringify(data);
     return wsp.request(dataStr);
   }
+  // Once the touchstones are saved they are re-routed to the dsahboard
   save = () => {
-    console.log("save");
     route('/dashboard');
   }
-
+  // Renders the setup wizard
   render() {
     const { refresh,touchstones } = this.state;
     var steps;
-
     if (refresh) {
       steps =
       [
@@ -97,9 +92,6 @@ export default class Setup extends Component {
       steps = step.concat(touch);
       steps.push({name: 'Done', component: <Done/>});
     }
-
-    console.log(steps);
-
     return (
       <div>
       <div style="width:100%;padding:10px;">
