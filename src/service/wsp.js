@@ -16,9 +16,6 @@ const STATE = {
   CLOSED: 3,
 };
 
-/**
- * @typicalname wsp
- */
 class WebSocketAsPromised {
   /**
    * Constructor. Unlike original WebSocket it does not immediately open connection.
@@ -39,6 +36,7 @@ class WebSocketAsPromised {
     this._onMessage = new Channel();
     this._onClose = new Channel();
     this._ws = null;
+    this.currentid = '';
   }
 
   /**
@@ -141,17 +139,21 @@ class WebSocketAsPromised {
    * @returns {Promise}
    */
   request(data, options) {
-    console.log(typeof data);
-
-    const {idProp} = this._options;
+    /*if (!data || typeof data !== 'object') {
+      return Promise.reject(new Error(`WebSocket request data should be a plain object, got ${data}`));
+    }*/
     const fn = id => {
+      //data[idProp] = id;
       this.send(data);
     };
-    const id = 'test'
+    const id = this.makeID();
+    this.currentid = id;
+    console.log(this.currentid);
     const promise = id === undefined
       ? this._pendingRequests.add(fn, options)
       : this._pendingRequests.set(id, fn, options);
-    return promise.catch(handleTimeoutError);
+    var pro = promise.catch(handleTimeoutError);
+    return pro;
   }
 
   /**
@@ -162,6 +164,14 @@ class WebSocketAsPromised {
   sendJson(data) {
     const dataStr = JSON.stringify(data);
     this.send(dataStr);
+  }
+
+  makeID() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 40; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
   }
 
   /**
@@ -206,12 +216,11 @@ class WebSocketAsPromised {
   }
 
   _handleMessage({data}) {
-    console.log(data);
     let jsonData;
     try {
       jsonData = JSON.parse(data);
-      const id = jsonData && jsonData[this._options.idProp];
-      this._pendingRequests.tryResolve(id, jsonData);
+      console.log(jsonData);
+      this._pendingRequests.tryResolve(this.currentid, jsonData);
     } catch(e) {
       // do nothing if can not parse data
     }
@@ -224,7 +233,6 @@ class WebSocketAsPromised {
 
   _handleClose({reason, code}) {
     const error = new Error(`Connection closed with reason: ${reason} (${code})`);
-    // todo: removeWsListeners
     this._ws = null;
     this._closing.resolve({reason, code});
     this._pendingRequests.rejectAll(error);

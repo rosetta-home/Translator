@@ -33,7 +33,6 @@ export default class Layover extends Component {
     const { open,body,callback,props } = this.state;
     /* Gets the body and callbacks from the props */
     const Body = body;
-    console.log(Body);
 		return (
       <Modal show={open} onClose={this.close}>
         <Body onDone={this.onDone} close={this.close} callback={callback} data={props}/>

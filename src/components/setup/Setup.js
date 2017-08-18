@@ -12,6 +12,8 @@ import Configs from '../../configs';
 import authservice from '../../service/authservice';
 import WebSocketAsPromised from '../../service/wsp';
 
+const wsp = new WebSocketAsPromised(Configs.ws_url());
+
 export default class Setup extends Component {
   constructor(props) {
     super(props);
@@ -22,23 +24,34 @@ export default class Setup extends Component {
         {'touchstone_id':'id#3'}
       ]
     };
-    const wsp = new WebSocketAsPromised(Configs.ws_url());
+    this.pingtimer = setInterval(this.ping, 30000);
     wsp.open().then(() => {
-
-
-      wsp.request('Bearer ' + authservice.getToken()).then(response => {
-
-        console.log(response);
-
-      });
-
+      this.auth();
     });
   }
   /* Component lifecyle function */
+  ping = () => {
+    console.log("ping");
+    var data = { type:'ping', payload:{} };
+    const dataStr = JSON.stringify(data)
+    wsp.request(dataStr).then(response => {
+      console.log(response);
+    });
+  }
+  auth = () => {
+    wsp.request('Bearer ' + authservice.getToken()).then(response => {
+
+    });
+  }
   componentDidMount() {
     ReactBroadcast.broadcast('SetTitle', 'Setup Rosetta Home');
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    clearInterval(this.pingtimer);
+    wsp.close().then(() => {
+
+    });
+  }
   updateStore(update) {
     this.sampleStore = {
       ...this.sampleStore,
@@ -47,16 +60,19 @@ export default class Setup extends Component {
   }
   updateState = (props) => {
     //console.log(props);
-    //this.setState({refresh:false});
+    this.setState({refresh:false});
 
   }
   updateTouchstone = (payload) => {
     console.log(payload);
-    return new Promise((resolve, reject) => {
-      setTimeout(function(){
-        resolve("Good");
-      }, 3000);
-    });
+    clearInterval(this.pingtimer);
+    this.pingtimer = setInterval(this.ping, 30000);
+    var data = {
+      type:'configure',
+      payload:{}
+    };
+    const dataStr = JSON.stringify(data);
+    return wsp.request(dataStr);
   }
   save = () => {
     console.log("save");
