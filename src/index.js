@@ -20,6 +20,8 @@ import Confirm from './components/pages/Confirm';
 import Devices from './components/pages/Devices';
 import Help from './components/pages/Help';
 import More from './components/pages/More';
+import Signup from './components/pages/Signup';
+import CheckEmail from './components/pages/CheckEmail';
 
 import Dashboard2 from './components/pages/Dashboard2';
 
@@ -29,6 +31,8 @@ const Root = () => (
       <HomePage path="/"/>
       <About path="/about"/>
       <Login path="/login"/>
+      <Signup path="/signup"/>
+      <CheckEmail path="/email"/>
       <Register path="/register"/>
       <Dashboard path="/dashboard"/>
       <OtherComponent path="/other"/>

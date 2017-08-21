@@ -25,12 +25,12 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 
 - [ ] Authentication
   - [x] Login
-  - [ ] Signup
-  - [ ] Confirm Account
+  - [x] Signup
+  - [x] Confirm Account
   - [ ] Recover Password
   - [ ] Two-Step Verification (Security Mind!)
 - [x] Google <a href="https://material.io/guidelines/">Material Theme</a>
-- [ ] Dashboard Charts
+- [x] Dashboard Charts
   - [x] Live Graph
   - [x] Bullet Chart
   - [x] Simple Data Point with Brush
@@ -39,7 +39,7 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
   - [x] Spark Graph
   - [x] Now Card
   - [x] Date Range Picker
-- [ ] Web App Life Cycle
+- [x] Web App Life Cycle
   - [x] Detect UnAuth User
   - [x] Changes Current Route
   - [x] NavBar Title Change (Uses on-broadcast-emitter)
@@ -48,7 +48,7 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
   - [x] Login Page
   - [x] Dashboard Page
   - [x] Setup Page
-  - [ ] Signup Page
+  - [x] Signup Page
 
 ### Project Structure
 
