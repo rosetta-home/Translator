@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import { Redirect } from 'react-router';
 import Intro from './Intro';
 import { Card, Button, Grid,Cell } from 'preact-mdl';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from '../../service/reactbroadcast';
 import CheckList from './CheckList';
 import Touchstone from './Touchstone';
 import Done from './Done';
@@ -11,6 +11,7 @@ import { route } from 'preact-router';
 import Configs from '../../configs';
 import authservice from '../../service/authservice';
 import WebSocketAsPromised from '../../service/wsp';
+import ProgressBar from '../elements/ProgressBar';
 
 const wsp = new WebSocketAsPromised(Configs.ws_url());
 
@@ -48,8 +49,14 @@ export default class Setup extends Component {
   //Component lifecyle methods
   componentDidMount() {
     ReactBroadcast.broadcast('SetTitle', 'Setup Rosetta Home');
+    var payload = {icon:'fa fa-question-circle-o',callback:"CallRight"};
+    ReactBroadcast.broadcast('SetRightItem', payload);
+    ReactBroadcast.on("CallRight", item => {
+      console.log("Open Help");
+    });
   }
   componentWillUnmount() {
+    ReactBroadcast.broadcast('SetRightItem', null);
     clearInterval(this.pingtimer);
     wsp.close().then(() => {
 
@@ -97,7 +104,8 @@ export default class Setup extends Component {
       <div style="width:100%;padding:10px;">
         <Card shadow={4} style="width:100%">
           <Wizard initialStep={1} steps={steps} save={this.save}/>
-          <Card.Actions style="text-align:right">
+          <Card.Actions>
+          <ProgressBar completed={50} />
           </Card.Actions>
         </Card>
       </div>

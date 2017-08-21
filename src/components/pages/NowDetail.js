@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from '../../service/reactbroadcast';
 import { Card, Button } from 'preact-mdl';
 
 export default class NowDetail extends Component {
