@@ -11,9 +11,9 @@ export default class Touchstone extends Component {
 	}
   componentWillUnmount() {}
 	submit = () => {
-		this.props.updateTouchstone({'id':this.props.id,'name':this.formdata.name}).then(v => {
+		//this.props.updateTouchstone({'id':this.props.id,'name':this.formdata.name}).then(v => {
 			this.props.next(true);
-    });
+    //});
 	}
 	// Tracks the change in the current touchstone name
 	onChange(event) {

@@ -6,6 +6,7 @@ import dataservice from '../../service/dataservice';
 import moment from 'moment';
 import { Card, Button, Grid,Cell } from 'preact-mdl';
 import configs from '../../configs';
+import MultiDPChartTooltip from './MultiDPChartTooltip';
 
 class MultiDPChart extends Component {
 
@@ -20,7 +21,7 @@ class MultiDPChart extends Component {
     /* Gets all data via authservice and multipromise function */
     this.datatypes = this.props.datapoints.split(',');
   }
-  click(data) { console.log(data); }
+  click(data) { }
   /* React component lifecyle functions */
  	componentDidMount() { }
  	componentWillUnmount() { }
@@ -88,7 +89,7 @@ class MultiDPChart extends Component {
           {/* YAxis with value for custom color and padding */}
           <YAxis domain={['auto', 'auto']} name="Value" hide={false} stroke="#0277bd" padding={{ bottom: 20 }}/>
           {/* Tooltip with callback set for formatting */}
-          <Tooltip formatter={this.valueformat}/>
+          <Tooltip content={<MultiDPChartTooltip/>}/>
           {/* The actually line for plotting the data values */}
           {lines}
           {/* ReferenceLine which is used as a threshold */}
