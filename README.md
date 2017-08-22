@@ -27,8 +27,8 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
   - [x] Login
   - [x] Signup
   - [x] Confirm Account
-  - [ ] Recover Password
-  - [ ] Two-Step Verification (Security Mind!)
+  - [x] Recover Password
+  - [ ] Two-Step Verification (Security In-Mind!)
 - [x] Google <a href="https://material.io/guidelines/">Material Theme</a>
 - [x] Dashboard Charts
   - [x] Live Graph

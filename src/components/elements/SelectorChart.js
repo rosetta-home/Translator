@@ -32,7 +32,7 @@ class SelectorChart extends Component {
       var data = [];
       for (var i = 0; i < results.length; i++) {
         var current = results[i];
-        data.push({ date:moment(current[0]).format("MMMM Do h:mm a"), value:current[1]  });
+        data.push({ date:moment(current[0]).format("MMMM Do h:mm a"), value:Math.round(current[1])});
       }
       this.data = data;
       /* Triggers a state change so the nvd3 chart will reload the data */
@@ -57,7 +57,7 @@ class SelectorChart extends Component {
         {/* Linchart with the the data and click callback defined */}
         <LineChart data={this.data} onClick={this.click} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
           {/* XAxis with value for custom color and padding */}
-          <XAxis dataKey="date" tickFormatter={this.valueformat} label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
+          <XAxis dataKey="date" label="Date" minTickGap={10} name="Date" hide={false} stroke="#0277bd" padding={{ botton: 20 }}/>
           {/* YAxis with value for custom color and padding */}
           <YAxis domain={['auto', 'auto']} tickFormatter={this.valueformat} name="Value" hide={false} stroke="#0277bd" padding={{ bottom: 20 }}/>
           {/* Tooltip with callback set for formatting */}

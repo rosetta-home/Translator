@@ -4,23 +4,14 @@ import { Card, Dialog, Button, Icon, Grid,Cell } from 'preact-mdl';
 export default class CheckList extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
-		this.list =
-			[
-				{'name':'Statement #1',checked:false},
-				{'name':'Statement #2',checked:false},
-				{'name':'Statement #3',checked:false},
-				{'name':'Statement #4',checked:false},
-				{'name':'Statement #5',checked:false},
-				{'name':'Statement #6',checked:false}
-			];
+		this.list = [
+		    {'name':'Statement #1',checked:false},{'name':'Statement #2',checked:false},
+				{'name':'Statement #3',checked:false},{'name':'Statement #4',checked:false},
+				{'name':'Statement #5',checked:false},{'name':'Statement #6',checked:false}
+		];
 	}
-	componentDidMount() {
-
-	}
-	componentWillReceiveProps(nextProps) {
-
-	}
+	componentDidMount() { }
+	componentWillReceiveProps(nextProps) { }
 	done = () => {
 		this.props.next(true);
 		this.props.getTouchstones();

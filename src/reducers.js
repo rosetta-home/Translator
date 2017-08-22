@@ -1,4 +1,3 @@
-
 const EMPTY = {};
 
 export default store => {

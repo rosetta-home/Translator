@@ -15,7 +15,7 @@ export default {
       for ( var key in form ) {
         form_data.append(key, form[key]);
       }
-      request.post('http://35.167.180.46:8080/account/login').send(form_data).end(function(err, res) {
+      request.post(Configs.api_endpoint() + '/account/login').send(form_data).end(function(err, res) {
         err ? reject(err) : resolve(res);
       });
     });
@@ -30,7 +30,7 @@ export default {
   register(form) {
     var form_data = new FormData();
 		for ( var key in form ) { form_data.append(key, form[key]); }
-    request.put('http://35.167.180.46:8080/account/register').send(form_data).end(function(err, res) {
+    request.put(Configs.api_endpoint() + '/account/register').send(form_data).end(function(err, res) {
       if (!err) {
         console.log(res.body);
       } else {
@@ -40,17 +40,18 @@ export default {
   },
   async getData(datapoint) {
     return new Promise((resolve, reject) => {
-      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/12h')
+      request.get(Configs.api_endpoint() + '/data/mean/'+ datapoint +'/2017-07-01T12:12:12Z/2017-07-07T12:12:12Z/12h')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {
+
         err ? reject(err) : resolve(JSON.parse(res.text));
       });
     });
   },
   async getData2(datapoint,start,end) {
     return new Promise((resolve, reject) => {
-      request.get('http://35.167.180.46:8080/data/mean/'+ datapoint +'/'+ start +'/' + end + '/60m')
+      request.get(Configs.api_endpoint() + '/data/mean/'+ datapoint +'/'+ start +'/' + end + '/60m')
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + this.getToken()})
       .send({})
       .end(function(err, res) {
