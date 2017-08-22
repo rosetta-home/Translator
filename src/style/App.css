@@ -122,6 +122,14 @@ g.nvd3.nv-wrap.nv-sparkline path {
     border-radius: 5px;
 }
 
+.notesuccess {
+    padding: 20px;
+    background-color: #5cb85c;
+    color: white;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
 .closebtn {
     margin-left: 15px;
     color: white;

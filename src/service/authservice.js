@@ -11,11 +11,20 @@ export default {
   clearCachedToken() { localStorage.removeItem('id_token'); },
   login(form) {
     return new Promise((resolve, reject) => {
-    var form_data = new FormData();
-    for ( var key in form ) { form_data.append(key, form[key]); }
+      var form_data = new FormData();
+      for ( var key in form ) {
+        form_data.append(key, form[key]);
+      }
       request.post('http://35.167.180.46:8080/account/login').send(form_data).end(function(err, res) {
         err ? reject(err) : resolve(res);
       });
+    });
+  },
+  forgotpassword(email) {
+    return new Promise((resolve, reject) => {
+      setTimeout(function(){
+        resolve("email has been reset");
+      }, 3000);
     });
   },
   register(form) {

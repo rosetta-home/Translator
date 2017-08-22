@@ -4,8 +4,9 @@ import { Router } from 'preact-router';
 import store from './store';
 import createBrowserHistory from 'history/createBrowserHistory';
 import "bootstrap/dist/css/bootstrap.css";
-
+// The main App component
 import App from './components/App';
+// All the pages for the web app
 import HomePage from './components/pages/HomePage';
 import OtherComponent from './components/pages/OtherComponent';
 import Error404 from './components/pages/Error404';
@@ -22,9 +23,12 @@ import Help from './components/pages/Help';
 import More from './components/pages/More';
 import Signup from './components/pages/Signup';
 import CheckEmail from './components/pages/CheckEmail';
-
+import ResetPassword from './components/pages/ResetPassword';
+// Testing: A second dashboard
 import Dashboard2 from './components/pages/Dashboard2';
-
+/* The main App component where all the children are the pages*/
+/* The router will give the correct component for current route */
+/* All the pages in the App and the route path linked to each one. */
 const Root = () => (
   <App>
     <Router>
@@ -32,6 +36,7 @@ const Root = () => (
       <About path="/about"/>
       <Login path="/login"/>
       <Signup path="/signup"/>
+      <ResetPassword path="/reset"/>
       <CheckEmail path="/email"/>
       <Register path="/register"/>
       <Dashboard path="/dashboard"/>
@@ -48,7 +53,5 @@ const Root = () => (
     </Router>
   </App>
 );
-
-render((
-  <Root></Root>
-), document.body);
+// Render the whole web app
+render((<Root></Root>), document.body);

@@ -52,7 +52,7 @@ export default class Setup extends Component {
     var payload = {icon:'fa fa-question-circle-o',callback:"CallRight"};
     ReactBroadcast.broadcast('SetRightItem', payload);
     ReactBroadcast.on("CallRight", item => {
-      console.log("Open Help");
+      route('/help');
     });
   }
   componentWillUnmount() {
