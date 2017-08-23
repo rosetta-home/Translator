@@ -72,6 +72,38 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 
 ### Documentation
 
+# Components
+
+#### Translator's Backbone
+
+```
+<div className="App">
+{/* Root of the Translator application, here is the basic layout of the web app with Google Material. */}
+  <Layout fixed-header fixed-drawer>
+    {/* Header component with title */}
+    <Header/>
+    {/* SideMenu with the options and router links */}
+    <SideMenu/>
+    {/* Provider for the redux storage */}
+    <Layover/>
+    <Provider store={store}>
+    {/* Layout content area for the preact component */}
+    <Layout.Content>
+      <NotificationCenter/>
+      {this.props.children}
+    </Layout.Content>
+    {/* Layout content area end tag */}
+    </Provider>
+    {/* Provider for the redux storage end tag */}
+    </Layout>
+  {/* Footer for the whole applicaiton */}
+  <Footer/>
+</div>
+```
+<b>Header</b> contains the NavTitle and RightItem component which when linked to the react broadcast will change the contents of the children when an event is emitted, for example the title of the current page in the body. <b>Layover</b> is in charge of handling all the modal pop ups. Once a layover is render with the component defined in the payload json object with contain the VNode from the DOM, but also the callback function for when the modal is dismissed. The callback payload is optional. <b>SideMenu</b> contains all the options for the current state. For example if the user is not logined into their Rosetta Home account, no token will be detected and the SideMenu will display options for a guest user, such as, Login, Setup, Help, Home, etc. Once a session is confirmed the react broadcast will emit a update to the SideMenu which will re-render the component with auth-user options (Dashboard,Settings,etc.) without re-rendering the whole App from the Root node down. <b>NotificationCenter</b> will display are NotificationCenter from the user interaction from failed Login to issues with the touchstones themselves. The ```{this.props.children}``` is the pages in the current route state from the URL matching in the ```index.js```.
+
+# Graphs
+
 <b>BulletChart</b>
 
 ```
