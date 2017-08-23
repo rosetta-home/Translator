@@ -132,10 +132,10 @@ export default class Dashboard2 extends Component {
 		console.log(payload);
 	}
 	componentDidMount() {
-		if (authentication.getToken() === '') {
-      route('/login');
-      ReactBroadcast.broadcast('Change_Links', false);
-    } else {
+		//if (authentication.getToken() == '') {
+      //route('/login');
+      //ReactBroadcast.broadcast('Change_Links', false);
+    //} else {
       ReactBroadcast.broadcast('Change_Links', true);
       ReactBroadcast.broadcast('SetTitle', 'Dashboard');
   		var payload = {icon:'fa fa-clock-o',callback:"CallRight"};
@@ -144,8 +144,8 @@ export default class Dashboard2 extends Component {
 				const { from, to } = this.state;
   			ReactBroadcast.broadcast('OpenModal', { component:RangePicker, callback:this.modalCallBack, props:{'from':from,'to':to} });
   		});
-    }
-		this.setState();
+    //}
+		//this.setState();
 	}
 	segmented = (button) => {
 		var id = button.target.id;
@@ -225,15 +225,7 @@ export default class Dashboard2 extends Component {
 		  	</div>
 			</div>
 
-			<Card shadow={4} style="width:100%;margin-top:10px;">
-				<SwipeableViews>
-      		<NowCard datapoint="ieq.co2" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-					<NowCard datapoint="weather_station.outdoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-				  <NowCard datapoint="weather_station.indoor_temperature" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-          <NowCard datapoint="weather_station.pressure" startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-          <NowCard datapoint="weather_station.uv" options={{'unit':tempmeasure}} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
-        </SwipeableViews>
-			</Card>
+
 
 
 

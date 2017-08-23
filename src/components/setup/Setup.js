@@ -105,7 +105,6 @@ export default class Setup extends Component {
         <Card shadow={4} style="width:100%">
           <Wizard initialStep={1} steps={steps} save={this.save}/>
           <Card.Actions>
-          <ProgressBar completed={50} />
           </Card.Actions>
         </Card>
       </div>
