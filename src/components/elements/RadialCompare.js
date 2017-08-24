@@ -189,7 +189,7 @@ class RadialCompare extends Component {
       const { value,raddata,current } = this.state;
     	return (
         <div>
-        <Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card shadow={4} className="card_extra">
         <Card.Title>
           <Card.TitleText><small>CO2 vs Wind Direction</small></Card.TitleText>
         </Card.Title>

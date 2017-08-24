@@ -11,7 +11,7 @@ export default class Confirm extends Component {
 		/* ReactBroadcast the updated title  */
 		ReactBroadcast.broadcast('SetTitle', 'Confirm');
 	}
-  
+
   setup = () => {
     route('/setup');
   }
@@ -19,7 +19,7 @@ export default class Confirm extends Component {
 		return (
       <div>
       <div>
-      <div style="width:100%;padding:10px;">
+      <div className="page_outline">
       <Card shadow={4} style="width:100%;">
         <Card.Title>Account Confirmed</Card.Title>
         <p style="color:black;">Your account has been successfully confirm. Proceed to setup to complete your installation of Rosetta Home.</p>

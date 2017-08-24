@@ -51,7 +51,7 @@ export default class Login extends Component {
 		}
 		return (
 			<div>
-			<div style="width:100%;padding:10px;">
+			<div className="page_outline">
 				<Card shadow={4} style="width:100%;">
 					<Card.Title>Rosetta Home Portal</Card.Title>
 					<div className="row" style="padding:20px;">

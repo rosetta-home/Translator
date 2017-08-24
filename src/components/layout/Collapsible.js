@@ -93,7 +93,7 @@ class Collapsible extends Component {
   renderNonClickableTriggerElement() {
     if (this.props.triggerSibling && typeof this.props.triggerSibling === 'string') {
       return (
-        <span className={`${this.props.classParentString}__trigger-sibling`}>{this.props.triggerSibling}</span>
+        <span>{this.props.triggerSibling}</span>
       )
     } else if(this.props.triggerSibling) {
       return <this.props.triggerSibling />
@@ -129,10 +129,10 @@ class Collapsible extends Component {
     var children = (this.state.isClosed && !this.state.inTransition) ? null : this.props.children;
     // Render the component.
     return(
-      <div style="padding: 10px;text-align:left;">
-        <div style="box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);">
-        <div style="background-color:#eceeef;padding: 5px;">
-          <span style="font-size:small;font-weight: 100;" onClick={this.handleTriggerClick}>
+      <div className="collapsible_outer">
+        <div className="collapsible_main">
+        <div className="collapsible_bar">
+          <span className="collapsible_span" onClick={this.handleTriggerClick}>
             {trigger}
           </span>
         </div>
@@ -147,5 +147,4 @@ class Collapsible extends Component {
     );
   }
 }
-
 export default Collapsible;

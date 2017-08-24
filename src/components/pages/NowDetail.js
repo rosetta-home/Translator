@@ -9,7 +9,7 @@ export default class NowDetail extends Component {
 	render() {
 		return (
       <div>
-      <div style="width:100%;padding:10px;">
+      <div className="page_outline">
       <Card shadow={4} style="width:100%;">
         <Card.Title>Touchstones #3</Card.Title>
 

@@ -102,7 +102,16 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 ```
 <b>Header</b> contains the NavTitle and RightItem component which when linked to the react broadcast will change the contents of the children when an event is emitted, for example the title of the current page in the body. <b>Layover</b> is in charge of handling all the modal pop ups. Once a layover is render with the component defined in the payload json object with contain the VNode from the DOM, but also the callback function for when the modal is dismissed. The callback payload is optional. <b>SideMenu</b> contains all the options for the current state. For example if the user is not logined into their Rosetta Home account, no token will be detected and the SideMenu will display options for a guest user, such as, Login, Setup, Help, Home, etc. Once a session is confirmed the react broadcast will emit a update to the SideMenu which will re-render the component with auth-user options (Dashboard,Settings,etc.) without re-rendering the whole App from the Root node down. <b>NotificationCenter</b> will display are NotificationCenter from the user interaction from failed Login to issues with the touchstones themselves. The ```{this.props.children}``` is the pages in the current route state from the URL matching in the ```index.js```.
 
-# Graphs
+
+
+# Graphs / Charts
+
+| Parameters |  |
+|---------|----------------|
+| datapoint | This is the datapoint id you want to have the Graph/Chart render, for example, ```datapoint="ieq.co2"```     |
+| startDateTime | The starting date and time to retrieve the data set. Needs to be formatted as <a href="https://www.timeanddate.com/time/aboututc.html">UTC</a>. |
+| endtDateTime | The ending date and time to retrieve the data set. Needs to be formatted as <a href="https://www.timeanddate.com/time/aboututc.html">UTC</a>. |
+| dres | The data resolutions for the data retrieved from the backend. |
 
 <b>BulletChart</b>
 

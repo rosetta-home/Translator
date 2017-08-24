@@ -76,7 +76,7 @@ class MultiDPChart extends Component {
     }
     return (
         <div>
-        <Card shadow={4} style="width:100%;margin-top:10px;">
+        <Card shadow={4} className="card_extra">
         <Card.Title>
           <Card.TitleText><small>{configs.title(this.props.datapoint)}</small></Card.TitleText>
         </Card.Title>

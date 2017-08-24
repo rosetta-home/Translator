@@ -63,7 +63,7 @@ class SparkGraphLive extends Component {
 	render () {
     return (
       <div>
-      <Card shadow={4} style="width:100%;margin-top:10px;">
+      <Card shadow={4} className="card_extra">
         <Card.Title>
           <Card.TitleText><small>{configs.title(this.props.datapoint)}</small></Card.TitleText>
         </Card.Title>
@@ -77,8 +77,7 @@ class SparkGraphLive extends Component {
              <NVD3Chart color={["#ef6c00"]} height={80} margin={{top: 10, right: 30, bottom: 10, left: 20}} id="sparklinePlus" type="sparklinePlus" datum={this.data} xTickFormat={(d) => d3.time.format('%H:%M:%S %p')(d)} showLastValue={false}/>
            </div>
         </div>
-        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}>
-        </Collapsible>
+        <Collapsible style="color:#ef6c00;padding-right:20px;" trigger="Live" transitionTime={100}></Collapsible>
 				<Card.Actions>
             <button><small style="font-weight: lighter;">More</small></button>
         </Card.Actions>

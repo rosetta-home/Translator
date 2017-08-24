@@ -21,7 +21,7 @@ export default class SelectorChartTooltip extends Component {
     // Gets the the date and value from the current state
     const { date, value } = this.state;
     return (
-      <div style="width:200px;height:50px;background-color:lightgray;border-radius:5px;text-align:center">
+      <div className="sc_tooltip">
         <small>{date}</small>
         <br></br>
         <small>{value}</small>

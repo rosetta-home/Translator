@@ -32,7 +32,7 @@ export default class ResetPassword extends Component {
 		}
 		return (
       <div>
-			<div style="width:100%;padding:10px;">
+			<div className="page_outline">
 			<Card shadow={4} style="width:100%;">
 				<Card.Title>Reset Password</Card.Title>
 					{sent &&

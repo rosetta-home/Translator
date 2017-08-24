@@ -28,7 +28,7 @@ export default class Signup extends Component {
 	render() {
 		return (
 			<div>
-			<div style="width:100%;padding:10px;">
+			<div className="page_outline">
 			<Card shadow={4} style="width:100%;">
 				<Card.Title>Sign Up</Card.Title>
 					<div className="row" style="padding:20px;">

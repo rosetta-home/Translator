@@ -41,7 +41,7 @@ export default class SelectorChartTooltip extends Component {
       items.push(<br></br>);
     }
     return (
-      <div style="width:200px;height:100px;background-color:lightgray;border-radius:5px;text-align:center">
+      <div className="mc_tooltip">
         {items}
       </div>
     )
