@@ -5,32 +5,44 @@ export default class Touchstone extends Component {
 	constructor(props) {
 		super(props);
 		this.formdata = {'name':''};
+		this.state = { enter: true };
+		this.props.next(true);
 	}
-	componentDidMount() {
-		this.props.next(false);
+	componentDidMount() { }
+	componentWillReceiveProps(nextProps) {
+  	this.setState({enter:false});
+		this.props.updateTouchstone({'id':nextProps.id}).then(v => {
+			this.setState({enter:true});
+    });
 	}
-  componentWillUnmount() {}
-	submit = () => {
-		//this.props.updateTouchstone({'id':this.props.id,'name':this.formdata.name}).then(v => {
-			this.props.next(true);
-    //});
+	save = () => {
+		this.props.saveTouchstone(this.props.id,this.formdata['name']).then(v => {
+			console.log(v);
+			console.log("Saved!");
+    });
 	}
-	// Tracks the change in the current touchstone name
 	onChange(event) {
 		this.formdata['name'] = event.target.value;
   }
 	render() {
+		const { enter } = this.state;
 		return (
       <div>
-				<h6>Find the blinking touchstone and please enter this locaiton.</h6>
-				<h6>ID {this.props.id}</h6>
+				{enter === false &&
+					<h6>Find the blinking touchstone, you will be asked to name it in a few moments.</h6>
+				}
 				<div className="row" style="margin-top:5px;margin-right:10px;margin-left:10px;">
 					<div className="col-12 full" style="padding-left: 5px;text-align: left;padding-top: 0px;padding-bottom: 0px;">
 						<br></br>
-						<TextField name="name" placeholder="Touchstone Name" onChange={this.onChange.bind(this)}></TextField>
-						<div style="width:100%;text-align:end;">
-						<Button onClick={this.submit}>Save</Button>
-					</div>
+						{enter === true &&
+							<div>
+							<h6>Please enter name of locaiton for the touchstone then tap 'Next'.</h6>
+							<TextField name="name" placeholder="Touchstone Name" onChange={this.onChange.bind(this)}></TextField>
+							<div style="width:100%;text-align:center;">
+							<button onClick={this.save}>Save</button>
+							</div>
+							</div>
+						}
 					</div>
 				</div>
       </div>

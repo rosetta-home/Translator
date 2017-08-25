@@ -5,9 +5,10 @@ export default class CheckList extends Component {
 	constructor(props) {
 		super(props);
 		this.list = [
-		    {'name':'Statement #1',checked:false},{'name':'Statement #2',checked:false},
-				{'name':'Statement #3',checked:false},{'name':'Statement #4',checked:false},
-				{'name':'Statement #5',checked:false},{'name':'Statement #6',checked:false}
+		    {'name':'Is the Hub and Touchstones all plugged in?',checked:false},
+				{'name':'Is the Rosetta Home Hub connected to the Internet?',checked:false},
+				{'name':'Are the touchstones within range of the Hub?',checked:false},
+				{'name':'Are the touchstones glowing?',checked:false}
 		];
 	}
 	componentDidMount() { }
@@ -18,20 +19,28 @@ export default class CheckList extends Component {
 	}
 	checked = (element) => {
 		//console.log(this.list[element.target.id] );
-		this.list[element.target.id].checked = true;
-		var done = true;
-		for (var i = 0; i < this.list.length; i++) {
-			 done = this.list[i].checked;
+		if (this.list[element.target.id].checked) {
+			this.list[element.target.id].checked = false;
+		} else {
+			this.list[element.target.id].checked = true;
 		}
-		if (done) {
-			this.props.next(true);
-			this.props.getTouchstones();
+
+		var haveFalse = false;
+		for (var i = 0; i < this.list.length; i++) {
+			 if (this.list[i].checked === false) {
+				 haveFalse = true
+			 }
+		}
+		if (haveFalse) {
+			//this.props.next(false);
+		} else {
+			//this.props.next(true);
 		}
 	}
 	render() {
 		var checklist = [];
 		for (var i = 0; i < this.list.length; i++) {
-			checklist.push(<div style="padding: 10px;"><input type="checkbox" id={i} onClick={this.checked}></input><label for={i}>{this.list[i].name}</label></div>);
+			checklist.push(<div style="padding: 10px;"><input type="checkbox" id={i} onClick={this.checked}></input><label for={i}><small>{this.list[i].name}</small></label></div>);
 		}
 		return (
       <div>

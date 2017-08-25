@@ -56,7 +56,7 @@ export default class Wizard extends Component {
     else {
       this.setState({
         showPreviousBtn: true,
-        showNextBtn: false,
+        showNextBtn: true,
         showDoneBtn: true
       })
     }
@@ -141,8 +141,7 @@ export default class Wizard extends Component {
           <div className="col-4 full">
           </div>
           <div className="col-4 full" style="padding-right: 5px;text-align: right;padding-top: 0px;padding-bottom: 0px;">
-          <Button style={this.state.showNextBtn ? {} : this.hidden}
-                  onClick={this.next}>Next</Button>
+          <Button onClick={this.next}>Next</Button>
 
                   <Button style={this.state.showDoneBtn ? {} : this.hidden}
                           onClick={this.props.save}>Save</Button>

@@ -9,6 +9,9 @@ export default {
   getToken() { return localStorage.getItem('id_token') || ''; },
   setCachedToken(token) { localStorage.setItem('id_token', token); },
   clearCachedToken() { localStorage.removeItem('id_token'); },
+  getAccount() { return localStorage.getItem('account') || null; },
+  setCachedAccount(account) { localStorage.setItem('account', account); },
+  clearCachedAccount() { localStorage.removeItem('account'); },
   login(form) {
     return new Promise((resolve, reject) => {
       var form_data = new FormData();

@@ -19,12 +19,8 @@ export default class Setup extends Component {
   constructor(props) {
     super(props);
     //Defaults and the touchstones linked to the hub
-    this.state = { refresh:true,
-      touchstones:[
-        {'touchstone_id':'5T7aal0wKVc56fvidAuITqOd6hBYEf0AsTAVwaAp'},
-        {'touchstone_id':'y9yVpwNlbTn45vGpViqDyugY0Sco5NPUQLdClslm'},
-        {'touchstone_id':'FijevwmkmViMctxlxlOje73IctAgzE0ycE6mT6Zs'}
-      ]
+    this.state = {
+      account:JSON.parse(authservice.getAccount())
     };
     //Setting the timer to ping the server and keep connection open
     this.pingtimer = setInterval(this.ping, 30000);
@@ -62,17 +58,26 @@ export default class Setup extends Component {
 
     });
   }
-  // Temp, but would get the list of touchstone connected to hub and reconfig the wizard for setup
-  updateState = (props) => {
-    this.setState({refresh:false});
-  }
   updateTouchstone = (payload) => {
-    console.log(payload);
     clearInterval(this.pingtimer);
     this.pingtimer = setInterval(this.ping, 30000);
     var data = {
       type:'configure',
-      payload:{}
+      payload:payload
+    };
+    const dataStr = JSON.stringify(data);
+    return wsp.request(dataStr);
+  }
+  saveTouchstone = (id,name) => {
+    console.log("Saving: " + id + " with name: " + name);
+    clearInterval(this.pingtimer);
+    this.pingtimer = setInterval(this.ping, 30000);
+    var data = {
+      type:'touchstone_name',
+      payload:{
+        'id':id,
+        'name':name
+      }
     };
     const dataStr = JSON.stringify(data);
     return wsp.request(dataStr);
@@ -83,22 +88,16 @@ export default class Setup extends Component {
   }
   // Renders the setup wizard
   render() {
-    const { refresh,touchstones } = this.state;
+    const { account } = this.state;
+    var touchstones = account.hardware.ieq;
     var steps;
-    if (refresh) {
-      steps =
-      [
-        {name: 'Checklist', component: <CheckList getTouchstones={this.updateState}/>}
-      ];
-    } else {
-      var touch = [];
-      var step = [{name: 'Checklist', component: <CheckList getTouchstones={this.updateState}/>}];
-      for (var i = 0; i < touchstones.length; i++) {
-        touch.push({name:'Touchstone', component:<Touchstone updateTouchstone={this.updateTouchstone} id={touchstones[i].touchstone_id}/>});
-      }
-      steps = step.concat(touch);
-      steps.push({name: 'Done', component: <Done/>});
+    var touch = [];
+    var step = [{name: 'Checklist', component: <CheckList getTouchstones={this.updateState}/>}];
+    for (var i = 0; i < touchstones.length; i++) {
+      touch.push({name:'Touchstone', component:<Touchstone saveTouchstone={this.saveTouchstone} updateTouchstone={this.updateTouchstone} id={touchstones[i].id}/>});
     }
+    steps = step.concat(touch);
+    steps.push({name: 'Done', component: <Done/>});
     return (
       <div>
       <div style="width:100%;padding:10px;">

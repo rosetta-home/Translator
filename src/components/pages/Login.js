@@ -26,9 +26,12 @@ export default class Login extends Component {
 	login() {
 		authentication.login(this.formdata).then(v => {
 			/* Gets the token */
-			var token = JSON.parse(v.text).success;
+			var res = JSON.parse(v.text);
+			var account = res.account;
+			var token = res.success;
 			/* Sets the token for the user */
 			authentication.setCachedToken(token);
+			authentication.setCachedAccount(JSON.stringify(account));
 			this.formdata = {}
 			/* Re-route to the dashboard */
 			route('/dashboard');
