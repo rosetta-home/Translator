@@ -13,33 +13,26 @@ import authservice from '../../service/authservice';
 import WebSocketAsPromised from '../../service/wsp';
 import ProgressBar from '../elements/ProgressBar';
 
-const wsp = new WebSocketAsPromised(Configs.ws_url());
-
 export default class Setup extends Component {
+
+  //const wsp = new WebSocketAsPromised(Configs.ws_url());
+
   constructor(props) {
     super(props);
+    this.wsp = new WebSocketAsPromised(Configs.ws_url());
     //Defaults and the touchstones linked to the hub
     this.state = {
       account:JSON.parse(authservice.getAccount())
     };
     //Setting the timer to ping the server and keep connection open
-    this.pingtimer = setInterval(this.ping, 30000);
-    wsp.open().then(() => {
+    this.wsp.open().then(() => {
       this.auth();
-    });
-  }
-  /* Component lifecyle function */
-  ping = () => {
-    // Pings the websocket to keep it alive
-    var data = { type:'ping', payload:{} };
-    const dataStr = JSON.stringify(data)
-    wsp.request(dataStr).then(response => {
-      console.log(response);
     });
   }
   // Auth the web socket connect
   auth = () => {
-    wsp.request('Bearer ' + authservice.getToken()).then(response => {
+    this.wsp.request('Bearer ' + authservice.getToken()).then(response => {
+      console.log("Bearer Auth Done");
     });
   }
   //Component lifecyle methods
@@ -53,25 +46,18 @@ export default class Setup extends Component {
   }
   componentWillUnmount() {
     ReactBroadcast.broadcast('SetRightItem', null);
-    clearInterval(this.pingtimer);
-    wsp.close().then(() => {
-
-    });
+    this.wsp.close().then(() => { });
   }
   updateTouchstone = (payload) => {
-    clearInterval(this.pingtimer);
-    this.pingtimer = setInterval(this.ping, 30000);
     var data = {
       type:'configure',
       payload:payload
     };
     const dataStr = JSON.stringify(data);
-    return wsp.request(dataStr);
+    return this.wsp.request(dataStr);
   }
   saveTouchstone = (id,name) => {
     console.log("Saving: " + id + " with name: " + name);
-    clearInterval(this.pingtimer);
-    this.pingtimer = setInterval(this.ping, 30000);
     var data = {
       type:'touchstone_name',
       payload:{
@@ -80,7 +66,7 @@ export default class Setup extends Component {
       }
     };
     const dataStr = JSON.stringify(data);
-    return wsp.request(dataStr);
+    return this.wsp.request(dataStr);
   }
   // Once the touchstones are saved they are re-routed to the dsahboard
   save = () => {

@@ -102,7 +102,9 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 ```
 <b>Header</b> contains the NavTitle and RightItem component which when linked to the react broadcast will change the contents of the children when an event is emitted, for example the title of the current page in the body. <b>Layover</b> is in charge of handling all the modal pop ups. Once a layover is render with the component defined in the payload json object with contain the VNode from the DOM, but also the callback function for when the modal is dismissed. The callback payload is optional. <b>SideMenu</b> contains all the options for the current state. For example if the user is not logined into their Rosetta Home account, no token will be detected and the SideMenu will display options for a guest user, such as, Login, Setup, Help, Home, etc. Once a session is confirmed the react broadcast will emit a update to the SideMenu which will re-render the component with auth-user options (Dashboard,Settings,etc.) without re-rendering the whole App from the Root node down. <b>NotificationCenter</b> will display are NotificationCenter from the user interaction from failed Login to issues with the touchstones themselves. The ```{this.props.children}``` is the pages in the current route state from the URL matching in the ```index.js```. Everything in the life cycle of the application will play in the ```Layout.Content```.
 
+#### Web-Socket Promises
 
+The websocket promise is located in ``` wsp.js ```. It has two parts, the first is the websocket and the promise manager. When an instant of the wsp is created is requires a URI link to connect. Once is has been connected, JSON Objects can be sent in the way of payloads. As a request is created a unique ID is added to the payload for the backend to return with processed request. The purpose of having a unique token is as the requesting I processing the promises going into a pending state, till an ```onmessage``` is trigged and resolves the pending promises with the response data.
 
 # Graphs / Charts
 
@@ -113,7 +115,7 @@ Cloud backend for RosettaHome located <a href="https://github.com/rosetta-home/b
 | endtDateTime | The ending date and time to retrieve the data set. Needs to be formatted as <a href="https://www.timeanddate.com/time/aboututc.html">UTC</a>. |
 | dres | The data resolutions for the data retrieved from the backend. |
 
-<b>BulletChart</b>
+<b>BulletChart</b> a simple bulletchat that displays the min, mean, max, and current values of the datapoint.
 
 ```
 const point = "ieq.co2";
@@ -121,7 +123,7 @@ const dres = '1d';
 <BulletChart datapoint={point} startDateTime={fromValue} endDateTime={toValue} dres={dres}/>
 ```
 
-<b>BarChart</b>
+<b>BarChart</b> is a simple bar chart which can take in only on datapoint at the current time.
 
 ```
 const point = "ieq.co2";

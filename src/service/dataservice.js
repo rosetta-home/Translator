@@ -15,6 +15,7 @@ export default {
       request.get(Configs.api_endpoint() + '/data/mean/'+ datapoint +'/'+ start +'/' + end + '/' + temp_res)
       .set({'Content-Type':'application/json','Authorization':'Bearer ' + authentication.getToken()})
       .send({}).end(function(err, res) {
+        //console.log(res);
         err ? reject(err) : resolve(JSON.parse(res.text));
       });
     });

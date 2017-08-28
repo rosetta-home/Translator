@@ -37,8 +37,30 @@ class WebSocketAsPromised {
     this._onClose = new Channel();
     this._ws = null;
     this.currentid = '';
+    this.pingtimer = setInterval(this.ping, 30000);
   }
-
+  ping = () => {
+    var data = { type:'ping', payload:{} };
+    const dataStr = JSON.stringify(data)
+    this.pingsend(dataStr).then(response => { });
+  }
+  pingsend(data, options) {
+    const id = this.makeID();
+    var jsdata = data;
+    if (!data.includes("Bearer")) {
+      var tmpobj = JSON.parse(data);
+      tmpobj['id'] = id;
+      jsdata = JSON.stringify(tmpobj);
+    }
+    const fn = id => {
+      this.send(jsdata);
+    };
+    const promise = id === undefined
+      ? this._pendingRequests.add(fn, options)
+      : this._pendingRequests.set(id, fn, options);
+    var pro = promise.catch(handleTimeoutError);
+    return pro;
+  }
   /**
    * Returns original WebSocket instance created by `options.createWebSocket`.
    *
@@ -139,16 +161,18 @@ class WebSocketAsPromised {
    * @returns {Promise}
    */
   request(data, options) {
-    /*if (!data || typeof data !== 'object') {
-      return Promise.reject(new Error(`WebSocket request data should be a plain object, got ${data}`));
-    }*/
-    const fn = id => {
-      //data[idProp] = id;
-      this.send(data);
-    };
+    clearInterval(this.pingtimer);
+    this.pingtimer = setInterval(this.ping, 30000);
     const id = this.makeID();
-    this.currentid = id;
-    console.log(this.currentid);
+    var jsdata = data;
+    if (!data.includes("Bearer")) {
+      var tmpobj = JSON.parse(data);
+      tmpobj['id'] = id;
+      jsdata = JSON.stringify(tmpobj);
+    }
+    const fn = id => {
+      this.send(jsdata);
+    };
     const promise = id === undefined
       ? this._pendingRequests.add(fn, options)
       : this._pendingRequests.set(id, fn, options);
@@ -193,6 +217,7 @@ class WebSocketAsPromised {
    * @returns {Promise}
    */
   close() {
+    clearInterval(this.pingtimer);
     this._opening.reset(new Error('Connection closing by client'));
     return this._closing.call(() => {
       if (this._ws) {
@@ -220,7 +245,7 @@ class WebSocketAsPromised {
     try {
       jsonData = JSON.parse(data);
       console.log(jsonData);
-      this._pendingRequests.tryResolve(this.currentid, jsonData);
+      this._pendingRequests.tryResolve(jsonData['id'], jsonData);
     } catch(e) {
       // do nothing if can not parse data
     }
