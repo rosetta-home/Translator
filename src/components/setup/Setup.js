@@ -14,9 +14,6 @@ import WebSocketAsPromised from '../../service/wsp';
 import ProgressBar from '../elements/ProgressBar';
 
 export default class Setup extends Component {
-
-  //const wsp = new WebSocketAsPromised(Configs.ws_url());
-
   constructor(props) {
     super(props);
     this.wsp = new WebSocketAsPromised(Configs.ws_url());
@@ -49,24 +46,12 @@ export default class Setup extends Component {
     this.wsp.close().then(() => { });
   }
   updateTouchstone = (payload) => {
-    var data = {
-      type:'configure',
-      payload:payload
-    };
-    const dataStr = JSON.stringify(data);
-    return this.wsp.request(dataStr);
+    var data = { type:'configure', payload:payload };
+    return this.wsp.request(JSON.stringify(data));
   }
   saveTouchstone = (id,name) => {
-    console.log("Saving: " + id + " with name: " + name);
-    var data = {
-      type:'touchstone_name',
-      payload:{
-        'id':id,
-        'name':name
-      }
-    };
-    const dataStr = JSON.stringify(data);
-    return this.wsp.request(dataStr);
+    var data = { type:'touchstone_name', payload: { 'id':id, 'name':name } };
+    return this.wsp.request(JSON.stringify(data));
   }
   // Once the touchstones are saved they are re-routed to the dsahboard
   save = () => {

@@ -119,9 +119,7 @@ export default class Wizard extends Component {
     this.setState({showPreviousBtn:status});
   }
 
-
   render() {
-    //console.log(this.state);
     var step = this.props.steps[this.state.compState].component;
     step.attributes['next'] = this.enableNext;
     step.attributes['previous'] = this.enablePrevious;
@@ -135,16 +133,16 @@ export default class Wizard extends Component {
         <div style={this.props.showNavigation ? {} : this.hidden}>
           <div className="row" style="margin-right:0px;margin-left:0px;">
           <div className="col-4 full" style="padding-left: 5px;text-align: left;padding-top: 0px;padding-bottom: 0px;">
-          <Button style={this.state.showPreviousBtn ? {} : this.hidden}
-                  onClick={this.previous}>Previous</Button>
+          <button style={this.state.showPreviousBtn ? {} : this.hidden}
+                  onClick={this.previous}>Previous</button>
           </div>
           <div className="col-4 full">
           </div>
           <div className="col-4 full" style="padding-right: 5px;text-align: right;padding-top: 0px;padding-bottom: 0px;">
-          <Button onClick={this.next}>Next</Button>
+          <button onClick={this.next}>Next</button>
 
-                  <Button style={this.state.showDoneBtn ? {} : this.hidden}
-                          onClick={this.props.save}>Save</Button>
+                  <button style={this.state.showDoneBtn ? {} : this.hidden}
+                          onClick={this.props.save}>Dashboard</button>
           </div>
           </div>
 
