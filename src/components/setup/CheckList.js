@@ -7,8 +7,8 @@ export default class CheckList extends Component {
 		this.list = [
 		    {'name':'Is the Hub and Touchstones all plugged in?',checked:false},
 				{'name':'Is the Rosetta Home Hub connected to the Internet?',checked:false},
-				{'name':'Are the touchstones within range of the Hub?',checked:false},
-				{'name':'Are the touchstones glowing?',checked:false}
+				{'name':'Another interesting question?',checked:false},
+				{'name':'The final interesting question?',checked:false}
 		];
 	}
 	componentDidMount() { }
