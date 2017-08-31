@@ -50,6 +50,18 @@ The backend for Rosetta Home located <a href="https://github.com/rosetta-home/br
   - [x] Setup Page
   - [x] Signup Page
 
+### Screenshots
+
+  <p align="left">
+  <img src="screenshots/setup.png" width="150">
+
+  <img src="screenshots/dashboard.png" width="150">
+
+  <img src="screenshots/dashboard2.png" width="150">
+
+  <img src="screenshots/now.png" width="150">
+  </p>
+
 ### Project Structure
 
   - src/
@@ -174,13 +186,3 @@ const nodeID = "0000000081474d35";
 const points = "weather_station.outdoor_temperature";
 <RHLiveGraph nodeID={nodeID} type={points} startDateTime={fromValue} endDateTime={toValue}/>
 ```
-
-# Screenshots
-
-<img src="screenshots/setup.png" width="150">
-
-<img src="screenshots/dashboard.png" width="150">
-
-<img src="screenshots/dashboard2.png" width="150">
-
-<img src="screenshots/now.png" width="150">
