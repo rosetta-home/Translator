@@ -15,7 +15,7 @@ import SideMenu from './layout/SideMenu';
 import Modal from './layout/Modal';
 import Layover from './layout/Layover';
 import NotificationCenter from './NotificationCenter';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from "reactbroadcast";
 import '../style/App.css';
 require("babel-core/register");
 require("babel-polyfill");

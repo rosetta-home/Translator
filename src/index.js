@@ -5,7 +5,7 @@ import store from './store';
 import createBrowserHistory from 'history/createBrowserHistory';
 import "bootstrap/dist/css/bootstrap.css";
 // The main App component
-import App from './components/App';
+import App from './components/app';
 // All the pages for the web app
 import HomePage from './components/pages/HomePage';
 import OtherComponent from './components/pages/OtherComponent';

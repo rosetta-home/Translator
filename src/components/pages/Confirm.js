@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from "reactbroadcast";
 import { Card, Button, TextField } from 'preact-mdl';
 import { route } from 'preact-router';
 

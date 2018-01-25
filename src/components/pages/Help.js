@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from '../../service/reactbroadcast';
+import ReactBroadcast from "reactbroadcast";
 import Collapsible from '../layout/Collapsible';
 import { Card, Button, TextField } from 'preact-mdl';
 

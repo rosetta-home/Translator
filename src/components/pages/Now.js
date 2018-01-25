@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Card, Button } from 'preact-mdl';
 import DRes from '../../service/dres';
-import ReactBroadcast from '../../service/reactbroadcast';
+import ReactBroadcast from "reactbroadcast";
 import d3 from 'd3';
 import { route } from 'preact-router';
 

@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { Redirect } from 'react-router';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from "reactbroadcast";
 
 export default class NotificationCenter extends Component {
   constructor(props) {

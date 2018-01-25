@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import { Card, Button, TextField } from 'preact-mdl';
 import authentication from '../../service/authservice';
 import { route } from 'preact-router';
-import ReactBroadcast from '../../service/reactbroadcast';
+import ReactBroadcast from "reactbroadcast";
 
 export default class Signup extends Component {
 	/* Component lifecyle methods */

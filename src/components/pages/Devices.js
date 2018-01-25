@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from 'ReactBroadcast';
+import ReactBroadcast from "reactbroadcast";
 import { Card, Button, TextField } from 'preact-mdl';
 
 export default class Devices extends Component {

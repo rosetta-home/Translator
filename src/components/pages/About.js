@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from "reactbroadcast";
 
 export default class About extends Component {
 	componentDidMount() {

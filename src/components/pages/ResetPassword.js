@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Card,TextField,Button } from 'preact-mdl';
 
-import ReactBroadcast from '../../service/reactbroadcast';
+import ReactBroadcast from "reactbroadcast";
 import authentication from '../../service/authservice';
 
 export default class ResetPassword extends Component {

@@ -6,7 +6,7 @@ import { route } from 'preact-router';
 import moment from 'moment';
 
 import configs from '../../configs';
-import ReactBroadcast from '../../service/reactbroadcast';
+import ReactBroadcast from "reactbroadcast";
 
 import SparkGraphLive from '../elements/SparkGraphLive';
 import LiveGraph from '../elements/LiveGraph';

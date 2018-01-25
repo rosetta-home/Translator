@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Button , Layout, Navigation} from 'preact-mdl';
 import '../../style/Header.css';
-import ReactBroadcast from "ReactBroadcast";
+import ReactBroadcast from "reactbroadcast";
 import NavTitle from './NavTitle';
 import RightItem from './RightItem';
 
